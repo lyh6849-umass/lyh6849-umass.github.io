@@ -2,12 +2,12 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href = "ma_db.css" type = "text/css" rel="stylesheet">
+<link href = "index_db.css" type = "text/css" rel="stylesheet">
 
 </head>
 <body>
     <div>
-    <h1>Your answers are currently being reviewed by Dr. Lee <br> Please wait, we will be with you shortly </h1>
+    <h1>Please instruct patient to start the self-evaluation questionnaire.</h1>
 </div>
 <?php
 date_default_timezone_set("America/New_York");
@@ -27,7 +27,7 @@ if ($conn ->connect_errno) {
   $pt = $time."_".$_POST['q1'];
  
 
-$sql= "SELECT question_id FROM question;";
+$sql= "SELECT question_id FROM question_db;";
 $result = $conn->query($sql);
 if($result->num_rows>0){
   while($row = $result->fetch_assoc()){
@@ -35,7 +35,7 @@ if($result->num_rows>0){
     if(isset($_POST[$id])){
     $ans = $_POST[$id];
     echo $ans;
-    $sql .="INSERT INTO patient_question_answer (patient_id,question_id,answer_id) VALUES ('$pt','$id','$ans');";
+    $sql .="INSERT INTO center_db (patient_id,question_id,answer_id) VALUES ('$pt','$id','$ans');";
     } else {};
   };
   

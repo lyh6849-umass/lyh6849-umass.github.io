@@ -1,0 +1,16 @@
+body {
+    margin:0;
+}
+
+div {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10vh;
+    color: #632d58;
+}

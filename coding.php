@@ -2,31 +2,74 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href = "coding.css" type = "text/css" rel="stylesheet">
 </head>
 <body>
   <form action="coding.php" method="post">
-Charting level: 
-  <input type="radio" name="Clvl" value="ma_pre_charting" checked>ma_pre_charting <br>
-  <input type="radio" name="Clvl" value="pt_pre_charting">pt_pre_charting <br>
-  <input type="radio" name="Clvl" value="ma_pre_charting2nd">ma_pre_charting2nd <br>
-  <input type="radio" name="Clvl" value="md_charting">md_charting <br>
-Question Class: <input type="text" name="QC"><br>
-Question Title: <input type="text" name="QT"><br>
+
+  Question Class: <input type="text" name="QC"><br>
+Question : <input type="text" name="QQ"><br>
+Answer1 : <input type="text" name="A1"><br>
+Answer2 : <input type="text" name="A2"><br>
+Answer3 : <input type="text" name="A3"><br>
+Answer4 : <input type="text" name="A4"><br>
+Answer5 : <input type="text" name="A5"><br>
+Answer6 : <input type="text" name="A6"><br>
+Answer7 : <input type="text" name="A7"><br>
+Answer8 : <input type="text" name="A8"><br>
+Answer9 : <input type="text" name="A9"><br>
 Number of Answers: <input type="text" name="NA" value="3"><br> 
-Number of following questions per answer: <input type="text" name="NfQ" value="3"><br> 
-Select one / all <input type = "radio" name="QType" value = "radio" checked>radio <input type="radio" name="QType" value="checkbox">checkbox<br>
-Answer name = <input type="text" name="Ans_name"><br>
+
 <input type="submit" value="Creat code">
 </form>
 </body>
 
 
 <?php
+$qc=$_POST['QC'];
+$qq=$_POST['QQ'];
+$na=$_POST['NA'];
+echo "&lt;div class=\"y ".$qc."\"&gt;<br>&lt;h2&gt;".$qq."&lt;/h2&gt;<br>";
+for ($i=1;$i<=$na;$i++){
+  $ac=$qc."a".$i;
+  $an="A".$i;
+  $aa=$_POST[$an];
+  echo "&lt;label&gt;&lt;input class=\"".$ac."\" type=\"radio\" name=\"".$qc."\" value=\"".$ac."\"&gt;&lt;span class=\"".$ac."\"&gt;".$aa."&lt;/span&gt;&lt;/label&gt;<br>";
+};
+echo "&lt;/div&gt;<br>";
 
-for ($i=1;$i<=30;$i++){
-  echo "('q1a".$i."','  '),";
+
+echo "&lt;div class=\"y ".$qc; for($t=1;$t<=$na;$t++){echo " ".$qc."a1q".$t;}; echo"\"&gt;<br>&lt;h2&gt;".$qq."&lt;/h2&gt;<br>";
+for ($i=1;$i<=$na;$i++){
+  $ac=$qc."a".$i;
+  $an="A".$i;
+  $aa=$_POST[$an];
+  echo "&lt;label&gt;&lt;input class=\"".$qc."a1q".$i."a1\" type=\"radio\" name=\"".$qc."a1q".$i."\" value=\"".$qc."a1q".$i."a1\"&gt;&lt;span class=\"".$qc."a1q".$i."a1\"&gt;".$aa."&lt;/span&gt;&lt;/label&gt;<br>";
+};
+echo "&lt;/div&gt;<br>";
+
+echo "INSERT INTO question_db (question_id) VALUES ('".$qc."');";
   
-}
+  /*elseif ($j==3){
+    echo "&lt;label&gt;&lt;input class=\"".$aid."\" type=\"radio\" name=\"".$qid."\" value=\"".$aid."\"&gt;&lt;span class=\"".$aid."\"&gt; More than half the days &lt;/span&gt;&lt;/label&gt;<br>";
+  } elseif ($j==4){
+    echo "&lt;label&gt;&lt;input class=\"".$aid."\" type=\"radio\" name=\"".$qid."\" value=\"".$aid."\"&gt;&lt;span class=\"".$aid."\"&gt; Nearly every day &lt;/span&gt;&lt;/label&gt;<br>";
+  };*/
+
+ 
+
+
+/*
+
+  <div class="y q1">
+      <h2>In general, would you say your health is </h2>
+      <label><input class="y1a1a2a" type="radio" name="mw1" value="1"><span class="y1a1a2a">Excellent</span></label>
+      <label><input class="y1a1a2b" type="radio" name="mw1" value="2"><span class="y1a1a2b">Very good</span></label>
+      <label><input class="y1a1a2c" type="radio" name="mw1" value="3"><span class="y1a1a2c">Good</span></label>
+      <label><input class="y1a1a2d" type="radio" name="mw1" value="4"><span class="y1a1a2d">Fair</span></label>
+      <label><input class="y1a1a2e" type="radio" name="mw1" value="5"><span class="y1a1a2e">Poor</span></label>
+  </div>
+
 /*
 $Clvl= $_POST['Clvl'];
 $QC = $_POST['QC'];
@@ -604,4 +647,6 @@ for ($AN = 1; $AN <= $NA; $AN++)
 }
 echo "&lt;/div&gt;<br>";
 */
+
+
 ?>
