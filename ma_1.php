@@ -9,7 +9,7 @@
 
 
 </div>
-<form class="ma_form" method="POST" action="index_db.php">
+<form class="ma_form" method="POST" action="ma_2.php">
     <div class="y q1">
         <div class="aptime">
             <h1>APPOINTMENT TIME</h1>
