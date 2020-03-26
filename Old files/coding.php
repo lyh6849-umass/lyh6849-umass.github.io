@@ -6,45 +6,7 @@
 </head>
 <body>
   <form action="coding.php" method="post">
-  q2a1q3a1q1a1
-q2a1q3a1q2a1
-q2a1q3a1q3a1
-q2a1q3a1q4a1
-q2a1q3a1q5a1
-q2a1q3a1q8a1
-q2a1q3a1q9a1
-q2a1q2a1q5a1
-q2a1q2a1q6a1
-q2a1q2a1q7a1
-q2a1q2a1q8a1
-q2a1q2a1q9a1
-q2a1q2a1q10a1
-q2a1q2a1q11a1
-q2a1q2a1q12a1
-q2a1q2a1q13a1
-q2a1q2a1q14a1
-q2a1q2a1q21a1
-q2a1q2a1q15a1
-q2a1q2a1q16a1
-q2a1q2a1q17a1
-q2a1q2a1q18a1
-q2a1q2a1q19a1
-q2a1q2a1q20a1
-q2a1q1a1q1a1
-q2a1q1a1q2a1
-q2a1q1a1q3a1
-q2a1q1a1q4a1
-q2a1q1a1q5a1
-q2a1q1a1q6a1
-q2a1q1a1q7a1
-q2a1q1a1q7a1q1a1
-q2a1q1a1q7a1q1a1q1a1
-q2a1q1a1q8a1
-q2a1q1a1q9a1
-q2a1q1a1q9a1q1a1
-q2a1q1a1q10a1
-q2a1q1a1q10a1q1a1
-q2a1q1a1q10a1q1a2q1a1
+
 Question Class: <input type="text" name="QC"><br>
 Question : <input type="text" name="QQ"><br>
 Answer1 : <input type="text" value="Yes" name="A1"><br>

@@ -38,9 +38,9 @@ echo "<input class=\"q0a1\" type=\"text\" name=\"q0\" value=\"".$qq."\">";
  
   <div class="y q2a1q3a1q3">
 <h2>[Urinary discomfort] Is it getting worse, same or improving?</h2>
-<label><input class="q2a1q3a1q3a1" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a1"><span class="q2a1q3a1q3a1">Worsening</span></label>
-<label><input class="q2a1q3a1q3a2" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a2"><span class="q2a1q3a1q3a2">Same, stable</span></label>
-<label><input class="q2a1q3a1q3a3" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a3"><span class="q2a1q3a1q3a3">Improving</span></label>
+<label><input class="q2a1q3a1q3a1" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a1"><span class="q2a1q3a1q3a1">Getting worse</span></label>
+<label><input class="q2a1q3a1q3a2" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a2"><span class="q2a1q3a1q3a2">Same</span></label>
+<label><input class="q2a1q3a1q3a3" type="radio" name="q2a1q3a1q3" value="q2a1q3a1q3a3"><span class="q2a1q3a1q3a3">Getting better</span></label>
 </div>
  
 <div class="y q2a1q3a1q4">
