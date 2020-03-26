@@ -6,11 +6,49 @@
 </head>
 <body>
   <form action="coding.php" method="post">
-
-  Question Class: <input type="text" name="QC"><br>
+  q2a1q3a1q1a1
+q2a1q3a1q2a1
+q2a1q3a1q3a1
+q2a1q3a1q4a1
+q2a1q3a1q5a1
+q2a1q3a1q8a1
+q2a1q3a1q9a1
+q2a1q2a1q5a1
+q2a1q2a1q6a1
+q2a1q2a1q7a1
+q2a1q2a1q8a1
+q2a1q2a1q9a1
+q2a1q2a1q10a1
+q2a1q2a1q11a1
+q2a1q2a1q12a1
+q2a1q2a1q13a1
+q2a1q2a1q14a1
+q2a1q2a1q21a1
+q2a1q2a1q15a1
+q2a1q2a1q16a1
+q2a1q2a1q17a1
+q2a1q2a1q18a1
+q2a1q2a1q19a1
+q2a1q2a1q20a1
+q2a1q1a1q1a1
+q2a1q1a1q2a1
+q2a1q1a1q3a1
+q2a1q1a1q4a1
+q2a1q1a1q5a1
+q2a1q1a1q6a1
+q2a1q1a1q7a1
+q2a1q1a1q7a1q1a1
+q2a1q1a1q7a1q1a1q1a1
+q2a1q1a1q8a1
+q2a1q1a1q9a1
+q2a1q1a1q9a1q1a1
+q2a1q1a1q10a1
+q2a1q1a1q10a1q1a1
+q2a1q1a1q10a1q1a2q1a1
+Question Class: <input type="text" name="QC"><br>
 Question : <input type="text" name="QQ"><br>
-Answer1 : <input type="text" name="A1"><br>
-Answer2 : <input type="text" name="A2"><br>
+Answer1 : <input type="text" value="Yes" name="A1"><br>
+Answer2 : <input type="text" value="No" name="A2"><br>
 Answer3 : <input type="text" name="A3"><br>
 Answer4 : <input type="text" name="A4"><br>
 Answer5 : <input type="text" name="A5"><br>
@@ -18,7 +56,9 @@ Answer6 : <input type="text" name="A6"><br>
 Answer7 : <input type="text" name="A7"><br>
 Answer8 : <input type="text" name="A8"><br>
 Answer9 : <input type="text" name="A9"><br>
-Number of Answers: <input type="text" name="NA" value="3"><br> 
+Number of Answers: <input type="text" name="NA" value="2"><br> 
+
+ALTER TABLE <input type="text" name="coltbn"> ADD [COLUMN] column_name column_definition [FIRST|AFTER existing_column];
 
 <input type="submit" value="Creat code">
 </form>
@@ -44,7 +84,14 @@ for ($i=1;$i<=$na;$i++){
   $ac=$qc."a".$i;
   $an="A".$i;
   $aa=$_POST[$an];
+  if($i==1){
   echo "&lt;label&gt;&lt;input class=\"".$qc."a1q".$i."a1\" type=\"radio\" name=\"".$qc."a1q".$i."\" value=\"".$qc."a1q".$i."a1\"&gt;&lt;span class=\"".$qc."a1q".$i."a1\"&gt;".$aa."&lt;/span&gt;&lt;/label&gt;<br>";
+  } elseif ($i==2) {
+    echo "&lt;label&gt;&lt;input class=\"".$qc."a1q".$i."a1\" type=\"radio\" name=\"".$qc."a1q".$i."\" value=\"".$qc."a1q".$i."a1\"&gt;&lt;span class=\"".$qc."a1q".$i."a1\"&gt;".$aa."&lt;/span&gt;&lt;/label&gt;<br>";
+  } else {
+    echo "&lt;label&gt;&lt;input class=\"".$qc."a1q".$i."a1\" type=\"radio\" name=\"".$qc."a1q".$i."\" value=\"".$qc."a1q".$i."a1\"&gt;&lt;span class=\"".$qc."a1q".$i."a1\"&gt;".$aa."&lt;/span&gt;&lt;/label&gt;<br>";
+  }
+
 };
 echo "&lt;/div&gt;<br>";
 
@@ -57,6 +104,9 @@ echo "INSERT INTO question_db (question_id) VALUES ('".$qc."');";
   };*/
 
  
+
+
+
 
 
 /*

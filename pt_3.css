@@ -1,9 +1,15 @@
-form div.y {
+body {
+    margin:0;
+}
+
+div.y {
     height: 100vh;
-    display: none;
+    display: flex;
     justify-content: center;    
     align-items: center;
     flex-direction: column;
+    text-align: center;
+    color:#830000;
 }
 
 form div.y input {

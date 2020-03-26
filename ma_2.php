@@ -7,8 +7,9 @@
 </head>
 <body>
     <div>
-    <h1>Please instruct patient to start the self-evaluation questionnaire.</h1>
+    <h1>Visit diagnoses are saved. <br>Please instruct patient to start the self-evaluation questionnaire.</h1>
 </div>
+<div style ="display:none;">
 <?php
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y_h_i_s');
@@ -49,6 +50,7 @@ if (!$conn -> multi_query($sql)) {
 };
 
 ?>
+</div>
 </body>
 </html>
 
