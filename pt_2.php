@@ -6,7 +6,7 @@
 </head>
 <body>
 <p id="c1"> Fitchburg Adult Medicine</p>
-<img class="c3" src="../lyh6849-umass.github.io/ss.jpeg">
+<img class="c3" src="../ss.jpeg">
 <form action="pt_3.php" method ="post">
  
 <div class="y c2 q0">

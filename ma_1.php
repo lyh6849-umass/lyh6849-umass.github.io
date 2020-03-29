@@ -10,7 +10,7 @@
 
   <body>
     <p id="c1"> Fitchburg Adult Medicine</p>
-    <img class="c3" src="../lyh6849-umass.github.io/ss.jpeg">
+    <img class="c3" src="../ss.jpeg">
   <form class="ma_form" method="POST" action="ma_2.php">
     <div class="c2 q1">
       <div class="b1">
