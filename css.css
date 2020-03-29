@@ -1,0 +1,429 @@
+body {
+    color:#000000;
+    font-family: sans-serif;
+    margin:0;
+}
+
+
+
+div.c2 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+select {
+    width: 40vw;
+}
+
+input {
+    display: none;
+}
+
+div.c2 label span {
+    background-color: #4c82751a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: helvetica;
+    width:40vw;;
+    height:5vh;
+    cursor: pointer;
+    margin-top: 0.3vh;
+    color: #000000;
+    border-radius:2px;
+    font-size: 17px;
+}
+
+div.c2 label input:hover ~ span {
+    background-color: #000000;
+    font-weight:bold;
+    color:white;
+    cursor: pointer;
+}
+
+div.c2 label input:checked ~ span {
+    background-color: #23909e;
+    font-weight:bold;
+    color:white;
+}
+
+div.c2 span.q1a1 {
+    margin-top: 2vh;
+}
+
+#c1 {
+    position: fixed;
+    font-family:fantasy;
+    font-size: 400px;
+    color: #0000001a;
+    margin-left: 2vw;
+}
+
+.next {
+    background-color:#B08666;
+    height:5vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+    width: 20vw;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.next:hover {
+    color:#f5e25d;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.c3{
+    height:100vh;
+    z-index: -1;
+    position:fixed;
+    
+}
+body {
+    color:#33383E;
+    font-family: sans-serif;
+    margin:0;
+}
+
+div.c2 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+select {
+    width: 40vw;
+}
+
+input {
+    display: none;
+}
+
+div.c2 label span {
+    background-color: #4c82751a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: helvetica;
+    width:40vw;;
+    height:5vh;
+    cursor: pointer;
+    margin-top: 0.3vh;
+    color: #000000;
+    border-radius:2px;
+    font-size: 17px;
+}
+
+div.c2 label input:hover ~ span {
+    background-color: #4C8275;
+    font-weight:bold;
+    color:white;
+    cursor: pointer;
+}
+
+div.c2 label input:checked ~ span {
+    background-color: #4C8275;
+    font-weight:bold;
+    color:white;
+}
+
+div.c2 span.q1a1 {
+    margin-top: 2vh;
+}
+
+#c1 {
+    position: fixed;
+    font-family:fantasy;
+    font-size: 150%;
+    color: #0000001a;
+    margin-left: 2vw;
+}
+
+.next {
+    background-color:#44575c;
+    height:5vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+    width: 20vw;
+    border-radius:10px;
+    font-weight:bold;
+    color:#f1f2f4;
+}
+
+.next:hover {
+    color:#f5e25d;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.c3{
+    height:100vh;
+    z-index: -1;
+    position:fixed;
+    
+}
+
+div.b1 {
+    background-color: #fefefe40;
+    height: 70vh;
+    width: 70vw;
+    display:flex;
+    justify-content:center;
+    text-align:center;
+    align-items:center;
+    flex-direction:column;
+    padding:5vh;
+}
+div.b1 div {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+}
+body {
+    color:#33383E;
+    font-family: sans-serif;
+    margin:0;
+}
+
+div.c2 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+select {
+    width: 40vw;
+}
+
+input {
+    display: none;
+}
+
+div.c2 label span {
+    background-color: #4c82751a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: helvetica;
+    width:40vw;;
+    height:5vh;
+    cursor: pointer;
+    margin-top: 0.3vh;
+    color: #401212;
+    border-radius:2px;
+    font-size: 17px;
+}
+
+div.c2 label input:hover ~ span {
+    background-color: #4C8275;
+    font-weight:bold;
+    color:white;
+    cursor: pointer;
+}
+
+div.c2 label input:checked ~ span {
+    background-color: #4C8275;
+    font-weight:bold;
+    color:white;
+}
+
+div.c2 span.q1a1 {
+    margin-top: 2vh;
+}
+
+#c1 {
+    position: fixed;
+    font-family:fantasy;
+    font-size: 150%;
+    color: #0000001a;
+    margin-left: 2vw;
+}
+
+.next {
+    background-color:#B08666;
+    height:5vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+    width: 20vw;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.next:hover {
+    color:white;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.c3{
+    height:100vh;
+    z-index: -1;
+    position:fixed;
+    
+}
+body {
+    color:#33383E;
+    font-family: sans-serif;
+    margin:0;
+}
+
+div.c2 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+select {
+    width: 40vw;
+}
+
+input {
+    display: none;
+}
+
+div.c2 label span {
+    background-color: #4c82751a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: helvetica;
+    width:40vw;
+    height:5vh;
+    cursor: pointer;
+    margin-top: 0.3vh;
+    color: #401212;
+    border-radius:2px;
+    font-size: 17px;
+}
+
+div.c2 label input:hover ~ span {
+    background-color: #598d96;
+    font-weight:bold;
+    color:white;
+    cursor: pointer;
+}
+
+div.c2 label input:checked ~ span {
+    background-color: #598d96;
+    font-weight:bold;
+    color:white;
+}
+
+div.c2 span.q1a1 {
+    margin-top: 2vh;
+}
+
+#c1 {
+    position: fixed;
+    font-family:fantasy;
+    font-size: 200%;
+    color: #0000001a;
+    margin-left: 2vw;
+}
+
+.next {
+    background-color:#44575c;
+    height:5vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align:center;
+    width: 20vw;
+    border-radius:10px;
+    font-weight:bold;
+    color:#f1f2f4;
+}
+
+.next:hover {
+    color:white;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.c3{
+    height:100vh;
+    z-index: -1;
+    position:fixed;
+    
+}
+
+div.b1 {
+    background-color: #fefefe40;
+    height: 70vh;
+    width: 70vw;
+    display:flex;
+    justify-content:center;
+    text-align:center;
+    align-items:center;
+    flex-direction:column;
+    padding:5vh;
+}
+div.b1 div {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+}
+
+form div.c2.q3 div.b1 div.c4 {
+    display:inline;
+}
+
+
+form div.c2 div.b1 div.c4 label span {
+    width:15vw;
+    display:inline-block;
+    box-sizing:border-box;
+    padding:1.5vh;
+    color:#000000;
+    font-weight: 200;
+}
+
+form div.c2 div.b1 div.c4 label input:hover~span {
+    color:white;
+    font-weight:bold;
+} 
+
+
+form div.y {
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+}
+
+div.c5 {
+    padding: 2vh;
+    
+
+}

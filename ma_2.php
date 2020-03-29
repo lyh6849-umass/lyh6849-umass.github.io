@@ -2,17 +2,16 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href = "ma_2.css" type = "text/css" rel="stylesheet">
-
+<link href = "css.css" type = "text/css" rel="stylesheet">
 </head>
 <body>
-    <div>
-    <h1>Visit diagnoses are saved. <br>Please instruct patient to start the self-evaluation questionnaire.</h1>
+<p id="c1"> Fitchburg Adult Medicine</p>
+    <div class="c2">
+    <h1>Visit diagnoses are saved. <br>Please instruct patient to start the questionnaire.</h1>
 </div>
-<div style ="display:none;">
+<div style ="display: none;">
 <?php
 date_default_timezone_set("America/New_York");
-$time= date('m_d_y_h_i_s');
 
 $user = 'b77225dc29feba';
 $password = '52bed046';
@@ -26,7 +25,7 @@ if ($conn ->connect_errno) {
   } else {echo "connected";};
   $time= date('m_d_y');
   $pt = $time."_".$_POST['q1'];
- 
+ echo $pt;
 
 $sql= "SELECT question_id FROM question_db;";
 $result = $conn->query($sql);

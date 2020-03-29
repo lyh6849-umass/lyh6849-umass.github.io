@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href = "index.css" type = "text/css" rel="stylesheet">
+<link href = "css.css" type = "text/css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
  
 <body>
-
-
+<p id="c1"> Fitchburg Adult Medicine</p>
+<img class="c3" src="../lyh6849-umass.github.io/ss.jpeg">
 <form class="md_form" action="md_2.php" method="post">
-    <div class="y q4">
-            <div class="aptime">
-                <h1>APPOINTMENT TIME</h1>
-                <label><input class="q4a1" type="radio" name="q4" value="q1a1"><span class = "q4a1">08:30</span></label>
-                <label><input class="q4a2" type="radio" name="q4" value="q1a2"><span class = "q4a2">08:45</span></label>
-                <label><input class="q4a3" type="radio" name="q4" value="q1a3"><span class = "q4a3">09:00</span></label>
-                <label><input class="q4a4" type="radio" name="q4" value="q1a4"><span class = "q4a4">09:15</span></label><br>
-                <label><input class="q4a5" type="radio" name="q4" value="q1a5"><span class = "q4a5">09:30</span></label>
-                <label><input class="q4a6" type="radio" name="q4" value="q1a6"><span class = "q4a6">09:45</span></label>
-                <label><input class="q4a7" type="radio" name="q4" value="q1a7"><span class = "q4a7">10:00</span></label>
-                <label><input class="q4a8" type="radio" name="q4" value="q1a8"><span class = "q4a8">10:15</span></label><br>
-                <label><input class="q4a9" type="radio" name="q4" value="q1a9"><span class = "q4a9">10:30</span></label>
-                <label><input class="q4a10" type="radio" name="q4" value="q1a10"><span class = "q4a10">10:45</span></label>
-                <label><input class="q4a11" type="radio" name="q4" value="q1a11"><span class = "q4a11">11:00</span></label>
-                <label><input class="q4a12" type="radio" name="q4" value="q1a12"><span class = "q4a12">11:15</span></label><br>
-                <label><input class="q4a13" type="radio" name="q4" value="q1a13"><span class = "q4a13">11:30</span></label>
-                <label><input class="q4a14" type="radio" name="q4" value="q1a14"><span class = "q4a14">11:45</span></label>
-                <label><input class="q4a15" type="radio" name="q4" value="q1a15"><span class = "q4a15">12:00</span></label>
-                <label><input class="q4a16" type="radio" name="q4" value="q1a16"><span class = "q4a16">12:15</span></label><br>
-                <label><input class="q4a17" type="radio" name="q4" value="q1a17"><span class = "q4a17">12:30</span></label>
-                <label><input class="q4a18" type="radio" name="q4" value="q1a18"><span class = "q4a18">02:00</span></label>
-                <label><input class="q4a19" type="radio" name="q4" value="q1a19"><span class = "q4a19">02:15</span></label>
-                <label><input class="q4a20" type="radio" name="q4" value="q1a20"><span class = "q4a20">02:30</span></label><br>
-                <label><input class="q4a21" type="radio" name="q4" value="q1a21"><span class = "q4a21">02:45</span></label>
-                <label><input class="q4a22" type="radio" name="q4" value="q1a22"><span class = "q4a22">03:00</span></label>
-                <label><input class="q4a23" type="radio" name="q4" value="q1a23"><span class = "q4a23">03:15</span></label>
-                <label><input class="q4a24" type="radio" name="q4" value="q1a24"><span class = "q4a24">03:30</span></label><br>
-                <label><input class="q4a25" type="radio" name="q4" value="q1a25"><span class = "q4a25">03:45</span></label>
-                <label><input class="q4a26" type="radio" name="q4" value="q1a26"><span class = "q4a26">04:00</span></label>
-                <label><input class="q4a27" type="radio" name="q4" value="q1a27"><span class = "q4a27">04:15</span></label>
-            </div>
-        </div>
+<div class="c2 q1">
+      <div class="b1">
+        <div>
+             <h1>APPOINTMENT TIME</h1>
+                <select name="q4" class="">
+                <option   value="q1a1">8:30</option  >
+                  <option   value="q1a2">8:45</option  >
+                  <option   value="q1a3">9:00</option  >
+                  <option   value="q1a4">9:15</option  >
+                  <option   value="q1a5">9:30</option  >
+                  <option   value="q1a6">9:45</option  >
+                  <option   value="q1a7">10:00</option  >
+                  <option   value="q1a8">10:15</option  >
+                  <option   value="q1a9">10:30</option  >
+                  <option   value="q1a10">10:45</option  >
+                  <option   value="q1a11">11:00</option  >
+                  <option   value="q1a12">11:15</option  >
+                  <option   value="q1a13">11:30</option  >
+                  <option   value="q1a14">11:45</option  >
+                  <option   value="q1a15">12:00</option  >
+                  <option   value="q1a16">12:15</option  >
+                  <option   value="q1a17">12:30</option  >
+                  <option   value="q1a18">2:00</option  >
+                  <option   value="q1a19">2:15</option  >
+                  <option   value="q1a20">2:30</option  >
+                  <option   value="q1a21">2:45</option  >
+                  <option   value="q1a22">3:00</option  >
+                  <option   value="q1a23">3:15</option  >
+                  <option   value="q1a24">3:30</option  >
+                  <option   value="q1a25">3:45</option  >
+                  <option   value="q1a26">4:00</option  >
+                  <option   value="q1a27">4:15</option  >
+
+
+                </select><br>
+                <span class="q1a1 next">NEXT</span>
+           
+                </div></div></div>
  
-    <div class="y">
+    <div class="c2">
         <label><input type="submit"><span>Review answers</span></label>
     </div>
 </form>
@@ -54,8 +60,6 @@
     crossorigin="anonymous"></script>
     <script src='index.js'></script> 
 
-<img src="/epic.png">
-<img src="/epic2.jpg">
 
     </body>
 </html>
@@ -74,7 +78,7 @@ $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
-  } else {echo "connected";};
+  } else {echo "";};
 
 
     $sql= "SELECT question_id FROM question_db;";

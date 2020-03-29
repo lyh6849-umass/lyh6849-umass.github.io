@@ -2,10 +2,11 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href = "note.css" type = "text/css" rel="stylesheet">
+<link href = "css.css" type = "text/css" rel="stylesheet">
 
 </head>
 <body>
+  <div class="c5">
 <?php
 $user = 'b77225dc29feba';
 $password = '52bed046';
@@ -278,3 +279,6 @@ if ($conn ->connect_errno) {
   
  
 ?>
+</div>
+</body>
+</html>

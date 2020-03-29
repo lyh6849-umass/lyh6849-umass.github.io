@@ -1,0 +1,48 @@
+body {
+    margin:0;
+}
+
+div.y {
+    height: 100vh;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color:#830000;
+}
+
+form div.y input {
+    display: none;
+}
+form div.y h2 {
+    font-family: sans-serif;
+    color: #411208;
+    text-align: center;
+}
+form div.y label span {
+    background-color: #eef1f3;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: helvetica;
+    width:380px;;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 0.3vh;
+    color: #000000;
+    border-radius:2px;
+    border: 1px solid #cdd1d5;
+    font-size: 17px;
+}
+
+form div.y label input:hover ~ span {
+    background-color: #5c4848;
+    color: white;
+}
+
+form div.y label input:checked ~ span {
+    background-color: #5c4848;
+    color: white;
+}

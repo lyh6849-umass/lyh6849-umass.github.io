@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href = "index.css" type = "text/css" rel="stylesheet">
+    <link href = "css.css" type = "text/css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
  
 <body>
-
-
+<img class="c3" src="../lyh6849-umass.github.io/ss.jpeg">
+<p id="c1"> Fitchburg Adult Medicine</p>
 <form class="pt_form" action="pt_2.php" method="post">
-<div class="y q3">
-        <div class="aptime"> 
+<div class="c2 q3">
+        <div class="b1"> 
             <h1>APPOINTMENT TIME</h1>
+            <div class="c4">
             <label><input class="q3a1" type="radio" name="q3" value="q1a1"><span class = "q3a1">08:30</span></label>
             <label><input class="q3a2" type="radio" name="q3" value="q1a2"><span class = "q3a2">08:45</span></label>
             <label><input class="q3a3" type="radio" name="q3" value="q1a3"><span class = "q3a3">09:00</span></label>
@@ -39,7 +40,8 @@
             <label><input class="q3a25" type="radio" name="q3" value="q1a25"><span class = "q3a25">03:45</span></label>
             <label><input class="q3a26" type="radio" name="q3" value="q1a26"><span class = "q3a26">04:00</span></label>
             <label><input class="q3a27" type="radio" name="q3" value="q1a27"><span class = "q3a27">04:15</span></label>
-        </div>
+            <label><input class="q3a27" type="radio" name="q3" value="q1a27"><span class = "q3a27">-</span></label>
+            </div></div>
     </div>
 
 
@@ -51,9 +53,10 @@
                             $(".q2a1q1").css("display" ,"flex"); 
                             $("html, body").animate({scrollTop: $(".q2").offset().top + $(".q2").height()}, 250);
                           });});</script>
-    <div class="y">
+    <div class="c2">
+        <div class="b1">
         <label><input type="submit"><span>Start Questionnaire</span></label>
-        </div>
+        </div></div>
         
 
     

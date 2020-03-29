@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href = "ma_db.css" type = "text/css" rel="stylesheet">
+<link href = "css.css" type = "text/css" rel="stylesheet">
 
 </head>
 <body>
