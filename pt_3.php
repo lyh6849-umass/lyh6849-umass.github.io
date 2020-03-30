@@ -40,17 +40,15 @@ $pt=$time."_".$_POST['q0'];
       if(isset($_POST[$id])){
       $ans = $_POST[$id];
         $sq = "SELECT * FROM answer_db WHERE answer_id='$ans';";
-        echo $ans;
+
         $result2 = $conn->query($sq);
         if($result2 ->num_rows>0){
           while($row2 = $result2->fetch_assoc()){
             $a_y_n = $row2['y_n'];
             $a_value = $row2['value'];
-            echo $a_y_n;
-            echo $a_value;
             $sql = "INSERT INTO center_db (patient_id, question_id, question_value, question_cc, answer_id, answer_y_n, answer_value) VALUES ('$pt', '$id', '$q_v', '$q_cc', '$ans','$a_y_n','$a_value');";
             if ($conn->query($sql) === TRUE) {
-              echo "success!";
+              echo "";
               } else {
               echo "Error: " . $sql . "<br>" . $conn->error."<BR><BR><BR>";
           };
