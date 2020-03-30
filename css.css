@@ -14,6 +14,16 @@ div.c2 {
     align-items:center;
     text-align: center;
 }
+.bg {
+    height: 40vh;
+    position: fixed;
+    right:-10vw;
+    bottom:0;
+    z-index:-1;
+    opacity:50%;
+}
+
+
 
 select {
     width: 40vw;
@@ -33,27 +43,29 @@ div.c2 label span {
     width:40vw;;
     height:5vh;
     cursor: pointer;
-    margin-top: 0.3vh;
     color: #000000;
     border-radius:2px;
-    font-size: 17px;
+    font-size: 3vh;
+    vertical-align:middle;
 }
 
 div.c2 label input:hover ~ span {
-    background-color: #000000;
+    background-color: #425064;
     font-weight:bold;
     color:white;
     cursor: pointer;
 }
 
 div.c2 label input:checked ~ span {
-    background-color: #23909e;
+    background-color: #425064;
     font-weight:bold;
     color:white;
 }
 
 div.c2 h1 {
-    font-size:300%;
+    font-size:6vh;
+    font-weight:bold;
+    
 }
 
 div.c2 h2 {
@@ -71,23 +83,6 @@ div.c2 span.q1a1 {
     margin-left: 2vw;
 }
 
-.next {
-    background-color:#B08666;
-    height:5vh;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    text-align:center;
-    width: 20vw;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-.next:hover {
-    color:#f5e25d;
-    font-weight:bold;
-    cursor: pointer;
-}
 
 .c3{
     height:100vh;
@@ -131,18 +126,18 @@ div.c2 label span {
     margin-top: 0.3vh;
     color: #000000;
     border-radius:2px;
-    font-size: 17px;
+    font-size: 3vh;
 }
 
 div.c2 label input:hover ~ span {
-    background-color: #4C8275;
+    background-color: #425064;
     font-weight:bold;
     color:white;
     cursor: pointer;
 }
 
 div.c2 label input:checked ~ span {
-    background-color: #4C8275;
+    background-color: #425064;
     font-weight:bold;
     color:white;
 }
@@ -159,24 +154,6 @@ div.c2 span.q1a1 {
     margin-left: 2vw;
 }
 
-.next {
-    background-color:#44575c;
-    height:5vh;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    text-align:center;
-    width: 20vw;
-    border-radius:10px;
-    font-weight:bold;
-    color:#f1f2f4;
-}
-
-.next:hover {
-    color:#f5e25d;
-    font-weight:bold;
-    cursor: pointer;
-}
 
 .c3{
     height:100vh;
@@ -187,7 +164,7 @@ div.c2 span.q1a1 {
 }
 
 div.b1 {
-    background-color: #fefefe40;
+    background-color: #ff000040;
     height: 70vh;
     width: 70vw;
     display:flex;
@@ -240,18 +217,18 @@ div.c2 label span {
     margin-top: 0.3vh;
     color: #401212;
     border-radius:2px;
-    font-size: 17px;
+    font-size: 3vh;
 }
 
 div.c2 label input:hover ~ span {
-    background-color: #4C8275;
+    background-color: #425064;
     font-weight:bold;
     color:white;
     cursor: pointer;
 }
 
 div.c2 label input:checked ~ span {
-    background-color: #4C8275;
+    background-color: #425064;
     font-weight:bold;
     color:white;
 }
@@ -268,23 +245,6 @@ div.c2 span.q1a1 {
     margin-left: 2vw;
 }
 
-.next {
-    background-color:#B08666;
-    height:5vh;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    text-align:center;
-    width: 20vw;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-.next:hover {
-    color:white;
-    font-weight:bold;
-    cursor: pointer;
-}
 
 .c3{
     height:100vh;
@@ -316,7 +276,7 @@ input {
 }
 
 div.c2 label span {
-    background-color: #2d4c45a3;
+    background-color: #7b7e83;
     position: relative;
     display: flex;
     align-items: center;
@@ -328,18 +288,20 @@ div.c2 label span {
     margin-top: 0.3vh;
     color: #ffffff;
     border-radius:2px;
-    font-size: 150%;
+    font-size: 3vh;
+    box-sizing:border-box;
+    padding:0.2vh
 }
 
 div.c2 label input:hover ~ span {
-    background-color: #598d96;
+    background-color: #425064;
     font-weight:bold;
     color:white;
     cursor: pointer;
 }
 
 div.c2 label input:checked ~ span {
-    background-color: #598d96;
+    background-color: #425064;
     font-weight:bold;
     color:white;
 }
@@ -357,7 +319,7 @@ div.c2 span.q1a1 {
 }
 
 .next {
-    background-color:#44575c;
+    background-color:#3c4393;
     height:5vh;
     display:flex;
     justify-content: center;
@@ -370,6 +332,7 @@ div.c2 span.q1a1 {
 }
 
 .next:hover {
+    background-color:#3a7add;
     color:white;
     font-weight:bold;
     cursor: pointer;
@@ -383,7 +346,7 @@ div.c2 span.q1a1 {
 }
 
 div.b1 {
-    background-color: #fefefe40;
+    background-color: #ffffffbf;
     height: 70vh;
     width: 70vw;
     display:flex;
@@ -407,12 +370,13 @@ form div.c2.q3 div.b1 div.c4 {
 
 
 form div.c2 div.b1 div.c4 label span {
-    width:15vw;
+    width:13vw;
     display:inline-block;
     box-sizing:border-box;
-    padding: 1.1vh;
+    /* padding: 1.1vh; */
     color: #ffffff;
     font-weight: 200;
+    vertical-align: middle;
 }
 
 form div.c2 div.b1 div.c4 label input:hover~span {
@@ -443,3 +407,4 @@ div.b1 select {
     padding-top:0.5vh;
     padding-bottom:0.5vh;
 }
+

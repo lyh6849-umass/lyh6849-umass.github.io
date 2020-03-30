@@ -2,20 +2,28 @@
 <html>
 <head>
     <link href = "css.css" type = "text/css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 </head>
  
 <body>
-<img class="c3" src="../ss.jpeg">
+
 <p id="c1"> Fitchburg Adult Medicine</p>
+
+<img class="bg" src="../img/umass3.png">
+
 <form class="pt_form" action="pt_2.php" method="post">
 <div class="c2 q3">
         <div class="b1"> 
             <h1>APPOINTMENT TIME</h1>
             <div class="c4">
-            <label><input class="q3a1" type="radio" name="q3" value="q1a1"><span class = "q3a1">08:30</span></label>
-            <label><input class="q3a2" type="radio" name="q3" value="q1a2"><span class = "q3a2">08:45</span></label>
-            <label><input class="q3a3" type="radio" name="q3" value="q1a3"><span class = "q3a3">09:00</span></label>
+            <label><input class="q3a1" type="radio" name="q3" value="q1a1"><span class = "q3a1 ">08:30</span></label>
+            <label><input class="q3a2" type="radio" name="q3" value="q1a2"><span class = "q3a2 ">08:45</span></label>
+            <label><input class="q3a3" type="radio" name="q3" value="q1a3"><span class = "q3a3 ">09:00</span></label>
             <label><input class="q3a4" type="radio" name="q3" value="q1a4"><span class = "q3a4">09:15</span></label><br>
             <label><input class="q3a5" type="radio" name="q3" value="q1a5"><span class = "q3a5">09:30</span></label>
             <label><input class="q3a6" type="radio" name="q3" value="q1a6"><span class = "q3a6">09:45</span></label>
@@ -62,11 +70,9 @@
     
 </form>
 
-<script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-    <script src='index.js'></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     </body>
 </html>
@@ -85,7 +91,7 @@ $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
-  } else {echo "connected";};
+  } else {echo "";};
 
 
     $sql= "SELECT question_id FROM question_db;";

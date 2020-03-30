@@ -6,7 +6,7 @@
 </head>
 <body>
 <p id="c1"> Fitchburg Adult Medicine</p>
-<img class="c3" src="../ss.jpeg">
+<img class="bg" src="../img/umass3.png">
 <form action="pt_3.php" method ="post">
  
 <div class="y c2 q0">
@@ -336,7 +336,7 @@ echo "<input class=\"q0a1\" type=\"text\" name=\"q0\" value=\"".$qq."\">";
  
 <div class="y c2 q1000">
 <div class="b1"><h2>You've answered all questions. <br>Please submit, answers will be delivered to Dr Lee.</h2>
-<label><input class="q1000a1" type="submit" name="q1000" value="q1000a1"><span class="q1000a1">Send answers to Dr. Lee for review</span></label>
+<label><input class="q1000a1" type="submit" name="q1000" value="q1000a1"><span class="q1000a1">SUBMIT</span></label>
 <script>$(document).ready(()=> { 
         $(".q1000").css("display" ,"flex"); 
 });</script>

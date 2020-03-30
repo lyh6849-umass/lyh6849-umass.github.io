@@ -7,7 +7,7 @@
 <body>
 <p id="c1"> Fitchburg Adult Medicine</p>
     <div class="c2">
-    <h1>Visit diagnoses are saved. <br>Please instruct patient to start the questionnaire.</h1>
+    <h2>Visit diagnoses are saved. <br>Please instruct patient to start the questionnaire.</h2>
 </div>
 <div style ="display: none;">
 <?php

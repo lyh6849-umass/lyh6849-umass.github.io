@@ -1,18 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
 
-    <!-- Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <link href = "css.css" type = "text/css" rel="stylesheet">
   </head>
 
   <body>
+  <img class="bg" src="../img/umass3.png">
     <p id="c1"> Fitchburg Adult Medicine</p>
-    <img class="c3" src="../ss.jpeg">
   <form class="ma_form" method="POST" action="ma_2.php">
-    <div class="c2 q1">
+    <div class="c2 q1  ">
       <div class="b1">
         <div>
              <h1>APPOINTMENT TIME</h1>
@@ -59,7 +61,7 @@
       <div class="b1">
         <h1> Visit Diagnoses </h1>
         <div>
-            <label><input class="q2a1q1a1" type="checkbox" name="q2a1q1" value="q2a1q1a1"><span class="q2a1q1a1"> URI </span></label>
+            <label ><input class="q2a1q1a1" type="checkbox" name="q2a1q1" value="q2a1q1a1"><span class="q2a1q1a1"> URI </span></label>
             <label><input class="q2a1q2a1" type="checkbox" name="q2a1q2" value="q2a1q2a1"><span class="q2a1q2a1"> Dizziness </span></label>
             <label><input class="q2a1q3a1" type="checkbox" name="q2a1q3" value="q2a1q3a1"><span class="q2a1q3a1"> Urinary symptom </span></label><br>
 </div>
@@ -75,10 +77,9 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
        </body>
 </html>
