@@ -15,24 +15,31 @@ background-color:#0000009c;
 .col {
     background-color:#ffffffd9;
 }
-.bg {
-    height: 40vh;
-    position: fixed;
-    right:-10vw;
-    bottom:0;
-    z-index:-1;
-    opacity:50%;
-}
+    .bg {
+        height: 40vh;
+        position: fixed;
+        right:-10vw;
+        bottom:0;
+        z-index:-1;
+        opacity:50%;
+    }
 
-#c1{
-    position:fixed;
-    font-size: 5vh;
-    color:#c0c5ff57;
-    top: 1vh;
-    left:2vw;
-    font-family:sans-serif;
-    font-weight: 700;
-    margin:0;
-    padding:0;
+    .speech {
+        border: 1px solid #DDD;
+        width:300px;
+        padding:0;
+        margin:0
+      }
 
-}
+      .speech input {
+        border:0;
+        width:240px;
+        display:inline-block;
+        height:30px;
+        font-size: 14px;
+      }
+
+      .speech img {
+        float:right;
+        width:40px
+      }

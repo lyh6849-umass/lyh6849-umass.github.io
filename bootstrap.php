@@ -9,6 +9,41 @@
   </head>
 
   <body>
+  <form id="labnol" method="get" action="">
+  <div class="speech">
+    <input type="text" name="q" id="transcript" placeholder="Speak" />
+    <img onclick="startDictation()" src="//i.imgur.com/cHidSVu.gif" />
+  </div>
+</form>
+
+<script>
+  function startDictation() {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+      recognition.start();
+      recognition.onresult = function(e) {
+        document.getElementById('transcript').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+      };
+      recognition.onerror = function(e) {
+        recognition.stop();
+      }
+    }
+  }
+</script>
+
+  <form id="labnol" method="get" action="http://www.labnol.org">
+      <div class="speech">
+        <input type="text" name="s" id="transcript" placeholder="Say Something"/>
+        <img onclick="startDictation()" src="https://i.imgur.com/cHidSVu.gif" />
+      </div>
+    </form>
+
+    
     <img class="bg" src="../img/umass3.png">
     <p id="c1"> FITCHBURG ADULT MEDICINE</p>
 
@@ -138,3 +173,10 @@ if ($conn ->connect_errno) {
         };
         };
   ?>
+
+  
+<script>
+
+
+
+</script>

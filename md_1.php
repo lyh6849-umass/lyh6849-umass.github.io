@@ -1,75 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
 <link href = "css.css" type = "text/css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
- 
 <body>
-<p id="c1"> Fitchburg Adult Medicine</p>
-<img class="c3" src="../ss.jpeg">
-<form class="md_form" action="md_2.php" method="post">
-<div class="c2 q1">
-      <div class="b1">
-        <div>
-             <h1>APPOINTMENT TIME</h1>
-                <select name="q4" class="">
-                <option   value="q1a1">8:30</option  >
-                  <option   value="q1a2">8:45</option  >
-                  <option   value="q1a3">9:00</option  >
-                  <option   value="q1a4">9:15</option  >
-                  <option   value="q1a5">9:30</option  >
-                  <option   value="q1a6">9:45</option  >
-                  <option   value="q1a7">10:00</option  >
-                  <option   value="q1a8">10:15</option  >
-                  <option   value="q1a9">10:30</option  >
-                  <option   value="q1a10">10:45</option  >
-                  <option   value="q1a11">11:00</option  >
-                  <option   value="q1a12">11:15</option  >
-                  <option   value="q1a13">11:30</option  >
-                  <option   value="q1a14">11:45</option  >
-                  <option   value="q1a15">12:00</option  >
-                  <option   value="q1a16">12:15</option  >
-                  <option   value="q1a17">12:30</option  >
-                  <option   value="q1a18">2:00</option  >
-                  <option   value="q1a19">2:15</option  >
-                  <option   value="q1a20">2:30</option  >
-                  <option   value="q1a21">2:45</option  >
-                  <option   value="q1a22">3:00</option  >
-                  <option   value="q1a23">3:15</option  >
-                  <option   value="q1a24">3:30</option  >
-                  <option   value="q1a25">3:45</option  >
-                  <option   value="q1a26">4:00</option  >
-                  <option   value="q1a27">4:15</option  >
 
-
-                </select><br>
-                <span class="q1a1 next">NEXT</span>
-           
-                </div></div></div>
- 
-    <div class="c2">
-        <label><input type="submit"><span>Review answers</span></label>
+<p class="c1"> Fitchburg Adult Medicine</p>
+<img class="bg" src="../img/umass3.png">
+<form class="pt_form" action="md_2.php" method="post">
+    <div class="q1 c2" style="display:flex;">
+        <div class="b1ap"> 
+        <h1>APPOINTMENT TIME</h1>
+            <div style ="display:inline; text-align:center;">
+            <label><input class="q1a1" style="display:none;" type="radio" name="q1" value="8:30"><span class = " q1a1">08:30</span></label>
+            <label><input class="q1a2" style="display:none;" type="radio" name="q1" value="8:45"><span class = " q1a2 ">08:45</span></label>
+            <label><input class="q1a3" style="display:none;" type="radio" name="q1" value="9:00"><span class = " q1a3 ">09:00</span></label>
+            <label><input class="q1a4" style="display:none;" type="radio" name="q1" value="9:15"><span class = " q1a4">09:15</span></label>
+            <label><input class="q1a5" style="display:none;" type="radio" name="q1" value="9:30"><span class = " q1a5">09:30</span></label>
+            <label><input class="q1a6" style="display:none;" type="radio" name="q1" value="9:45"><span class = " q1a6">09:45</span></label>
+            <label><input class="q1a7" style="display:none;" type="radio" name="q1" value="10:00"><span class = " q1a7">10:00</span></label>
+            <label><input class="q1a8" style="display:none;" type="radio" name="q1" value="10:15"><span class = " q1a8">10:15</span></label>
+            <label><input class="q1a9" style="display:none;" type="radio" name="q1" value="10:30"><span class = " q1a9">10:30</span></label>
+            <label><input class="q1a10" style="display:none;" type="radio" name="q1" value="10:45"><span class = " q1a10">10:45</span></label>
+            <label><input class="q1a11" style="display:none;" type="radio" name="q1" value="11:00"><span class = " q1a11">11:00</span></label>
+            <label><input class="q1a12" style="display:none;" type="radio" name="q1" value="11:15"><span class = " q1a12">11:15</span></label>
+            <label><input class="q1a13" style="display:none;" type="radio" name="q1" value="11:30"><span class = " q1a13">11:30</span></label>
+            <label><input class="q1a14" style="display:none;" type="radio" name="q1" value="11:45"><span class = " q1a14">11:45</span></label>
+            <label><input class="q1a15" style="display:none;" type="radio" name="q1" value="12:00"><span class = " q1a15">12:00</span></label>
+            <label><input class="q1a16" style="display:none;" type="radio" name="q1" value="12:15"><span class = " q1a16">12:15</span></label>
+            <label><input class="q1a17" style="display:none;" type="radio" name="q1" value="12:30"><span class = " q1a17">12:30</span></label>
+            <label><input class="q1a18" style="display:none;" type="radio" name="q1" value="2:00"><span class = " q1a18">02:00</span></label>
+            <label><input class="q1a19" style="display:none;" type="radio" name="q1" value="2:15"><span class = " q1a19">02:15</span></label>
+            <label><input class="q1a20" style="display:none;" type="radio" name="q1" value="2:30"><span class = " q1a20">02:30</span></label>
+            <label><input class="q1a21" style="display:none;" type="radio" name="q1" value="2:45"><span class = " q1a21">02:45</span></label>
+            <label><input class="q1a22" style="display:none;" type="radio" name="q1" value="3:00"><span class = " q1a22">03:00</span></label>
+            <label><input class="q1a23" style="display:none;" type="radio" name="q1" value="3:15"><span class = " q1a23">03:15</span></label>
+            <label><input class="q1a24" style="display:none;" type="radio" name="q1" value="3:30"><span class = " q1a24">03:30</span></label>
+            <label><input class="q1a25" style="display:none;" type="radio" name="q1" value="3:45"><span class = " q1a25">03:45</span></label>
+            <label><input class="q1a26" style="display:none;" type="radio" name="q1" value="4:00"><span class = " q1a26">04:00</span></label>
+            <label><input class="q1a27" style="display:none;" type="radio" name="q1" value="4:15"><span class = " q1a27">04:15</span></label>
+            <label><input class="q1a28" style="display:none;" type="radio" name="q1" value=""><span class = " q1a28">-- : --</span></label>
+            </div>
+        </div>
     </div>
-</form>
-
-
-<script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-    <script src='index.js'></script> 
-
-
-    </body>
-</html>
-
+    <div class="c2" style="display:flex;">
+      <div class="b1ap"> 
+      <label><input type="submit" style="display:none;"><span id="submitbtn">Submit</span></label>
+      </div>
+    </div>
+  </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src='jquery.js'></script> 
 
 <?php
-date_default_timezone_set("America/New_York");
-$time= date('m_d_y_h_i_s');
-
-$user = 'b77225dc29feba';
+  $user = 'b77225dc29feba';
 $password = '52bed046';
 $dbname = 'heroku_bf6133839e3e3aa';
 $host = 'us-cdbr-iron-east-04.cleardb.net';
@@ -99,16 +90,10 @@ if ($conn ->connect_errno) {
                 };
             };
     } else {};
-    $conn -> close();
-    
-    for ($i=10;$i<=10;$i++){
-        for($j=1;$j<=2;$j++){
-            echo "<script>$(document).ready(()=>{ 
-                $(\".q2a1q".$i."a1\").on('click',()=>{
-                    $(\".q2a1q".$i."a1q".$j."\").css(\"display\" ,\"flex\"); 
-                    $(\"html, body\").animate({scrollTop: $(\".q2\").offset().top + $(\".q2\").height()}, 250);
-                });});</script>";
+    ?>
+</body>
+</html>
+ 
+ 
+ 
 
-        };
-        };
-  ?>
