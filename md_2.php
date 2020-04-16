@@ -40,22 +40,11 @@ if ($conn ->connect_errno) {
           $r3= $conn->query($sql);
           if($r3->num_rows>0){
             while($row3=$r3->fetch_assoc()){
-              $i = $row3['question_id'];
-              $sql = "SELECT * FROM question_db WHERE question_id='$i';";
-              $r4=$conn->query($sql);
-              if($r4->num_rows>0){
-                while ($row4=$r4->fetch_assoc()){
-                  echo $row4['value'].": ";
-                }
-              }
-              $i = $row3['answer_id'];
-              $sql = "SELECT * FROM answer_db WHERE answer_id='$i';";
-              $r5=$conn->query($sql);
-              if($r5->num_rows>0){
-                while ($row5=$r5->fetch_assoc()){
-                  echo $row5['answer_value']."<br>";
+              if($row3['answer_value']=="Start"){
+              } elseif ($row3['answer_value']=="Next"){
+              } else {
+                echo $row3['question_value'].": ".$row3['answer_value']."<br>";
             }
-          }
     }
   }
   echo "<br>";

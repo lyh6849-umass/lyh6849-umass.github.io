@@ -37,17 +37,45 @@ $pt=$time."_".$_POST['q1'];
       $id = $row["question_id"];
       $q_v= $row["value"];
       $q_cc=$row["cc_id"];
-      if(isset($_POST[$id])){
-      $ans = $_POST[$id];
-      $sql = "INSERT INTO center_db (patient_id, question_id, answer_id, question_cc) VALUES ('$pt', '$id', '$ans', '$q_cc');";
-            if ($conn->query($sql) === TRUE) {
-              echo "";
-              } else {
-              echo "Error: " . $sql . "<br>" . $conn->error."<BR><BR><BR>";
-          };
-          };
-        };
-      };
+      $a_id = "";
+      $a_v="";
+      if($row['question_type']=="checkbox"){
+        if(!empty($_POST[$id])){
+          foreach ($_POST[$id] as $a){
+              $sql = "SELECT * FROM answer_db WHERE answer_id ='$a';";
+              $r=$conn->query($sql);
+                if($r->num_rows>0){
+                  while($row=$r->fetch_assoc()){
+                    $a_v = $row['answer_value']."; ".$a_v;
+                    $a_id=$a."; ".$a_id;
+                  }
+                }
+              }
+              $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type) VALUES ('$pt', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox');";
+              if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+            }
+          }
+      else {
+        if(isset($_POST[$id])){
+          $a = $_POST[$id];
+          $sql = "SELECT * FROM answer_db WHERE answer_id ='$a';";
+          $r=$conn->query($sql);
+          if($r->num_rows>0){
+            while($row=$r->fetch_assoc()){
+              $a_v = $row['answer_value'];
+              $a_v = str_replace("'","\'",$a_v);
+              $sql = "INSERT INTO center_db (patient_id, question_id, question_value, answer_id, question_cc, answer_value) VALUES ('$pt', '$id', '$q_v', '$a', '$q_cc', '$a_v');";
+                    if ($conn->query($sql) === TRUE) {
+                      echo "";
+                      } else {
+                      echo "Error: " . $sql . "<br>" . $conn->error."<BR>";
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 ?>
 
   

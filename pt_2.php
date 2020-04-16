@@ -14,11 +14,7 @@
 $i = $_POST['q1'];
 echo "<input type=\"text\" value=\"$i\" style=\"display:none;\" name =\"q1\">";
 ?>
-<div class="c2 q0" style="display:flex;">
-  <div class="b1"><h2>Please answer following questions. <br>  Answers will be reviewed by Dr. Lee.</h2>
-    <label><input id="q0a1" style ="display:none;" type="radio" name="q0" value="q0a1"><span class="q0a1">Start</span></label>
-  </div>
-</div>
+
  
 <?php 
 date_default_timezone_set("America/New_York");
@@ -29,24 +25,40 @@ $dbname = 'heroku_bf6133839e3e3aa';
 $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
- 
+$pt = $time."_".$_POST['q1'];
+echo $pt;
 //question generator
-$sql = "SELECT * FROM question_db ORDER BY question_id ;";
-$r2 = $conn->query($sql);
-if ($r2->num_rows>0){
-while ($row2=$r2->fetch_assoc()){
-  $q_id = $row2['question_id'];
-  echo "<div class=\"c2 ".$row2['question_id']."\">  <div class=\"b1\"><h2>".$row2['value']."</h2>";
-  $sql = "SELECT * FROM answer_db WHERE question_id = '$q_id';";
-  $r3 = $conn->query($sql);
-  if ($r3->num_rows>0){
-    while($row3=$r3->fetch_assoc()){
-      echo "<label><input id=\"".$row3['answer_id']."\" type=\"radio\" name=\"".$row2['question_id']."\" value=\"".$row3['answer_id']."\" style=\"display:none;\"><span class=\"".$row3['answer_id']."\">".$row3['answer_value']." </span></label><br>";
-    };
-  };
+$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$pt';";
+$r=$conn->query($sql);
+if($r->num_rows>0){
+  while($row=$r->fetch_assoc()){
+    $cc=$row['cc_id'];
+    $sql = "SELECT * FROM question_db WHERE cc_id = '$cc' ORDER BY question_id ;";
+    $r2 = $conn->query($sql);
+    if ($r2->num_rows>0){
+      while ($row2=$r2->fetch_assoc()){
+        $q_id = $row2['question_id'];
+        echo "<div class=\"c2 ".$row2['question_id']."\">  <div class=\"b1\"><h2>".$row2['value']."</h2>";
+          $sql = "SELECT * FROM answer_db WHERE question_id = '$q_id';";
+          $r3 = $conn->query($sql);
+          if ($r3->num_rows>0){
+            while($row3=$r3->fetch_assoc()){
+              if($row3['answer_type']=="radio"){
+                echo "<label><input id=\"".$row3['answer_id']."\" type=\"radio\" name=\"".$row2['question_id']."\" value=\"".$row3['answer_id']."\" style=\"display:none;\"><span class=\"".$row3['answer_id']."\">".$row3['answer_value']." </span></label><br>";
+                } elseif($row3['answer_type']=="checkbox"){
+                echo "<label><input id=\"".$row3['answer_id']."\" type=\"checkbox\" name=\"".$row2['question_id']."[]\" value=\"".$row3['answer_id']."\" style=\"display:none;\"><span class=\"".$row3['answer_id']."\">".$row3['answer_value']." </span></label><br>";
+                }
+            };
+          };
+          if($row2['question_type']=="checkbox"){
+            echo "<br><label><input type=\"button\" style=\"display: none;\"><span class=\"ma_1_submit ".$row2['question_id']."a1\">Next</span></label><br>";
+          } else {};
   echo "</div></div>";
 };
+
 };
+  }
+}
 ?>
  
 <div class="y c2 q1000">
@@ -79,34 +91,37 @@ if ($r4->num_rows>0){
 };
  
 //scroller generator + follow up quesetion generator
-$sql= "SELECT question_id FROM question_db;";
+$sql= "SELECT * FROM answer_db;";
 $result = $conn->query($sql);
 if($result->num_rows>0){
 while($row = $result->fetch_assoc()){
-    for ($i=1;$i<=10;$i++){
-        for($j=1;$j<=1;$j++){
-            $id = $row["question_id"];
-            $ans_id = $id."a".$i;
-            $que_id = $ans_id."q".$j;
-                echo "<script>$(document).ready(()=>{ 
-                    $(\".".$ans_id."\").on('click',()=>{
-                        $(\".".$que_id."\").css(\"display\" ,\"flex\"); 
-                        $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 250);
-                      });});</script>";
+  $i= $row['answer_id'];
+  $id= $row['question_id'];
+    for($j=1;$j<=3;$j++){
+      if($row['answer_type']!=="checkbox"){
+        echo "<script>$(document).ready(()=>{ 
+          $(\".".$i."\").on('click',()=>{
+            $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);
+          
+          });});</script>";
+                        };  
+      echo "<script>$(document).ready(()=>{ 
+          $(\".".$i."\").on('click',()=>{
+            $(\".".$i."q".$j."\").css(\"display\" ,\"flex\"); 
+          });});</script>";
+                    };
                 };                    
             };
-        };
-} else {};
   
 $conn -> close();
 ?>
 </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src='jquery.js'></script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+            <script></script>
 
 </html>
  

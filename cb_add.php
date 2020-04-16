@@ -7,36 +7,10 @@ $dbname = 'heroku_bf6133839e3e3aa';
 $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
- 
-$sql = "DROP TABLE answer_db;";
-if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
-$sql = "DROP TABLE question_db;";
-if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
-$sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`answer_db` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `answer_id` VARCHAR(45) NULL,
-    `question_id` VARCHAR(45) NULL,
-    `answer_value` VARCHAR(100) NULL,
-    `answer_type` VARCHAR(20) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
-    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
-$sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`question_db` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `question_id` VARCHAR(45) NULL,
-    `value` VARCHAR(100) NULL,
-    `cc_id` VARCHAR(45) NULL,
-    `question_type` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
-    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
+
 $lv="";
 $lv2="";
-$sql = "SELECT * FROM qa;";
+$sql = "SELECT * FROM qa2;";
  
 $r1=$conn->query($sql);
 if($r1->num_rows>0){

@@ -59,7 +59,7 @@ div.c2 h1 {
 }
  
 div.c2 h2 {
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 div.c2 span.q1a1 {
   margin-top: 2vh;
@@ -129,7 +129,6 @@ div.c2 label span {
   font-size: 2.4vh;
   box-sizing:border-box;
   padding:0.2vh;
-  z-index:;
 }
  
  
@@ -186,6 +185,7 @@ div.b1 {
   align-items:center;
   flex-direction:column;
   padding:5vh;
+  margin-bottom:10vh;
   z-index:10;
 }
  

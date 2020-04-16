@@ -59,38 +59,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src='jquery.js'></script> 
 
-<?php
-  $user = 'b77225dc29feba';
-$password = '52bed046';
-$dbname = 'heroku_bf6133839e3e3aa';
-$host = 'us-cdbr-iron-east-04.cleardb.net';
-$port = 3306;
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn ->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn ->connect_error;
-    exit();
-  } else {echo "";};
-
-
-    $sql= "SELECT question_id FROM question_db;";
-    $result = $conn->query($sql);
-    if($result->num_rows>0){
-    while($row = $result->fetch_assoc()){
-        for ($i=1;$i<=28;$i++){
-            for($j=1;$j<=1;$j++){
-                $id = $row["question_id"];
-                $ans_id = $id."a".$i;
-                $que_id = $ans_id."q".$j;
-                    echo "<script>$(document).ready(()=>{ 
-                        $(\".".$ans_id."\").on('click',()=>{
-                            $(\".".$que_id."\").css(\"display\" ,\"flex\"); 
-                            $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 250);
-                          });});</script>";
-                    };                    
-                };
-            };
-    } else {};
-    ?>
+  <?php
+  for ($i=1;$i<=28;$i++){
+          echo "<script>$(document).ready(()=>{ 
+              $(\".q1a".$i."\").on('click',()=>{
+                  $(\"html, body\").animate({scrollTop: $(\".q1\").offset().top + $(\".q1\").height()}, 250);
+              });});</script>";
+      };
+?>
 </body>
 </html>
  
