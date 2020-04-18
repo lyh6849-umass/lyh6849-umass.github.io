@@ -16,7 +16,6 @@
   <img class="bg" src="../img/umass3.png">
   <p class="c1"> Fitchburg Adult Medicine</p>
 
-  <div class="container">
   <form class="ma_form" method="POST" action="ma_2.php">
   <div class="q1 c2" style="display:flex;">
         <div class="b1ap"> 
@@ -51,8 +50,8 @@
             <label><input class="q1a27" style="display:none;" type="radio" name="q1" value="4:15"><span class = " q1a27">04:15</span></label>
             <label><input class="q1a28" style="display:none;" type="radio" name="q1" value=""><span class = " q1a28">-- : --</span></label>
               </div>
-        </div>
-    </div>
+        </div></div>
+
 
     <div class="q5 c2" style="display:flex;">
       <div class="b1">
@@ -81,8 +80,7 @@
           
      
       </form>
-      </div>
-
+     
 
                
 
