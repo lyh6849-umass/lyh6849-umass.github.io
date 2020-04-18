@@ -46,6 +46,7 @@ if ($conn->query($sql) === TRUE) {
 }
 };
 echo "<br><br><br><br>";
+
 //data insert to pt_cc_db
 for ($i=1;$i<=10;$i++){
 $j = "q2_".$i;

@@ -1,0 +1,10 @@
+body {
+    height: 100vh;
+    background-color:lavender;
+}
+
+@media (max-width:400px){
+    body {
+        background-color:red;
+    }
+}

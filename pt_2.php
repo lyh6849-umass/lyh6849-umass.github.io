@@ -2,7 +2,11 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/6507119a2f.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width"/>
 <link href = "css.css" type = "text/css" rel="stylesheet">
+
+
 </head>
 <body>
 <p class="c1"> Fitchburg Adult Medicine</p>
@@ -119,9 +123,6 @@ $conn -> close();
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src='jquery.js'></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-            <script></script>
 
 </html>
  

@@ -17,7 +17,27 @@ body {
   opacity:50%;
 }
 
+.mainlink{
+  font-size: 50px;
+  width: 20vw;
+  height: 20vw;
+  border: solid #000054;
+  margin:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  color: black;
+}
 
+.mainlink:hover {
+  background-color: #8aa9d5;
+  color:white;
+}
+
+.mainlink:active{
+  background-color: #8e91bc;
+}
 
  
 .gradient_1 {
@@ -114,7 +134,7 @@ div.c2 {
  
  
 div.c2 label span {
-  background-color: #7b7e83;
+  background-color: #5b5f66;
   position: relative;
   display: flex;
   align-items: center;
@@ -295,56 +315,57 @@ select {
  
  
  
-@media screen and (max-width: 991px) {
- 
+@media (max-width: 500px) {
+ div.b1 {
+   width:100vw;
+   padding: 0;
+margin-bottom:0;
 }
- 
-@media screen and (max-width: 767px) {
-div.b1ap {
-width:90vw;
+  div.c2 h2 {
+  font-size: 6vw;
+  padding-right:3vw;
+  padding-left:3vw;
 }
-}
- 
-@media screen and (max-width: 479px) {
-div.b1ap {
-width:100vw;
-}
-}
- 
- 
- 
-@media screen and (max-width: 991px) {
-  .button {
-    width: 80vw;
-    
-  }
-  .wp {
-      background-color: black;
-  }
-  .div-block {
-    width: 80vw;
-  }
-}
- 
-@media screen and (max-width: 767px) {
-  .button {
-    width: 90vw;
-  }
-  .div-block {
-    width: 90vw;
-  }
-}
- 
-@media screen and (max-width: 479px) {
-  .button {
-    width: 100vw;
-  }
-  .div-block {
-    width: 100vw;
-  }
-  p.c1 {
-      font-size:8vw;
- 
-  }
 
+div.c2 label span {
+  width: 80vw;
+  height:7vh;
+  font-size: 2.4vh;
+  padding:1vw;
 }
+.c1 {
+  position: fixed;
+  font-family:fantasy;
+  font-size: 170%;
+  color: #0000001a;
+  margin-left: 2vw;
+  z-index:101;
+}
+
+.bg {
+  height: 20vh;
+  position: fixed;
+  right:-10vw;
+  bottom:0;
+  z-index:-1;
+  opacity:50%;
+}
+
+.gradient_1 {
+  width:100vw;
+  height: 10vh;
+  position: fixed;
+  background-image: linear-gradient(#ffffff, #ffffff00);
+  z-index:100;
+}
+
+.gradient_2 {
+  width:100vw;
+  height: 10vh;
+  position: fixed;
+  bottom:0;
+  background-image: linear-gradient(#ffffff00, #ffffff);
+  z-index:100;
+}
+}
+ 
