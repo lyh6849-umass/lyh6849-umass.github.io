@@ -282,6 +282,10 @@ div.b1ap {
   padding:2vw;
   height: 70vh;
 }
+
+div.b1ap div {
+  width:100%;
+}
  
  
 div.b1ap label {
@@ -290,11 +294,6 @@ div.b1ap label {
 }
 div.b1ap label span {
     width:100%;
-    font-size: 2.5vw;
-}
- 
- 
-div.b1ap label span {
     font-size: 2.4vh;
 }
  
@@ -366,6 +365,21 @@ div.c2 label span {
   bottom:0;
   background-image: linear-gradient(#ffffff00, #ffffff);
   z-index:100;
+}
+
+div.b1ap {
+  width:100vw;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+}
+
+div.b1ap label {
+    width: 23.5%;
+    box-sizing: border-box;
+}
+div.b1ap label span {
+    width:100%;
+    font-size: 2.4vh;
 }
 }
  
