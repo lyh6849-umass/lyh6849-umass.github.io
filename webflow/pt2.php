@@ -45,8 +45,8 @@ $dbname = 'heroku_bf6133839e3e3aa';
 $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
-$pt = $time."_".$_GET['q1'];
-echo "<input type=\"text\" name=\"q1\" value=\"".$pt."\">";
+$qn = $_GET['q1'];
+echo "<input type=\"text\" name=\"q1\" value=\"".$qn."\">";
 //all question generator
 $sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='04_27_20_8:30';";
 $r=$conn->query($sql);
