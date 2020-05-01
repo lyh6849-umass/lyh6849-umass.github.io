@@ -46,9 +46,9 @@ $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
 $qn = $_GET['q1'];
-echo "<input type=\"text\" name=\"q1\" value=\"".$qn."\">";
+echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
 //all question generator
-$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='04_27_20_8:30';";
+$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id =$qn;";
 $r=$conn->query($sql);
 if($r->num_rows>0){
   while($row=$r->fetch_assoc()){
