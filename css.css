@@ -18,24 +18,24 @@ body {
 }
 
 .mainlink{
-  font-size: 4vw;
-  width: 20vw;
-  height: 20vw;
-  border: solid #000054;
+  font-size: 3.5vw;
+  width: 90%;
+  height: 3vw;
+  /* border: solid #000054; */
   margin:10px;
   display:flex;
   justify-content:center;
   align-items:center;
   text-decoration:none;
-  color: black;
+  color: #5f6976;
   padding: 2vw;
   font-family: monospace;
   font-weight: 600;
 }
 
 .mainlink:hover {
-  background-color: #8aa9d5;
-  color:white;
+  background-color: #5f6976;
+  color:#ffffff;
 }
 
 .mainlink:active{
@@ -207,7 +207,7 @@ div.b1 {
   text-align:center;
   align-items:center;
   flex-direction:column;
-  padding:5vh;
+  padding: 2vh;
   margin-bottom:10vh;
   z-index:10;
 }
@@ -383,6 +383,28 @@ div.b1ap label {
 div.b1ap label span {
     width:100%;
     font-size: 2.4vh;
+}
+.mainlink{
+  text-transform: capitalize;
+  font-size: 6.5vw;
+  width: 90%;
+  height: 35vw;
+  background-color: #5f69761c;
+  /* border: solid #000054; */
+  margin:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  color: #5f6976;
+  padding: 2vw;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.mainlink:hover {
+  background-color: #5f6976;
+  color:#ffffff;
 }
 }
  

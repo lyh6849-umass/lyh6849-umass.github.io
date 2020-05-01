@@ -5,7 +5,7 @@
 <script src="https://kit.fontawesome.com/6507119a2f.js" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width"/>
 <link href = "css.css" type = "text/css" rel="stylesheet">
-
+<style>.c1 {display:none;}</style>
 
 </head>
 <body>
@@ -31,12 +31,16 @@ $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
 $pt = $time."_".$_POST['q1'];
 echo $pt;
-//question generator
+
 $sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$pt';";
 $r=$conn->query($sql);
 if($r->num_rows>0){
   while($row=$r->fetch_assoc()){
     $cc=$row['cc_id'];
+    
+
+    //bring all question in none display
+
     $sql = "SELECT * FROM question_db WHERE cc_id = '$cc' ORDER BY question_id ;";
     $r2 = $conn->query($sql);
     if ($r2->num_rows>0){
@@ -61,6 +65,16 @@ if($r->num_rows>0){
 };
 
 };
+
+//first question generator
+if($cc!==""){
+  for($p=1;$p<=20;$p++){
+    echo "<style>.".$cc."q".$p." {display:flex;}</style>";
+  }
+};
+
+
+
   }
 }
 ?>
