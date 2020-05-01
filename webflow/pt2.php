@@ -34,6 +34,7 @@ div.c2 label input:checked ~ span {
   <div class="c3">
         <div class="b1">
           <p class="paragraph-2">Please answer following question regarding your symptoms. Answers are going to be reviewed after Dr. Lee finishes encounter with previous patient. If you need <span class="text-span">EMERGENCY </span>care, please notify medical assistant who&#x27;s at the counter for help. </p><a href="#" class="button-2 w-button">Next</a></div>
+          <script>   $(document).ready(()=>{ $(".next").on('click',()=>{ $("html, body").animate({scrollTop: $(".next").parent().parent().offset().top + $(".next").parent().parent().height()}, 1000);});});</script> 
       </div>
       
 <?php 
