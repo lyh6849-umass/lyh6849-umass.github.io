@@ -49,7 +49,7 @@ $qn = $_GET['q1'];
 echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
 
 //all question generator
-$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn'1;";if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn';";if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
 $r=$conn->query($sql);
 if($r->num_rows>0){
   while($row=$r->fetch_assoc()){if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
