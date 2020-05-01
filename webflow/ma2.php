@@ -38,7 +38,7 @@
 
 
 
-<div style ="display:none;">
+<div style ="display:inline;">
 <?php
 date_default_timezone_set("America/New_York");
 $user = 'b77225dc29feba';
