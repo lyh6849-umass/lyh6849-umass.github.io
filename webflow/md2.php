@@ -36,7 +36,7 @@ if ($conn ->connect_errno) {
     while($row2=$r2->fetch_assoc()){
       echo "[".$row2['visit_diagnosis']."]<br>";
       $i = $row2['cc_id'];
-        $sql = "SELECT * FROM center_db WHERE patient_id = '$pt' AND question_cc = '$i';";
+        $sql = "SELECT * FROM center_db WHERE patient_id = '$qn' AND question_cc = '$i';";
           $r3= $conn->query($sql);
           if($r3->num_rows>0){
             while($row3=$r3->fetch_assoc()){
