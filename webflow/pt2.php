@@ -47,6 +47,7 @@ $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
 $qn = $_GET['q1'];
 echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
+
 //all question generator
 $sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn'1;";if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
 $r=$conn->query($sql);
