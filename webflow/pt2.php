@@ -49,10 +49,10 @@ $qn = $_GET['q1'];
 echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
 
 //all question generator
-$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn';";if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+$sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn';";
 $r=$conn->query($sql);
 if($r->num_rows>0){
-  while($row=$r->fetch_assoc()){if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+  while($row=$r->fetch_assoc()){
     $cc=$row['cc_id'];
     $sql = "SELECT * FROM question_db WHERE cc_id = '$cc' ORDER BY question_id ;";
     $r2 = $conn->query($sql);
@@ -62,7 +62,7 @@ if($r->num_rows>0){
         echo "<div class=\"c2 w-container ".$row2['question_id']."\"><div class=\"b1\"><h1 class=\"heading\">".$row2['value']."</h1>";
           $sql = "SELECT * FROM answer_db WHERE question_id = '$q_id';";
           $r3 = $conn->query($sql);
-          if ($r3->num_rows>0){if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+          if ($r3->num_rows>0){
             while($row3=$r3->fetch_assoc()){
               if($row3['answer_type']=="radio"){
                 echo "<label class=\"radio-button-field-3 w-radio\">
@@ -75,22 +75,22 @@ if($r->num_rows>0){
                 $i = $r3->num_rows+1;
                 $next = $row2['question_id']."a".$i;
             }
-            if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+
             $i = $row3['answer_id'];
             for($j=1;$j<=3;$j++){
               echo "<script>$(document).ready(()=>{ 
                   $(\".".$i."\").on('click',()=>{
                     $(\".".$i."q".$j."\").css(\"display\" ,\"flex\"); 
                   });});</script>";}
-            };if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+            };
             if($row2['question_type']=="checkbox"){
             echo "<a href=\"#\" class=\"button-2 w-button ".$next."\">Next</a>";
             echo "<script>$(document).ready(()=>{ $(\".".$next."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 1000);});});</script>";
-          } else {};if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+          } else {};
   echo "</div></div>";
 };
 
-};if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+};
   }
   //first question generator
 if($cc!==""){
