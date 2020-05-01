@@ -37,22 +37,7 @@
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link href = "css.css" type = "text/css" rel="stylesheet">
-</head>
-<body>
-<p class="c1"> Fitchburg Adult Medicine</p>
-    <div class="c2" style="display:flex;">
-    <h2>Visit diagnoses are saved. <br>Please instruct patient to start the <a href="../pt_1.php" style="text-decoration:none; ">questionnaire.</a></h2>
-    <?php
-    /*$cb=$_POST['checkbox'];
-    $cbs= implode(",", $cb);
-    echo $cbs;*/
-    ?>
-</div>
+
 <div style ="display:none;">
 <?php
 date_default_timezone_set("America/New_York");
