@@ -30,7 +30,6 @@
 </html>
 
 <?php
-
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y');
 $user = 'b77225dc29feba';
@@ -43,9 +42,8 @@ if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
   } else {echo "";};
-$pt=$_POST['q1'];
-
-
+  $qn=$_POST['q1'];
+  echo $qn;
   $sql= "SELECT * FROM question_db;";
   $result = $conn->query($sql);
   if($result->num_rows>0){
@@ -56,18 +54,23 @@ $pt=$_POST['q1'];
       $a_id = "";
       $a_v="";
       if($row['question_type']=="checkbox"){
+        echo "checkbox detected<br>";
+        echo $id."<BR>".$q_v;
         if(!empty($_POST[$id])){
+          echo "checkbox is not empty<BR>"; 
           foreach ($_POST[$id] as $a){
               $sql = "SELECT * FROM answer_db WHERE answer_id ='$a';";
               $r=$conn->query($sql);
                 if($r->num_rows>0){
                   while($row=$r->fetch_assoc()){
                     $a_v = $row['answer_value']."; ".$a_v;
+                    echo $a_v;
                     $a_id=$a."; ".$a_id;
                   }
                 }
               }
-              $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type) VALUES ('$pt', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox');";
+              $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type) VALUES ('$qn', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox');";
+              echo $q_v;
               if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
             }
           }
@@ -80,8 +83,8 @@ $pt=$_POST['q1'];
             while($row=$r->fetch_assoc()){
               $a_v = $row['answer_value'];
               $a_v = str_replace("'","\'",$a_v);
-              $sql = "INSERT INTO center_db (patient_id, question_id, question_value, answer_id, question_cc, answer_value) VALUES ('$pt', '$id', '$q_v', '$a', '$q_cc', '$a_v');";
-                    if ($conn->query($sql) === TRUE) {
+              $sql = "INSERT INTO center_db (patient_id, question_id, question_value, answer_id, question_cc, answer_value) VALUES ('$qn', '$id', '$q_v', '$a', '$q_cc', '$a_v');";      
+              if ($conn->query($sql) === TRUE) {
                       echo "";
                       } else {
                       echo "Error: " . $sql . "<br>" . $conn->error."<BR>";

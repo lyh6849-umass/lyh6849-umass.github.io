@@ -75,7 +75,9 @@
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea24fa4777920d17bd4218b" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <script src="jquery.js" type="text/javascript"></script>
-  <script>   $(document).ready(()=>{ $(".q1a1").on('click',()=>{ $("html, body").animate({scrollTop: $(".q1").offset().top + $(".q1").height()}, 1000);});});</script> 
+  <!--<script>   $(document).ready(()=>{ $(".q1a1").on('click',()=>{ $("html, body").animate({scrollTop: $(".q1").offset().top + $(".q1").height()}, 1000);});});</script>-->
+  <script>   $(document).ready(()=>{ $(".q1a1").on('click', () =>{ 
+    $("html, body").animate({scrollTop: $(".q1").offset().top + $(".q1").height()}, 1000);});});</script>
   <script>   
         var i = 2;
           $(document).ready(()=>{

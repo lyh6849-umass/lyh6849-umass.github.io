@@ -34,7 +34,7 @@ div.c2 label input:checked ~ span {
   <div class="c3">
         <div class="b1">
           <p class="paragraph-2">Please answer following question regarding your symptoms. Answers are going to be reviewed after Dr. Lee finishes encounter with previous patient. If you need <span class="text-span">EMERGENCY </span>care, please notify medical assistant who&#x27;s at the counter for help. </p><a href="#" class="button-2 w-button next">Next</a></div>
-          <script>   $(document).ready(()=>{ $(".next").on('click',()=>{ $("html, body").animate({scrollTop: $(".next").parent().parent().offset().top + $(".next").parent().parent().height()}, 1000);});});</script> 
+          <script>   $(document).ready(()=>{ $(".next").on('click',()=>{ $("html, body").animate({scrollTop: $(".next").parent().parent().offset().top + $(".next").parent().parent().height()}, 100);});});</script> 
       </div>
       
 <?php 
@@ -69,7 +69,7 @@ if($r->num_rows>0){
                 echo "<label class=\"radio-button-field-3 w-radio\">
                     <input type=\"radio\" name=\"".$row2['question_id']."\" value=\"".$row3['answer_id']."\" class=\"w-form-formradioinput radio-button-3 w-radio-input\">
                     <span class=\"radio-button-label-3 w-form-label ".$row3['answer_id']."\">".$row3['answer_value']."</span></label>";
-                echo "<script>$(document).ready(()=>{ $(\".".$row3['answer_id']."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 1000);});});</script>";
+                echo "<script>$(document).ready(()=>{ $(\".".$row3['answer_id']."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 100);});});</script>";
                 } elseif($row3['answer_type']=="checkbox"){
                 echo "<label class=\"w-checkbox checkbox-field \">
                 <input type=\"checkbox\" id=\"".$row3['answer_id']."\" data-name=\"".$row2['question_id']."[]\" value=\"".$row3['answer_id']."class=\"w-checkbox-input checkbox ".$row3['answer_id']."\"  style=\"display:none;\" ><span for=\"\" class=\"checkbox-label w-form-label ".$row3['answer_id']."\">".$row3['answer_value']."</span></label>";
@@ -86,7 +86,7 @@ if($r->num_rows>0){
             };
             if($row2['question_type']=="checkbox"){
             echo "<a href=\"#\" class=\"button-2 w-button ".$next."\">Next</a>";
-            echo "<script>$(document).ready(()=>{ $(\".".$next."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 1000);});});</script>";
+            echo "<script>$(document).ready(()=>{ $(\".".$next."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 100);});});</script>";
           } else {};
   echo "</div></div>";
 };
