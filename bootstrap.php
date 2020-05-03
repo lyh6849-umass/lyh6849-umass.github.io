@@ -12,6 +12,15 @@ if ($conn ->connect_errno) {
     exit();
   } else {echo "";};
 
-  $sql = "DELETE FROM qa WHERE q_a = '4.6.';";
+  $sql = "SELECT * FROM cc_db;";
+  $r2=$conn->query($sql);
+  if ($r2->num_rows>0){
+    while($row2=$r2->fetch_assoc()){
+      $q = $row2['q_id'];
+      $v = $row2['visit_diagnosis'];
+      $sql = "INSERT INTO cc_db2 (q_id, visit_diagnosis) VALUES ('$q','$v');";
+      if ($conn->query($sql) === TRUE) {echo "success!";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+    }
+  }
   if ($conn->query($sql) === TRUE) {echo "success!";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
   ?>

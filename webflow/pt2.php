@@ -111,7 +111,7 @@ if($cc!==""){
 }
 }
 ?>
-<div class="c3"> <div class="b1"> <p class="paragraph-2">You&#x27;ve answered all questions. Answers will be reviewed at your appointment time. For <span class="text-span">EMERGENCY </span>services, please call 911.</p><label class="w-checkbox"><input required="" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input"><span class="w-form-label">I&#x27;ve understood the above instruction.</span></label><input type="submit" value="Submit" data-wait="Please wait..." class="sbm w-button"></div> </div>
+<div class="c3"> <div class="b1"> <p class="paragraph-2">You&#x27;ve answered all questions. Answers will be reviewed at your appointment time. For <span class="text-span">EMERGENCY </span>services, please call 911.</p><label class="w-checkbox"><input  type="checkbox" id="checkbox" name="checkbox" required="" data-name="Checkbox" class="w-checkbox-input"><span class="w-form-label">I&#x27;ve understood the above instruction.</span></label><input type="submit" value="Submit" data-wait="Please wait..." class="sbm w-button"></div> </div>
 </form>
 
 
