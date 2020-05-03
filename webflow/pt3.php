@@ -21,7 +21,7 @@
 <body>
 <div class="c3"> 
 <div class="div-block-2"> 
-  <a href="<?php echo $_GET['q1'];?>" class="link-block w-inline-block"> 
+  <a href="<?php echo $_POST['q1'];?>" class="link-block w-inline-block"> 
   <h1 class="heading-2">Please click here for video call, wait on the line.<br>Provider will be with you shortly.</h1> </a> 
 </div>
   
