@@ -379,6 +379,8 @@
 }
 
 .heading-2 {
+  position: relative;
+  z-index: 1;
   color: #222;
   font-size: 1.7em;
   text-align: center;
@@ -437,6 +439,11 @@
   display: flex;
   width: 100vw;
   height: 65vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -749,12 +756,19 @@
   align-items: center;
 }
 
+.c3:hover {
+  border: 0px solid #000;
+}
+
 .text-span-2 {
   color: red;
 }
 
 .sbm {
   width: 150px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
   border-radius: 3px;
   background-color: rgba(72, 78, 144, 0.43);
   box-shadow: 2px 2px 3px 0 #3a3a3a;
@@ -764,8 +778,16 @@
 }
 
 .sbm:hover {
+  border-style: none;
+  border-width: 0px;
+  border-color: transparent;
   background-color: rgba(52, 49, 216, 0.81);
   box-shadow: 4px 4px 3px 0 #3a3a3a;
+}
+
+.sbm:focus {
+  border-style: none;
+  border-width: 0px;
 }
 
 .div-block-6 {
@@ -802,6 +824,11 @@
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+
+.paragraph-3 {
+  color: #7c7c7c;
+  text-align: center;
 }
 
 @media screen and (max-width: 991px) {
@@ -989,8 +1016,11 @@
     font-size: 16px;
   }
   .heading {
+    margin-top: 0px;
     margin-bottom: 15px;
-    font-size: 0.8em;
+    padding: 10px 12px;
+    background-color: hsla(0, 0%, 100%, 0.09);
+    font-size: 0.9em;
     line-height: 1.3em;
     text-align: center;
   }
@@ -1033,6 +1063,7 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    width: 95vw;
     height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -1057,18 +1088,22 @@
     flex-direction: column;
   }
   .radio-button-label-3 {
-    height: 30px;
-    margin-top: 5px;
-    font-size: 18px;
+    width: 95vw;
+    height: auto;
+    min-height: 60px;
+    margin-top: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
     text-align: center;
   }
   .paragraph-2 {
-    width: 98%;
+    width: 98vw;
     margin-right: 5px;
     margin-left: 5px;
-    padding: 10px;
+    padding: 20px 5px;
     border-radius: 5px;
-    font-size: 0.6em;
+    font-size: 1.5em;
     text-align: center;
   }
   .checkbox-label {
@@ -1076,9 +1111,11 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    width: 70vw;
-    height: 30px;
+    width: 95vw;
+    height: 60px;
+    min-height: 60px;
     margin-top: 5px;
+    margin-bottom: 0px;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
@@ -1093,7 +1130,7 @@
     -webkit-transition: box-shadow 600ms ease, background-color 400ms ease;
     transition: box-shadow 600ms ease, background-color 400ms ease;
     color: #3d3d3d;
-    font-size: 18px;
+    font-size: 16px;
   }
   .checkbox-label:hover {
     background-color: rgba(16, 45, 66, 0.75);
@@ -1110,6 +1147,13 @@
   .b1 {
     width: 100vw;
     height: 90vh;
+  }
+  .sbm {
+    width: 95vw;
+    height: 30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 17px;
   }
 }
 
