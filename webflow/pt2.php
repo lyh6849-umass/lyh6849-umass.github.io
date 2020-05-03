@@ -111,18 +111,10 @@ if($cc!==""){
 }
 }
 ?>
-      <div class="c3">
-        <div class="b1">
-        <p class="paragraph-2">You&#x27;ve answered all questions. Answers will be reviewed at your appointment time. For <span class="text-span">EMERGENCY </span>services, please call 911.</p><input type="submit" value="Submit" class="sbm w-button"></div>
-      </div></form>
+<div class="c3"> <div class="b1"> <p class="paragraph-2">You&#x27;ve answered all questions. Answers will be reviewed at your appointment time. For <span class="text-span">EMERGENCY </span>services, please call 911.</p><label class="w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input"><span class="w-form-label">I&#x27;ve understood above instruction.</span></label><input type="submit" value="Submit" data-wait="Please wait..." class="sbm w-button"></div> </div>
+</form>
 
 
-    <div class="w-form-done">
-      <div>Thank you! Your submission has been received!</div>
-    </div>
-    <div class="w-form-fail">
-      <div>Oops! Something went wrong while submitting the form.</div>
-    </div>
   </div><img src="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg" srcset="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1080.jpeg 1080w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1600.jpeg 1600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2000.jpeg 2000w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2600.jpeg 2600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-3200.jpeg 3200w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg 3888w" sizes="100vw" alt="" class="image">
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea24fa4777920d17bd4218b" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
