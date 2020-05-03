@@ -28,7 +28,7 @@
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 </body>
 </html>
-
+<div style="display:none">
 <?php
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y');
@@ -43,7 +43,6 @@ if ($conn ->connect_errno) {
     exit();
   } else {echo "";};
   $qn=$_POST['q1'];
-  echo $qn;
   $sql= "SELECT * FROM question_db;";
   $result = $conn->query($sql);
   if($result->num_rows>0){
@@ -54,8 +53,7 @@ if ($conn ->connect_errno) {
       $a_id = "";
       $a_v="";
       if($row['question_type']=="checkbox"){
-        echo "checkbox detected<br>";
-        echo $id."<BR>".$q_v;
+        echo $_POST[$id];
         if(!empty($_POST[$id])){
           echo "checkbox is not empty<BR>"; 
           foreach ($_POST[$id] as $a){
@@ -72,7 +70,7 @@ if ($conn ->connect_errno) {
               $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type) VALUES ('$qn', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox');";
               echo $q_v;
               if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
-            }
+            } elseif(empty($_POST[$id])) {echo "checkbox is empty";};
           }
       else {
         if(isset($_POST[$id])){
@@ -96,6 +94,7 @@ if ($conn ->connect_errno) {
       }
     }
 ?>
+</div>
 
   
 

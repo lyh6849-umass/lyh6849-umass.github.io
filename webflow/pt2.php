@@ -72,7 +72,7 @@ if($r->num_rows>0){
                 echo "<script>$(document).ready(()=>{ $(\".".$row3['answer_id']."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$row2['question_id']."\").offset().top + $(\".".$row2['question_id']."\").height()}, 100);});});</script>";
                 } elseif($row3['answer_type']=="checkbox"){
                 echo "<label class=\"w-checkbox checkbox-field \">
-                <input type=\"checkbox\" id=\"".$row3['answer_id']."\" data-name=\"".$row2['question_id']."[]\" value=\"".$row3['answer_id']."class=\"w-checkbox-input checkbox ".$row3['answer_id']."\"  style=\"display:none;\" ><span for=\"\" class=\"checkbox-label w-form-label ".$row3['answer_id']."\">".$row3['answer_value']."</span></label>";
+                <input type=\"checkbox\" id=\"".$row3['answer_id']."\" name=\"".$row2['question_id']."[]\" value=\"".$row3['answer_id']."\" class=\"w-checkbox-input checkbox ".$row3['answer_id']."\"  style=\"display:none;\" ><span for=\"\" class=\"checkbox-label w-form-label ".$row3['answer_id']."\">".$row3['answer_value']."</span></label>";
                 $i = $r3->num_rows+1;
                 $next = $row2['question_id']."a".$i;
             }
@@ -104,7 +104,7 @@ if($cc!==""){
 ?>
       <div class="c3">
         <div class="b1">
-          <p class="paragraph-2">You have answered all question. Answers are going to be reviewed after Dr. Lee finishes encounter with previous patient. If you need <span class="text-span">EMERGENCY </span>care, please notify medical assistant who&#x27;s at the counter for help. </p><input type="submit" value="Submit" data-wait="Please wait..." class="sbm w-button"></div>
+          <p class="paragraph-2">You have answered all question. Answers are going to be reviewed after Dr. Lee finishes encounter with previous patient. If you need <span class="text-span">EMERGENCY </span>care, please notify medical assistant who&#x27;s at the counter for help. </p><input type="submit" value="Submit" class="sbm w-button"></div>
       </div></form>
 
 

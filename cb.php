@@ -21,6 +21,7 @@ $sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`answer_db` (
     `answer_value` VARCHAR(100) NULL,
     `answer_type` VARCHAR(20) NULL,
     PRIMARY KEY (`id`),
+    UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
  
@@ -31,6 +32,7 @@ $sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`question_db` (
     `cc_id` VARCHAR(45) NULL,
     `question_type` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
+    UNIQUE INDEX `question_id` (`question_id` ASC),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
  
@@ -96,11 +98,14 @@ if($r1->num_rows>0){
                 $q = preg_replace('/\./',"a",$q,1);
                 $q = preg_replace('/\./',"q",$q,1);//q1a4q3a2q1
                 }; // id created 
-                
+
             $w=substr_count("2.".$lv.$lv2.strstr($row1['q_a'],' ',true),".");
             if($w==2){
+                echo "w is 2!<br>";
                 if($s[1] !=="1"){
-                    $sql ="INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE q_id = '$s';";    
+                    echo $s."<br>";
+                    echo $t."<br>";
+                    $sql ="INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE visit_diagnosis = '$t';";  
                 }                
                 if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}}    
             
