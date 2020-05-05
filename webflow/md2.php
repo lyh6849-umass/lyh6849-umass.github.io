@@ -43,7 +43,9 @@ if ($conn ->connect_errno) {
               if($row3['answer_value']=="Start"){
               } elseif ($row3['answer_value']=="Next"){
               } else {
-                echo $row3['question_value'].": ".$row3['answer_value']."<br>";
+                if (substr($row3['question_value'], 0, 36)=="How often have you been bothered by "){
+                  if ()
+                } else {echo $row3['question_value'].": ".$row3['answer_value']."<br>"};
             }
     }
   }

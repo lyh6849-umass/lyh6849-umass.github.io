@@ -1,4 +1,5 @@
 <?php 
+set_time_limit(0);
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y');
 $user = 'b77225dc29feba';
@@ -8,17 +9,18 @@ $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
  
-$sql = "DROP TABLE answer_db;";
+$sql = "DELETE FROM answer_db;";
 if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
  
-$sql = "DROP TABLE question_db;";
+$sql = "DELETE FROM question_db;";
 if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
+ /*
 $sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`answer_db` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `answer_id` VARCHAR(45) NULL,
     `question_id` VARCHAR(45) NULL,
-    `answer_value` VARCHAR(100) NULL,
+    `answer_value` VARCHAR(150) NULL,
+    `cc_id` VARCHAR(45) NULL,
     `answer_type` VARCHAR(20) NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC),
@@ -28,14 +30,14 @@ $sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`answer_db` (
 $sql = "CREATE TABLE `heroku_bf6133839e3e3aa`.`question_db` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `question_id` VARCHAR(45) NULL,
-    `value` VARCHAR(100) NULL,
+    `value` VARCHAR(250) NULL,
     `cc_id` VARCHAR(45) NULL,
     `question_type` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `question_id` (`question_id` ASC),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC));";
     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
- 
+ */
 $lv="";
 $lv2="";
 $sql = "SELECT * FROM qa;";
@@ -124,10 +126,10 @@ if($r1->num_rows>0){
                 echo $s.", ".$q.", ".$t."<br>";
                 //if it's an answer
                 if(substr($row1['q_a'],-1)=="x"){
-                   $sql = "INSERT INTO answer_db (answer_id, question_id, answer_value, answer_type) VALUES ('$s','$q','$t','checkbox');";
+                   $sql = "INSERT INTO answer_db (answer_id, question_id, answer_value, answer_type, cc_id) VALUES ('$s','$q','$t','checkbox','$c');";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}; 
                 } else {
-                    $sql = "INSERT INTO answer_db (answer_id, question_id, answer_value, answer_type) VALUES ('$s','$q','$t','radio');";
+                    $sql = "INSERT INTO answer_db (answer_id, question_id, answer_value, answer_type, cc_id) VALUES ('$s','$q','$t','radio','$c');";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
                 };
             } else {

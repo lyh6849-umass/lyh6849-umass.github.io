@@ -41,7 +41,7 @@ $dbname = 'heroku_bf6133839e3e3aa';
 $host = 'us-cdbr-iron-east-04.cleardb.net';
 $port = 3306;
 $conn = new mysqli($host, $user, $password, $dbname);
-$qn = $_GET['q1'];
+$qn = $_POST['q1'];
 echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
 
 //all question generator

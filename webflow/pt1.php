@@ -21,13 +21,13 @@
 </head>
 <body>
   <div class="w-form">
-    <form id="diff" name="diff" data-name="Email Form" method="get" class="form" action = "pt2.php">
+    <form id="diff" name="diff" data-name="Email Form" method="post" class="form" action = "pt2.php">
       <div class="c2">
         <div class="b1"><input type="text" class="text-field w-input" maxlength="256" name="q1" data-name="q1" placeholder="" id="q" required="">
           <div class="div-block-7">
             <div class="div-block-9"><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='1'" >1</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='2'" >2</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='3'" >3</a></div>
             <div class="div-block-9"><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='4'" >4</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='5'" >5</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='6'" >6</a></div>
-            <div class="div-block-9"><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='7'" >7</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='8'" >8</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='9'" >9</a></div><input type="submit" value="Submit" data-wait="Please wait..." class="submit-button-3 w-button" onclick ="diff.q1.value+='9'" ></div>
+            <div class="div-block-9"><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='7'" >7</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='8'" >8</a><a href="#" class="button-3 w-button" onclick ="diff.q1.value+='9'" >9</a></div><input type="submit" value="Submit" data-wait="Please wait..." class="submit-button-3 w-button" ></div>
         </div>
       </div>
     </form>

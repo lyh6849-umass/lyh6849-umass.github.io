@@ -70,6 +70,10 @@ if ($conn->query($sql) === TRUE) {
 }
 };
 echo "<br><br><br><br>";
+//data insert to qn_tele_db
+$qq=$_POST['q3'];
+$sql = "INSERT INTO qn_tele_db (qn, tele) VALUES ('$qn','$qq');";
+if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 
 //data insert to pt_cc_db
 for ($i=1;$i<=10;$i++){
@@ -84,11 +88,7 @@ if(isset($h)){
       $h = $row2['visit_diagnosis'];
       $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k','$h');";
       echo $qn." ".$k."<br>";
-      if ($conn->query($sql) === TRUE) {
-        echo "";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-};
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 };
 };
 };

@@ -19,12 +19,36 @@
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
 <body>
-<div class="c3"> 
-<div class="div-block-2"> 
-  <a href="<?php echo $_POST['q1'];?>" class="link-block w-inline-block"> 
-  <h1 class="heading-2">Please click here for video call, wait on the line.<br>Provider will be with you shortly.</h1> </a> 
-</div>
-  
+<div class="c3">
+    <div class="div-block-2">
+      <a href="#" class="link-block w-inline-block">
+        <h1 class="heading-2">Please click on the button to start Telehealth and wait on the line.<br>Provider will be with you shortly.</h1>
+      </a><a href="<?php 
+  date_default_timezone_set("America/New_York");
+$time= date('m_d_y');
+$user = 'b77225dc29feba';
+$password = '52bed046';
+$dbname = 'heroku_bf6133839e3e3aa';
+$host = 'us-cdbr-iron-east-04.cleardb.net';
+$port = 3306;
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn ->connect_errno) {
+    echo "Failed to connect to MySQL: " . $conn ->connect_error;
+    exit();
+  } else {echo "";};
+  $qn = $_POST['q1'];
+  $sql = "SELECT * FROM qn_tele_db WHERE qn='$qn';";
+  $r2=$conn->query($sql);
+  if ($r2->num_rows>0){
+    while($row2=$r2->fetch_assoc()){
+      echo $row2['tele'];
+    }
+  }
+  if ($conn->query($sql) === TRUE) {echo "";} else {echo "";};?>" class="button-4 w-button"></a></div>
+  </div>
+
+
+
   <img src="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg" srcset="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1080.jpeg 1080w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1600.jpeg 1600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2000.jpeg 2000w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2600.jpeg 2600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-3200.jpeg 3200w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg 3888w" sizes="100vw" alt="" class="image">
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea24fa4777920d17bd4218b" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
