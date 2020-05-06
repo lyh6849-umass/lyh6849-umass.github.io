@@ -37,22 +37,9 @@ if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
   } else {echo "";};
-
-$i= $_POST['medication'];
-$n = substr_count($i,"•");
-$lines=explode("•", $i);
-for ($j=0;$j<=$n;$j++){
-  echo $lines[$j]."<br>";
-  $k = strstr($lines[$j],', Disp:',true);
-  echo $k."<br>";
-  $l = strstr($k,', ',true);
-  echo $l."<BR>";
-  $m = substr(strstr($k,', '), 2);
-  echo $m."<br>";
-  $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
-  if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
-
-}
+$s = "q2a34";
+  $sql = "DELETE FROM question_db WHERE cc_id='q2a34';";
+  if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;} 
 ?>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea24fa4777920d17bd4218b" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
@@ -61,23 +48,3 @@ for ($j=0;$j<=$n;$j++){
 </html>
 
 
-
-
-
-<?php
-echo $_GET['q1'];
-date_default_timezone_set("America/New_York");
-$time= date('m_d_y');
-$user = 'b77225dc29feba';
-$password = '52bed046';
-$dbname = 'heroku_bf6133839e3e3aa';
-$host = 'us-cdbr-iron-east-04.cleardb.net';
-$port = 3306;
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn ->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn ->connect_error;
-    exit();
-  } else {echo "";};
-
-  if ($conn->query($sql) === TRUE) {echo "success!";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
-  ?>

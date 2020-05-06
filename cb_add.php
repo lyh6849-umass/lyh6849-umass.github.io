@@ -74,10 +74,10 @@ if($r1->num_rows>0){
             $w=substr_count("2.".$lv.$lv2.strstr($row1['q_a'],' ',true),".");
             if($w==2){
                 if($s[1] !=="1"){
-                    echo $s."<BR>";
-                    $sql = "DELETE FROM answer_db WHERE cc_id = '$s';";
+                    echo $s."yeah<BR>";
+                    $sql = "DELETE FROM answer_db WHERE cc_id='$s';";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;} 
-                    $sql = "DELETE FROM question_db WHERE cc_id = 'q2a34';"; 
+                    $sql = "DELETE FROM question_db WHERE cc_id='$s';";   
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE visit_diagnosis = '$t';";  
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
@@ -95,7 +95,7 @@ if($r1->num_rows>0){
                 } elseif($i=="6") {
                     $lv2="";
                 } else {};
-              /*
+
             if($nd % 2 ==0){
                 echo $s.", ".$q.", ".$t."<br>";
                 //if it's an answer
@@ -117,7 +117,7 @@ if($r1->num_rows>0){
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                 }
                
-            };     */
+            };     
             $sql = "SELECT * FROM answer_db;";
             $r2 = $conn->query($sql);
             echo $r2->num_rows."<br>";   

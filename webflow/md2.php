@@ -31,7 +31,7 @@ if ($conn ->connect_errno) {
   };*/
   echo "Questionnaire ID: ".$qn."<BR><BR>";
 
-  $sql = "SELECT * FROM med_db;";
+  $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
   if ($r->num_rows>0){
     echo "[Medication Reconcile]<br><table><th>Medication</th><th>Direction</th><th>Reconcile</th></tr>";
