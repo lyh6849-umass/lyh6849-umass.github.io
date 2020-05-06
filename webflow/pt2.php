@@ -73,10 +73,10 @@ if ($r5->num_rows>0){
       if($s=="PLS"||$s=="Pls"||$s=="Plz"||$s=="Please"||$s=="PLEASE"){
         $d = strstr($d,' ');
       }
-      $i1 = $id."1";
-      $i2 = $id."2";
-      $i3 = $id."3";
-      $i4 = $id."4";
+      $i1 = $id."_1";
+      $i2 = $id."_2";
+      $i3 = $id."_3";
+      $i4 = $id."_4";
       if($m!==""){
         if($s=="Take"||$s=="TAKE"){
           $d = strstr($d,' ');
