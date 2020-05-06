@@ -25,18 +25,7 @@
         <h1 class="heading-2">You will receive a text message 10-15 minutes prior to your appointment time.<br>It will guide you to the video call.</h1>
       </a><a href="
       <?php /*
-  date_default_timezone_set("America/New_York");
-$time= date('m_d_y');
-$user = 'b77225dc29feba';
-$password = '52bed046';
-$dbname = 'heroku_bf6133839e3e3aa';
-$host = 'us-cdbr-iron-east-04.cleardb.net';
-$port = 3306;
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn ->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn ->connect_error;
-    exit();
-  } else {echo "";};
+ 
   $qn = $_POST['q1'];
   $sql = "SELECT * FROM qn_tele_db WHERE qn='$qn';";
   $r2=$conn->query($sql);
@@ -60,7 +49,18 @@ if ($conn ->connect_errno) {
 </html>
 <div style="display:inline">
 <?php
-
+ date_default_timezone_set("America/New_York");
+ $time= date('m_d_y');
+ $user = 'b77225dc29feba';
+ $password = '52bed046';
+ $dbname = 'heroku_bf6133839e3e3aa';
+ $host = 'us-cdbr-iron-east-04.cleardb.net';
+ $port = 3306;
+ $conn = new mysqli($host, $user, $password, $dbname);
+ if ($conn ->connect_errno) {
+     echo "Failed to connect to MySQL: " . $conn ->connect_error;
+     exit();
+   } else {echo "";};
   $qn=$_POST['q1'];
 
 //medication infomration insert
