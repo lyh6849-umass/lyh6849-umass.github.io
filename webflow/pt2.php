@@ -152,7 +152,7 @@ if($r->num_rows>0){
             }
 
             $i = $row3['answer_id'];
-            for($j=1;$j<=3;$j++){
+            for($j=1;$j<=20;$j++){
               echo "<script>$(document).ready(()=>{ 
                   $(\".".$i."\").on('click',()=>{
                     $(\".".$i."q".$j."\").css(\"display\" ,\"flex\"); 
