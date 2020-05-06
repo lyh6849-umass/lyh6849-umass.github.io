@@ -127,7 +127,7 @@ $r=$conn->query($sql);
 if($r->num_rows>0){
   while($row=$r->fetch_assoc()){
     $cc=$row['cc_id'];
-    $sql = "SELECT * FROM question_db WHERE cc_id = '$cc' ORDER BY question_id ;";
+    $sql = "SELECT * FROM question_db WHERE cc_id = '$cc' ORDER BY id ;";
     $r2 = $conn->query($sql);
     if ($r2->num_rows>0){
       while ($row2=$r2->fetch_assoc()){
