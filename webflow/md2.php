@@ -30,6 +30,31 @@ if ($conn ->connect_errno) {
   echo "<b>[Upper respiratory infection]</b><br>";
   };*/
   echo "Questionnaire ID: ".$qn."<BR><BR>";
+
+  $sql = "SELECT * FROM med_db;";
+  $r=$conn->query($sql);
+  if ($r->num_rows>0){
+    echo "[Medication Reconcile]<br><table><th>Medication</th><th>Direction</th><th>Reconcile</th></tr>";
+    while($row=$r->fetch_assoc()){
+      $m = $row['med'];
+      $d = $row['dose'];
+      $id = $row['id'];
+      $recon = $row['recon'];
+      if ($recon == "Continued"){
+        echo "<tr><td>".$m."</td><td>".$d."</td><td><span style=\"color:green;\">".$recon."</span></td></tr>";
+      } elseif ($recon == "Discontinued" || $recon =="Patient is taking differently") {
+        echo "<tr><td>".$m."</td><td>".$d."</td><td><span style=\"color:red;\">".$recon."</span></td></tr>";
+      } elseif ($recon == ""){
+        echo "<tr><td>".$m."</td><td>".$d."</td><td><span style=\"color:blue;\">Patient didn't answer</span></td></tr>";
+      };
+      
+    }
+    echo "</table><br><br><br>";
+  }
+      
+      
+
+
   $sql = "SELECT * FROM pt_cc_db WHERE pt_id ='$qn';";
   $r2=$conn->query($sql);
   if ($r2->num_rows>0){
@@ -41,18 +66,15 @@ if ($conn ->connect_errno) {
           if($r3->num_rows>0){
             while($row3=$r3->fetch_assoc()){
               if($row3['answer_value']=="Start"){
-              } elseif ($row3['answer_value']=="Next"){
-              } else {
-                if (substr($row3['question_value'], 0, 36)=="How often have you been bothered by "){
-                  if ()
-                } else {echo $row3['question_value'].": ".$row3['answer_value']."<br>"};
+              } elseif ($row3['answer_value']=="Next"){} 
+              else {echo $row3['question_value'].": ".$row3['answer_value']."<br>";};
             }
     }
   }
   echo "<br>";
 
 }
-  }
+
 ?>
 </div>
 </body>

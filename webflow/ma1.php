@@ -28,6 +28,7 @@
 ?>
           <h1 class="heading">Questionnaire Number</h1><input type="text" class="text-field w-input" maxlength="256" name="q1" data-name="q1" placeholder="question" id="q" required="">
           <h1 class="heading">Telehealth Link</h1><input type="text" class="text-field w-input" maxlength="256" name="q3" data-name="q1" placeholder="video" id="q">
+          <h1 class="heading">Medications</h1><textarea name="medication" rows ="5" cols="100"></textarea>
           <a href="#" class="button-2 w-button q1a1">Next</a></div>
           
         </div>

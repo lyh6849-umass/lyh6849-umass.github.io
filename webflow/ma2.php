@@ -38,7 +38,7 @@
 
 
 
-<div style ="display:none;">
+<div style ="display:inline;">
 <?php
 date_default_timezone_set("America/New_York");
 $user = 'b77225dc29feba';
@@ -93,6 +93,28 @@ if(isset($h)){
 };
 };
 };
+
+//med rec
+$i= $_POST['medication'];
+$n = substr_count($i,"•");
+$lines=explode("•", $i);
+for ($j=0;$j<=$n;$j++){
+  //echo $lines[$j]."<br>";
+  $k = strstr($lines[$j],', Disp:',true);
+  //echo $k."<br>";
+  $l = strstr($k,', ',true);
+  //echo $l."<br>";
+  $m = substr(strstr($k,', '), 2);
+  //  $m = strstr(substr(strstr($k,', '), 2)," ");
+  //echo $m."<br>";
+  $arr = explode(' ',trim($m));
+  //echo $arr[0]."<br>";
+  $e= $arr[0];
+  if(strlen($l)>3){
+      $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+      }; 
+  }
   $conn -> close();
 ?>
 </div>
