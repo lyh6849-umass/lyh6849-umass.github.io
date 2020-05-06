@@ -1,3 +1,5 @@
+<textarea rows="50" cols="200">
+
 <?php 
 set_time_limit(0);
 date_default_timezone_set("America/New_York");
