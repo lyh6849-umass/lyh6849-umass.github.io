@@ -38,27 +38,6 @@ div.c3 label input:checked ~ span {
 
   <div class="w-form">
   <form id="email-form" name="email-form" data-name="Email Form" method="post" class="form" action="pt3.php">
-  <div class="c3 j">
-        <div class="b1">
-          <h1 class="k1 heading-5">Hello:)</h1>
-          <h1 class="k2 heading-5">Self check-in questionnaire will start in 5 seconds.</h1>
-          <h1 class="k3 heading-5">4 seconds</h1>
-          <h1 class="k4 heading-5">3</h1>
-          <h1 class="k5 heading-5">2</h1>
-          <h1 class="k6 heading-5">1</h1>
-        </div>
-      </div>
-      <style> .heading-5{display:none;}</style>
-      <script>$(document).ready(()=>{ 
-        $(".k1").fadeIn(1000).delay(1000).fadeOut(1000)
-        $(".k2").delay(3000).fadeIn(1000).delay(1500).fadeOut(1000)
-        $(".k3").delay(6500).fadeIn(500).delay(500).fadeOut(500)
-        $(".k4").delay(8000).fadeIn(500).delay(500).fadeOut(500)
-        $(".k5").delay(9500).fadeIn(500).delay(500).fadeOut(500)
-        $(".k6").delay(11000).fadeIn(500).delay(500).fadeOut(500)
-        $(".j").delay(12500).slideUp(1000);
-        });
-        </script>
         
 <?php 
 date_default_timezone_set("America/New_York");
