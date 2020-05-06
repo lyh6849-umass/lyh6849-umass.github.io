@@ -21,7 +21,7 @@ if ($conn ->connect_errno) {
   } else {};
   date_default_timezone_set("America/New_York");
   $time= date('m_d_y');
-  $qn = $_GET['q1'];
+  $qn = $_POST['q1'];
 
 
   /*$sql= "SELECT * FROM center_db WHERE answer_id = 'q2a1q1a1' AND patient_id = '$pt';";
