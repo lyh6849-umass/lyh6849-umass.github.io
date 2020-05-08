@@ -100,7 +100,7 @@ for ($u=0;$u<=$n;$u++){
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $t = ucwords($t);
                     echo "T is here and it is: ".$t."<br>";
-                    $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE q_id='$s', visit_diagnosis='$t';";  
+                    $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE q_id='$s';";  
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                 
                 }                
