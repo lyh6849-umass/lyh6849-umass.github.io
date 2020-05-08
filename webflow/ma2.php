@@ -57,11 +57,14 @@ $qn = $_POST['q1'];
 //visit diagnosis list automatic update
 $sql = "SELECT * FROM cc_db;";
 $r3=$conn->query($sql);
+$nn = $r3->num_rows;
 for ($i=1;$i<=10;$i++){
   $i2="q2_".$i;
   $i3=$_POST[$i2];
   $i3= ucwords($i3);
-$sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$i3');";
+  $nn = $nn + $i + 200;
+  $q_id = "q2a".$nn;
+$sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$q_id', '$i3');";
 echo $i3."<br>";
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";
@@ -78,16 +81,18 @@ if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>"
 //data insert to pt_cc_db
 for ($i=1;$i<=10;$i++){
 $j = "q2_".$i;
+echo $j;
 $h = $_POST[$j];
 if(isset($h)){
   $sql = "SELECT * FROM cc_db WHERE visit_diagnosis = '$h';";
   $r2 = $conn->query($sql);
+  echo "h is: ".$h."<BR>";
   if($r2->num_rows>0){
+    echo "numrows>0<br>";
     while ($row2 = $r2->fetch_assoc()){
       $k = $row2['q_id'];
-      $h = $row2['visit_diagnosis'];
       $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k','$h');";
-      echo $qn." ".$k."<br>";
+      echo "qn, k is: ".$qn." ".$k."<br>";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 };
 };
