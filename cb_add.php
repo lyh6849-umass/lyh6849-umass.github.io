@@ -35,7 +35,7 @@ $qn = $_POST['qa'];
 $lines=explode("\n", $qn);
 $n = substr_count($qn,"\n");
 for ($u=0;$u<=$n;$u++){ 
-    $k = $lines[$u]; 
+    $k = trim($lines[$u],"\n"); 
             $s=$k;//1.2.1.4.2.1. yes
             $s=strstr($s,' ',true); // 1.2.3.1.4.2.1.
             $s="2.".$lv.$lv2.$s;
@@ -98,10 +98,11 @@ for ($u=0;$u<=$n;$u++){
 
                     $sql = "DELETE FROM question_db WHERE cc_id='$s';";   
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
-                    $t = str_replace("\n","",ucwords($t));
+                    $t = ucwords($t);
+                    $t = substr($t,0,-1);
                     echo "T is here and it is: ".$t."<br>";
-                    $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE q_id='$s';";  
-                    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
+                    $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE visit_diagnosis='$t';";  
+                    if ($conn->query($sql) === TRUE) {echo "did";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $t= str_replace("\n","",$t);
                 }                
                 }    

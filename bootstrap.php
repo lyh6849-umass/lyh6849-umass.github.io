@@ -37,9 +37,9 @@ if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
   } else {echo "";};
-$s = "q2a34";
-  $sql = "DELETE FROM question_db WHERE cc_id='q2a34';";
-  if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;} 
+
+
+  echo "line1 \n line2";
 ?>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea24fa4777920d17bd4218b" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
