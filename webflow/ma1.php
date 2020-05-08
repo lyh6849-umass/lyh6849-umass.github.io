@@ -35,7 +35,7 @@
       <div class="c3">
         <div class="b1">
           <h1 class="heading">VISIT DIAGNOSIS</h1>
-          <div class="c4 input_list" id><input type="text" list="list2" class="text-field w-input" maxlength="256" name="q2_1" data-name="q2"  placeholder="Search" id="q-2" required=""></div>
+          <div class="c4 input_list" id><input type="text" list="list2" class="" maxlength="256" name="q2_1" data-name="q2"  placeholder="Search" id="q-2" required=""></div>
           <div class="div-block-5"><a href="#" class="button-2 w-button plus">+</a><input type="submit" value="Submit" data-wait="Please wait..." class="submit-button w-button"></div>
         </div>
       </div>

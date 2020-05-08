@@ -102,8 +102,9 @@ for ($u=0;$u<=$n;$u++){
                 echo "w is 2!<br>";
                 if($s[1] !=="1"){
                     echo $s."<br>";
-                    $t = ucwords($t);
+                    $t = str_replace("\n","",ucwords($t));
                     echo $t."<br>";
+                
                     $sql ="INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE UPDATE q_id='$s', visit_diagnosis='$t';";  
                 }                
                 if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}}    
