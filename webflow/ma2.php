@@ -64,7 +64,7 @@ for ($i=1;$i<=10;$i++){
   $i3= ucwords($i3);
   $nn = $nn + $i + 200;
   $q_id = "q2a".$nn;
-$sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$q_id', '$i3');";
+$sql = "INSERT INTO cc_add (q_id, visit_diagnosis) VALUES ('$q_id', '$i3');";
 echo $i3."<br>";
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";
