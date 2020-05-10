@@ -693,11 +693,6 @@
   object-fit: fill;
 }
 
-.checkbox-label:hover {
-  background-color: rgba(16, 45, 66, 0.75);
-  color: #fff;
-}
-
 .checkbox {
   display: none;
 }
