@@ -71,7 +71,7 @@ if ($conn ->connect_errno) {
             }
     }
   }
-  echo "<br>";
+  echo "<br><br>";
 
 }
 
