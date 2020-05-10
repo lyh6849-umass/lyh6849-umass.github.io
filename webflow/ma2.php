@@ -40,6 +40,7 @@
 <form action="ma3.php" method="POST">
 <div style ="display:inline;">
 <?php
+$nn=1;
 date_default_timezone_set("America/New_York");
 $user = 'b77225dc29feba';
 $password = '52bed046';
@@ -54,25 +55,7 @@ if ($conn ->connect_errno) {
 $time= date('m_d_y');
 $qn = $_POST['q1'];
 
-//visit diagnosis list automatic update
-$sql = "SELECT * FROM cc_db;";
-$r3=$conn->query($sql);
-$nn = $r3->num_rows;
-for ($i=1;$i<=10;$i++){
-  $i2="q2_".$i;
-  $i3=$_POST[$i2];
-  $i3= ucwords($i3);
-  $nn = $nn + $i + 200;
-  $q_id = "q2a".$nn;
-$sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$q_id', '$i3');";
-echo $i3."<br>";
-if ($conn->query($sql) === TRUE) {
-  echo "New record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
-}
-};
-echo "<br><br><br><br>";
+
 //data insert to qn_tele_db
 $qq=$_POST['q3'];
 $sql = "INSERT INTO qn_tele_db (qn, tele) VALUES ('$qn','$qq');";
@@ -100,12 +83,8 @@ if(isset($h)){
 };
 
 //med rec
-
-echo "[HERE!]<BR>";
 $i= $_POST['medication'];
-$nn=1;
 $n = substr_count($i,"\n");
-echo "n is: ".$n."<BR>";
 $lines=explode("\n", $i);
 for ($j=0;$j<=$n;$j++){
   $jj=$lines[$j];
@@ -156,7 +135,34 @@ for ($j=0;$j<=$n;$j++){
 
   } 
 
+//visit diagnosis list automatic update
+$sql = "SELECT * FROM cc_db;";
+$r3=$conn->query($sql);
+for ($i=1;$i<=10;$i++){
+  $i2="q2_".$i;
+  $i3=$_POST[$i2];
+  if(isset($_POST[$i2])){
+      $i3= ucwords($i3);
+      $q_id = "q2a".$nn;
+    $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$i3');";
+    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
 
+    $sql = "SELECT q_id FROM cc_db where visit_diagnosis ='$i3';";
+    $r= $conn->query($sql);
+    if($r->num_rows>0){
+      while($row= $r->fetch_assoc()){
+        if($row['q_id']==""){
+          echo "cc didn't exist, updated<BR><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$i3."\">
+                <input type=\"text\" list=\"list2\" name =\"svd".$nn."\">";
+                $nn=$nn+1;
+        }
+      }
+    }
+  }
+
+
+};
+echo "<br><br><br><br>";
 
   $sql = "SELECT visit_diagnosis FROM cc_db;";
   $r6=$conn->query($sql);

@@ -9,14 +9,15 @@ $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
-  } else {echo "connected";};
+  } else {echo "";};
 
   for ($i=1;$i<10;$i++){
     $v = "visit_dx".$i;
     $s = "svd".$i;
     $a = $_POST[$v];
     $b = $_POST[$s];
-    if(isset($b)){
+    if($b!==""){
+        echo "isset!<BR>";
         $sql = "SELECT q_id FROM cc_db WHERE visit_diagnosis ='$b';";
         $r = $conn->query($sql);
         if($r->num_rows>0){
