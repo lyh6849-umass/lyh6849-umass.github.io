@@ -20,7 +20,7 @@
 </head>
 <body>
   <div class="c2 w-container"><img src="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg" srcset="images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1080.jpeg 1080w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-1600.jpeg 1600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2000.jpeg 2000w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-2600.jpeg 2600w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603-p-3200.jpeg 3200w, images/silver-iphone-6-near-blue-and-silver-stethoscope-48603.jpg 3888w" sizes="100vw" alt="" class="image">
-    <h1 class="heading-2">Who&#x27;s connecting?</h1>
+    <h1 class="heading-2">To Where?</h1>
     <div class="div-block-3"><a href="ma1.html" class="button w-button">Great MA</a><a href="#" class="button w-button">VIP Patient</a><a href="old-home.html" class="button w-button">Kind MD</a></div>
     <div class="div-block-2"></div>
   </div>

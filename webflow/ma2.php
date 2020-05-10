@@ -37,7 +37,7 @@
 
 
 
-
+<form action="ma3.php" method="POST">
 <div style ="display:inline;">
 <?php
 date_default_timezone_set("America/New_York");
@@ -100,8 +100,10 @@ if(isset($h)){
 };
 
 //med rec
+
 echo "[HERE!]<BR>";
 $i= $_POST['medication'];
+$nn=1;
 $n = substr_count($i,"\n");
 echo "n is: ".$n."<BR>";
 $lines=explode("\n", $i);
@@ -137,7 +139,9 @@ for ($j=0;$j<=$n;$j++){
       if($r->num_rows>0){
         while($row = $r->fetch_assoc()){
           if($row['q_id']==""){
-            echo "cc didn't exist, updated<BR>";
+            echo "cc didn't exist, updated<BR><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$jj."\">
+            <input type=\"text\" list=\"list2\" name =\"svd".$nn."\">";
+            $nn=$nn+1;
           } if($row['q_id'] !== ""){
             echo $row['q_id']."\n";
           }
@@ -151,8 +155,22 @@ for ($j=0;$j<=$n;$j++){
  
 
   } 
+
+
+
+  $sql = "SELECT visit_diagnosis FROM cc_db;";
+  $r6=$conn->query($sql);
+  if($r6->num_rows>0){
+    echo "<datalist id=\"list2\">";
+    while ($row6=$r6->fetch_assoc()){
+      echo "<option value=\"".$row6['visit_diagnosis']."\" style=\"display:none;\"><option>";
+    }
+    echo "</datalist>";
+  };
   $conn -> close();
 ?>
+<input type="submit">
+</form>
 </div>
 </body>
 </html>
