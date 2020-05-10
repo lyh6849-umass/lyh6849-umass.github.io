@@ -51,7 +51,7 @@ $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
-  } else {echo "connected";};
+  } else {echo "";};
 $time= date('m_d_y');
 $qn = $_POST['q1'];
 
@@ -67,20 +67,57 @@ $j = "q2_".$i;
 echo $j."<BR>";
 $h = $_POST[$j];
 if(isset($h)){
+  $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$h');";
+  if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}  
+
   $sql = "SELECT * FROM cc_db WHERE visit_diagnosis = '$h';";
   $r2 = $conn->query($sql);
-  echo "h is: ".$h."<BR>";
   if($r2->num_rows>0){
-    echo "numrows>0<br>";
     while ($row2 = $r2->fetch_assoc()){
-      $k = $row2['q_id'];
-      $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k','$h');";
-      echo "qn, k is: ".$qn." ".$k."<br>";
-      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
+      if($row2['q_id']==""){
+        echo "<br><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$h."\">
+        <input type=\"text\" list=\"list2\" name =\"svd".$nn."\"><br>";
+        $nn=$nn+1;
+      } 
+      $k2 = $row['q_id'];
+
+      $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2', '$h');";
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
 };
 };
 };
 };
+
+$i= $_POST['medication'];
+$n = substr_count($i,"\n");
+$lines=explode("\n", $i);
+for ($j=0;$j<=$n;$j++){
+  $jj=$lines[$j];
+  //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
+  //echo "•<br>";
+  if(strpos($jj, "***") !== false){
+    $jj =  substr(substr(ucwords(trim($jj, "***")),1),0,-1);;
+    $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$jj');";
+    if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}  
+
+    $sql = "SELECT * FROM cc_db WHERE visit_diagnosis='$jj';";
+    $r=$conn->query($sql);
+    if($r->num_rows>0){
+      while($row = $r->fetch_assoc()){
+        if($row['q_id']==""){
+          echo "<br><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$jj."\">
+          <input type=\"text\" list=\"list2\" name =\"svd".$nn."\"><br>";
+          $nn=$nn+1;
+        } 
+        $k2 = $row['q_id'];
+        $sql = "INSERT INTO pt_cc_db (pt_id, visit_diagnosis) VALUES ('$qn', '$jj');";
+        if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+
+        }
+      }
+    } 
+  } 
+
 
 //med rec
 $i= $_POST['medication'];
@@ -107,62 +144,9 @@ for ($j=0;$j<=$n;$j++){
       $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
       }; 
-    
-    } elseif (strpos($jj, "***") !== false) {
-      $jj =  substr(substr(ucwords(trim($jj, "***")),1),0,-1);;
-      echo "line ".$j."is: ".$jj."<br>";
-      $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$jj');";
-      if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}  
-      $sql = "SELECT * FROM cc_db WHERE visit_diagnosis='$jj';";
-      $r=$conn->query($sql);
-      if($r->num_rows>0){
-        while($row = $r->fetch_assoc()){
-          if($row['q_id']==""){
-            echo "cc didn't exist, updated<BR><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$jj."\">
-            <input type=\"text\" list=\"list2\" name =\"svd".$nn."\">";
-            $nn=$nn+1;
-          } if($row['q_id'] !== ""){
-            echo $row['q_id']."\n";
-          }
-          $k2 = $row['q_id'];
-          $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2','$jj');";
-          if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
-
-        }
-      }
-    };
- 
-
+    } 
   } 
 
-//visit diagnosis list automatic update
-$sql = "SELECT * FROM cc_db;";
-$r3=$conn->query($sql);
-for ($i=1;$i<=10;$i++){
-  $i2="q2_".$i;
-  $i3=$_POST[$i2];
-  if(isset($_POST[$i2])){
-      $i3= ucwords($i3);
-      $q_id = "q2a".$nn;
-    $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$i3');";
-    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
-
-    $sql = "SELECT q_id FROM cc_db where visit_diagnosis ='$i3';";
-    $r= $conn->query($sql);
-    if($r->num_rows>0){
-      while($row= $r->fetch_assoc()){
-        if($row['q_id']==""){
-          echo "cc didn't exist, updated<BR><input type=\"text\" name=\"visit_dx".$nn."\" value=\"".$i3."\">
-                <input type=\"text\" list=\"list2\" name =\"svd".$nn."\">";
-                $nn=$nn+1;
-        }
-      }
-    }
-  }
-
-
-};
-echo "<br><br><br><br>";
 
   $sql = "SELECT visit_diagnosis FROM cc_db;";
   $r6=$conn->query($sql);
