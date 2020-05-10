@@ -22,7 +22,7 @@
 <div class="c3">
     <div class="div-block-2">
       <a href="#" class="link-block w-inline-block">
-        <h1 class="heading-2">You will receive a text message 10-15 minutes prior to your appointment time.<br>It will guide you to the video call.</h1>
+        <h1 class="heading-2">You will receive a text message 10-15 minutes prior to your appointment time.<br>Please click the link in the text message.</h1>
       </a><a href="
       <?php /*
  
