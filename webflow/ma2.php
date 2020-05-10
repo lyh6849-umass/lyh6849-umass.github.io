@@ -100,10 +100,16 @@ if(isset($h)){
 };
 
 //med rec
+echo "[HERE!]<BR>";
 $i= $_POST['medication'];
-$n = substr_count($i,"•");
-$lines=explode("•", $i);
+$n = substr_count($i,"\n");
+echo "n is: ".$n."<BR>";
+$lines=explode("\n", $i);
 for ($j=0;$j<=$n;$j++){
+  $jj=$lines[$j];
+  //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
+  //echo "•<br>";
+  if(strpos($jj, "Disp") !== false){
   //echo $lines[$j]."<br>";
   $k = strstr($lines[$j],', Disp:',true);
   //echo $k."<br>";
@@ -115,11 +121,36 @@ for ($j=0;$j<=$n;$j++){
   $arr = explode(' ',trim($m));
   //echo $arr[0]."<br>";
   $e= $arr[0];
+  echo "line ".$j."is: ".$jj."<br>";
   if(strlen($l)>3){
       $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
       }; 
-  }
+    
+    } elseif (strpos($jj, "***") !== false) {
+      $jj =  substr(substr(ucwords(trim($jj, "***")),1),0,-1);;
+      echo "line ".$j."is: ".$jj."<br>";
+      $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$jj');";
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}  
+      $sql = "SELECT * FROM cc_db WHERE visit_diagnosis='$jj';";
+      $r=$conn->query($sql);
+      if($r->num_rows>0){
+        while($row = $r->fetch_assoc()){
+          if($row['q_id']==""){
+            echo "cc didn't exist, updated<BR>";
+          } if($row['q_id'] !== ""){
+            echo $row['q_id']."\n";
+          }
+          $k2 = $row['q_id'];
+          $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2','$jj');";
+          if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+
+        }
+      }
+    };
+ 
+
+  } 
   $conn -> close();
 ?>
 </div>
