@@ -79,7 +79,7 @@ if(isset($h)){
         <input type=\"text\" list=\"list2\" name =\"svd".$nn."\"><br>";
         $nn=$nn+1;
       } 
-      $k2 = $row['q_id'];
+      $k2 = $row2['q_id'];
 
       $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2', '$h');";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
