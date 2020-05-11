@@ -63,6 +63,11 @@
    } else {echo "";};
   $qn=$_POST['q1'];
 
+//more med?
+  $mo = $_POST['medrec_momed'];
+  $sql = "INSERT INTO med_add_db (qn, momed) VALUES('$qn','$mo') ON DUPLICATE KEY UPDATE momed='$mo';";
+  if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
+
 //medication infomration insert
 $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
 $r5 = $conn->query($sql);
@@ -77,6 +82,7 @@ if ($r5->num_rows>0){
   }
 }
 
+//INSERT to center_db
   $sql= "SELECT * FROM question_db;";
   $result = $conn->query($sql);
   if($result->num_rows>0){
@@ -84,6 +90,7 @@ if ($r5->num_rows>0){
       $id = $row["question_id"];
       $q_v= $row["value"];
       $q_cc=$row["cc_id"];
+      $q_nt=$row["q_note"];
       $a_id = "";
       $a_v="";
       if($row['question_type']=="checkbox"){
@@ -101,7 +108,7 @@ if ($r5->num_rows>0){
                   }
                 }
               }
-              $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type) VALUES ('$qn', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox');";
+              $sql ="INSERT INTO center_db (patient_id, question_id, question_value, answer_id, answer_value, question_cc, question_type, q_note) VALUES ('$qn', '$id', '$q_v', '$a', '$a_v', '$q_cc', 'checkbox', '$q_nt');";
               echo $q_v;
               if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error."<BR>";}
             } elseif(empty($_POST[$id])) {echo "checkbox is empty";};
@@ -115,7 +122,7 @@ if ($r5->num_rows>0){
             while($row=$r->fetch_assoc()){
               $a_v = $row['answer_value'];
               $a_v = str_replace("'","\'",$a_v);
-              $sql = "INSERT INTO center_db (patient_id, question_id, question_value, answer_id, question_cc, answer_value) VALUES ('$qn', '$id', '$q_v', '$a', '$q_cc', '$a_v');";      
+              $sql = "INSERT INTO center_db (patient_id, question_id, question_value, answer_id, question_cc, answer_value, q_note) VALUES ('$qn', '$id', '$q_v', '$a', '$q_cc', '$a_v', '$q_nt');";      
               if ($conn->query($sql) === TRUE) {
                       echo "";
                       } else {

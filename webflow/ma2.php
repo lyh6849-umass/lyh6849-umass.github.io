@@ -61,7 +61,7 @@ $qq=$_POST['q3'];
 $sql = "INSERT INTO qn_tele_db (qn, tele) VALUES ('$qn','$qq');";
 if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 
-//data insert to pt_cc_db
+//data insert to pt_cc_db, cc_db from visit diagnosis
 for ($i=1;$i<=10;$i++){
 $j = "q2_".$i;
 echo $j."<BR>";
@@ -87,7 +87,7 @@ if(isset($h)){
 };
 };
 };
-
+//data insert to pt_cc_db, cc_db from textarea
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
 $lines=explode("\n", $i);
@@ -110,7 +110,7 @@ for ($j=0;$j<=$n;$j++){
           $nn=$nn+1;
         } 
         $k2 = $row['q_id'];
-        $sql = "INSERT INTO pt_cc_db (pt_id, visit_diagnosis) VALUES ('$qn', '$jj');";
+        $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2', '$jj');";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
 
         }
@@ -122,30 +122,33 @@ for ($j=0;$j<=$n;$j++){
 //med rec
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
+
 $lines=explode("\n", $i);
-for ($j=0;$j<=$n;$j++){
-  $jj=$lines[$j];
-  //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
-  //echo "•<br>";
-  if(strpos($jj, "Disp") !== false){
-  //echo $lines[$j]."<br>";
-  $k = strstr($lines[$j],', Disp:',true);
-  //echo $k."<br>";
-  $l = strstr($k,', ',true);
-  //echo $l."<br>";
-  $m = substr(strstr($k,', '), 2);
-  //  $m = strstr(substr(strstr($k,', '), 2)," ");
-  //echo $m."<br>";
-  $arr = explode(' ',trim($m));
-  //echo $arr[0]."<br>";
-  $e= $arr[0];
-  echo "line ".$j."is: ".$jj."<br>";
-  if(strlen($l)>3){
-      $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
-      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
-      }; 
+
+  for ($j=0;$j<=$n;$j++){
+    $jj=$lines[$j];
+    //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
+    //echo "•<br>";
+    if(strpos($jj, "Disp") !== false){
+    //echo $lines[$j]."<br>";
+    $k = strstr($lines[$j],', Disp:',true);
+    //echo $k."<br>";
+    $l = strstr($k,', ',true);
+    //echo $l."<br>";
+    $m = substr(strstr($k,', '), 2);
+    //  $m = strstr(substr(strstr($k,', '), 2)," ");
+    //echo $m."<br>";
+    $arr = explode(' ',trim($m));
+    //echo $arr[0]."<br>";
+    $e= $arr[0];
+    echo "line ".$j."is: ".$jj."<br>";
+    if(strlen($l)>3){
+        $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
+        if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+        }; 
+      } 
     } 
-  } 
+
 
 
   $sql = "SELECT visit_diagnosis FROM cc_db;";

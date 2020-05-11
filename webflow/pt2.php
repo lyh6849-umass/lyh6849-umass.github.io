@@ -39,6 +39,17 @@ div.c3 label input:checked ~ span {
   <div class="w-form">
   <form id="email-form" name="email-form" data-name="Email Form" method="post" class="form" action="pt3.php">
         
+  <div class="c3 medrec_nomed"><div class="b1"><h1 class="heading-4">Do you take any prescribed medications on a regular basis?</h1>
+  <label class="radio-button-field-3 w-radio"><input type="radio" name="medrec_momed" value="Yes" class="w-form-formradioinput radio-button-3 w-radio-input">
+  <span class="radio-button-label-3 w-form-label medrec_nomedbtn">Yes</span></label>
+  <label class="radio-button-field-3 w-radio"><input type="radio" name="medrec_momed" value="None" class="w-form-formradioinput radio-button-3 w-radio-input">
+  <span class="radio-button-label-3 w-form-label medrec_nomedbtn">No</span></label>
+  <script>$(document).ready(()=>{ $(".medrec_nomedbtn").on('click',()=>{ $("html, body").animate({scrollTop: $(".medrec_nomed").offset().top + $(".medrec_nomed").height()}, 0);});});</script>
+
+
+
+</div></div>
+
 <?php 
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y');
@@ -56,69 +67,79 @@ $qn = $_POST['q1'];
 
 
 echo "<input style=\"display:none\" type=\"text\" name=\"q1\" value=\"".$qn."\">";
+
 $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
 $r5 = $conn->query($sql);
 if ($r5->num_rows>0){
-
+  echo "<style>.medrec_nomed {display:none;]</style>";
   echo "<div class=\"c3 medrec\"><div class=\"b1\"><h1 class=\"heading-4\">Please bring all medication bottles for review.</h1>";
   echo "<a href=\"#\" class=\"button-2 w-button medrecnext\">I'm ready</a>";
   echo "<script>$(document).ready(()=>{ $(\".medrecnext\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".medrec\").offset().top + $(\".medrec\").height()}, 100);});});</script>";
   echo "</div></div>";
   while ($row5=$r5->fetch_assoc()){
-    
-      $m = $row5['med'];
-      $d = $row5['dose'];
-      $id = $row5['id'];
-      $s=strstr($d,' ',true); // 1.2.3.1.4.2.1.
-      if($s=="PLS"||$s=="Pls"||$s=="Plz"||$s=="Please"||$s=="PLEASE"){
-        $d = strstr($d,' ');
-      }
-      $i1 = $id."_1";
-      $i2 = $id."_2";
-      $i3 = $id."_3";
-      $i4 = $id."_4";
-      if($m!==""){
-        if($s=="Take"||$s=="TAKE"){
+    $m = $row5['med'];
+
+        
+        $d = $row5['dose'];
+        $id = $row5['id'];
+        $s=strstr($d,' ',true); // 1.2.3.1.4.2.1.
+        if($s=="PLS"||$s=="Pls"||$s=="Plz"||$s=="Please"||$s=="PLEASE"){
           $d = strstr($d,' ');
-          echo "<div class=\"c3 ".$id."\"><div class=\"b1\"><h1 class=\"heading-4\">Do you take this medication?</h1>
-          <div class=\"div-block-10\">
-            <div class=\"text-block-4\">Pharmacy</div>
-            <div class=\"div-block-12\">
-              <div class=\"div-block-11\">".$m."</div>
-            </div>
-            <div class=\"div-block-13\">".$d."</div>
-          </div>
-          <label class=\"radio-button-field-3 w-radio ".$i1."\"><input type=\"radio\" data-name=\"Radio 11\" id=\"radio-11\" name=\"".$id."\" value=\"Continued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i1."\">Correct</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i2."\"><input type=\"radio\" data-name=\"Radio 12\" id=\"radio-12\" name=\"".$id."\" value=\"Patient is taking differently\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i2."\">Yes, but different DIRECTION</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i3."\"><input type=\"radio\" data-name=\"Radio 13\" id=\"radio-13\" name=\"".$id."\" value=\"Discontinued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i3."\">No, I don't take it</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i4."\"><input type=\"radio\" data-name=\"Radio 14\" id=\"radio-14\" name=\"".$id."\" value=\"Duplicate\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i4."\">Duplicate Medication</span></label></div></div>
-          <script>$(document).ready(()=>{ $(\".".$i1."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i2."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i3."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i4."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          ";
-        } else {
-          echo "<div class=\"c3 ".$id."\"><div class=\"b1\"><h1 class=\"heading-4\">Do you use this medication or instrument?</h1>
-          <div class=\"div-block-10\">
-            <div class=\"text-block-4\">Pharmacy</div>
-            <div class=\"div-block-12\">
-              <div class=\"div-block-11\">".$m."</div>
-            </div>
-            <div class=\"div-block-13\">".$d."</div>
-          </div>
-          <label class=\"radio-button-field-3 w-radio ".$i1."\"><input type=\"radio\" data-name=\"Radio 11\" id=\"radio-11\" name=\"".$id."\" value=\"Continued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i1."\">Correct</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i2."\"><input type=\"radio\" data-name=\"Radio 12\" id=\"radio-12\" name=\"".$id."\" value=\"Patient is taking differently\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i2."\">Yes, but different DIRECTION</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i3."\"><input type=\"radio\" data-name=\"Radio 13\" id=\"radio-13\" name=\"".$id."\" value=\"Discontinued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i3."\">No, I don't use it</span></label>
-          <label class=\"radio-button-field-3 w-radio ".$i4."\"><input type=\"radio\" data-name=\"Radio 14\" id=\"radio-14\" name=\"".$id."\" value=\"Duplicate\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i4."\">Duplicate Medication(instrument)</span></label></div></div>
-          <script>$(document).ready(()=>{ $(\".".$i1."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i2."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i3."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          <script>$(document).ready(()=>{ $(\".".$i4."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
-          ";
         }
-    }
+        $i1 = $id."_1";
+        $i2 = $id."_2";
+        $i3 = $id."_3";
+        $i4 = $id."_4";
+        if($m!==""){
+          if($s=="Take"||$s=="TAKE"){
+            $d = strstr($d,' ');
+            echo "<div class=\"c3 ".$id."\"><div class=\"b1\"><h1 class=\"heading-4\">Do you take this medication?</h1>
+            <div class=\"div-block-10\">
+              <div class=\"text-block-4\">Pharmacy</div>
+              <div class=\"div-block-12\">
+                <div class=\"div-block-11\">".$m."</div>
+              </div>
+              <div class=\"div-block-13\">".$d."</div>
+            </div>
+            <label class=\"radio-button-field-3 w-radio ".$i1."\"><input type=\"radio\" data-name=\"Radio 11\" id=\"radio-11\" name=\"".$id."\" value=\"Continued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i1."\">Correct</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i2."\"><input type=\"radio\" data-name=\"Radio 12\" id=\"radio-12\" name=\"".$id."\" value=\"Patient is taking differently\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i2."\">Yes, but different DIRECTION</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i3."\"><input type=\"radio\" data-name=\"Radio 13\" id=\"radio-13\" name=\"".$id."\" value=\"Discontinued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i3."\">No, I don't take it</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i4."\"><input type=\"radio\" data-name=\"Radio 14\" id=\"radio-14\" name=\"".$id."\" value=\"Duplicate\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i4."\">Duplicate Medication</span></label></div></div>
+            <script>$(document).ready(()=>{ $(\".".$i1."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i2."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i3."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i4."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            ";
+          } else {
+            echo "<div class=\"c3 ".$id."\"><div class=\"b1\"><h1 class=\"heading-4\">Do you use this medication or instrument?</h1>
+            <div class=\"div-block-10\">
+              <div class=\"text-block-4\">Pharmacy</div>
+              <div class=\"div-block-12\">
+                <div class=\"div-block-11\">".$m."</div>
+              </div>
+              <div class=\"div-block-13\">".$d."</div>
+            </div>
+            <label class=\"radio-button-field-3 w-radio ".$i1."\"><input type=\"radio\" data-name=\"Radio 11\" id=\"radio-11\" name=\"".$id."\" value=\"Continued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i1."\">Correct</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i2."\"><input type=\"radio\" data-name=\"Radio 12\" id=\"radio-12\" name=\"".$id."\" value=\"Patient is taking differently\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i2."\">Yes, but different DIRECTION</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i3."\"><input type=\"radio\" data-name=\"Radio 13\" id=\"radio-13\" name=\"".$id."\" value=\"Discontinued\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i3."\">No, I don't use it</span></label>
+            <label class=\"radio-button-field-3 w-radio ".$i4."\"><input type=\"radio\" data-name=\"Radio 14\" id=\"radio-14\" name=\"".$id."\" value=\"Duplicate\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label ".$i4."\">Duplicate Medication(instrument)</span></label></div></div>
+            <script>$(document).ready(()=>{ $(\".".$i1."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i2."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i3."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            <script>$(document).ready(()=>{ $(\".".$i4."\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".".$id."\").offset().top + $(\".".$id."\").height()}, 0);});});</script>
+            ";
+          
+      }
+  
+      }
 
   }
+  echo "<div class=\"c3 medrec_momed\"><div class=\"b1\"><h1 class=\"heading-4\">Do you take medication other than what's asked above?</h1>";
+  echo "
+  <label class=\"radio-button-field-3 w-radio medrec_momedbtn\"><input type=\"radio\" name=\"medrec_momed\" value=\"Yes\" class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label medrec_momedbtn\">Yes</span></label>
+  <label class=\"radio-button-field-3 w-radio medrec_momedbtn\"><input type=\"radio\" name=\"medrec_momed\" value=\"No\"  class=\"w-form-formradioinput radio-button-3 w-radio-input\"><span class=\"radio-button-label-3 w-form-label medrec_momedbtn\">No</span></label>
+  <script>$(document).ready(()=>{ $(\".medrec_momedbtn\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".medrec_momed\").offset().top + $(\".medrec_momed\").height()}, 0);});});</script></div></div>";
+
 }
 if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}
 //all question generator

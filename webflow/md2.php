@@ -49,8 +49,20 @@ if ($conn ->connect_errno) {
       };
       
     }
-    echo "</table><br><br><br>";
+
+    echo "</table>";
+    $sql = "SELECT * FROM med_add_db WHERE qn='$qn';";
+    $r=$conn->query($sql);
+    if($r->num_rows>0){
+      while($row=$r->fetch_assoc()){
+        if($row['momed']=="Yes"){
+          echo "<span style=\"color:red;\">Some mediations are missing in the record!</span>";
+        } else{};
+      }
+    }echo"<br><br><br>";
   }
+
+  
       
       
 
