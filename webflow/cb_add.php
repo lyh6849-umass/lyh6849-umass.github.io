@@ -35,7 +35,18 @@ $qn = $_POST['qa'];
 $lines=explode("\n", $qn);
 $n = substr_count($qn,"\n");
 for ($u=0;$u<=$n;$u++){ 
-    $k = trim($lines[$u],"\n"); 
+    echo "round ".$u."!<br>";
+    if(strpos($lines[$u], "/") !== false){
+    echo $lines[$u];
+    $k2=trim(substr(strstr($lines[$u],'/'),0,-1),'/');
+    echo "2nd k is:".$k2."<br>";
+    $k = strstr($lines[$u],'/',true);
+    }
+    elseif (strpos($lines[$u], "/") !== true){
+        $k = substr($lines[$u],0,-1);
+        $k2="";
+    }
+    echo $k."<br>";
             $s=$k;//1.2.1.4.2.1. yes
             $s=strstr($s,' ',true); // 1.2.3.1.4.2.1.
             $s="2.".$lv.$lv2.$s;
@@ -63,10 +74,12 @@ for ($u=0;$u<=$n;$u++){
              
             
             $q="q".strrev($q);//q1.4.3.2.1
-            
+            echo $k."<br>";
             $t=strstr($k,' '); //value, q_to_pt, a_to_pt
-            if (substr($k,-2)==3||substr($k,-2)==4||substr($k,-2)==5||substr($k,-2)==6||$k[-2]=="x"){
-                $t=substr($t,0,-2);}
+            echo "T is =:".$t."<br>";
+            echo "T-1 is: ".$t[-1]."<br>";
+            if ($t[-1]==3||$t[-1]==4||$t[-1]==5||$t[-1]==6||$t[-1]=="x"){
+                $t=substr($t,0,-1);}
             else {};
 
             if ($t[0]==" "){
@@ -99,15 +112,15 @@ for ($u=0;$u<=$n;$u++){
                     $sql = "DELETE FROM question_db WHERE cc_id='$s';";   
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $t = ucwords($t);
-                    $t = substr($t,0,-1);
+
                     echo "T is here and it is: ".$t."<br>";
                     $sql = "INSERT INTO cc_db (q_id, visit_diagnosis) VALUES ('$s','$t') ON DUPLICATE KEY UPDATE visit_diagnosis='$t';";  
-                    if ($conn->query($sql) === TRUE) {echo "did";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
+                    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $t= str_replace("\n","",$t);
                 }                
                 }    
 
-            $i = $k[-2];
+            $i = $k[-1];
             if ($i == 3) {
                $lv=strstr($k,' ',true);
                 } elseif($i==4) {
@@ -117,11 +130,11 @@ for ($u=0;$u<=$n;$u++){
                 } elseif($i==6) {
                     $lv2="";
                 } else {};
-                echo "k-2 is: ".$k[-2]."<BR>";
+                echo "k-2 is: ".$k[-1]."<BR>";
             if($nd % 2 ==0){
                 echo $s.", ".$q.", ".$t."<br>";
                 //if it's an answer
-                if($k[-2]=="x"){
+                if($k[-1]=="x"){
                    $sql = "INSERT INTO answer_db (answer_id, question_id, answer_value, answer_type, cc_id) VALUES ('$s','$q','$t','checkbox', '$c');";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}; 
                 } else {
@@ -132,13 +145,13 @@ for ($u=0;$u<=$n;$u++){
                 //if it's a question   
                 echo $s." ".$t."<br>";
 
-                if($k[-2] == "x"){
+                if($k[-1] == "x"){
                     echo "it came to checkbox<br>";
-                    $sql = "INSERT INTO question_db (question_id, value, cc_id, question_type) VALUES ('$s', '$t','$c', 'checkbox');";
+                    $sql = "INSERT INTO question_db (question_id, value, cc_id, question_type, q_note) VALUES ('$s', '$t','$c', 'checkbox','$k2');";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                 } else {
                     echo "it came to radio<br>";
-                    $sql = "INSERT INTO question_db (question_id, value, cc_id, question_type) VALUES ('$s', '$t','$c', 'radio');";
+                    $sql = "INSERT INTO question_db (question_id, value, cc_id, question_type, q_note) VALUES ('$s', '$t','$c', 'radio','$k2');";
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                 }
                

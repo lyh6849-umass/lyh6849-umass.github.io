@@ -33,11 +33,8 @@
 
 
 
-
-
-
-
 <form action="ma3.php" method="POST">
+<input type="submit">
 <div style ="display:inline;">
 <?php
 $nn=1;
@@ -55,7 +52,6 @@ if ($conn ->connect_errno) {
 $time= date('m_d_y');
 $qn = $_POST['q1'];
 
-
 //data insert to qn_tele_db
 $qq=$_POST['q3'];
 $sql = "INSERT INTO qn_tele_db (qn, tele) VALUES ('$qn','$qq');";
@@ -69,7 +65,6 @@ $h = $_POST[$j];
 if(isset($h)){
   $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$h');";
   if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}  
-
   $sql = "SELECT * FROM cc_db WHERE visit_diagnosis = '$h';";
   $r2 = $conn->query($sql);
   if($r2->num_rows>0){
@@ -80,13 +75,13 @@ if(isset($h)){
         $nn=$nn+1;
       } 
       $k2 = $row2['q_id'];
-
       $sql = "INSERT INTO pt_cc_db (pt_id, cc_id, visit_diagnosis) VALUES ('$qn', '$k2', '$h');";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+      };
+    };
+  };
 };
-};
-};
-};
+
 //data insert to pt_cc_db, cc_db from textarea
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
@@ -118,13 +113,10 @@ for ($j=0;$j<=$n;$j++){
     } 
   } 
 
-
 //med rec
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
-
 $lines=explode("\n", $i);
-
   for ($j=0;$j<=$n;$j++){
     $jj=$lines[$j];
     //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
@@ -149,8 +141,6 @@ $lines=explode("\n", $i);
       } 
     } 
 
-
-
   $sql = "SELECT visit_diagnosis FROM cc_db;";
   $r6=$conn->query($sql);
   if($r6->num_rows>0){
@@ -162,7 +152,7 @@ $lines=explode("\n", $i);
   };
   $conn -> close();
 ?>
-<input type="submit">
+
 </form>
 </div>
 </body>

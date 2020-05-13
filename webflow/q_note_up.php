@@ -20,10 +20,12 @@
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
 <body>
+    
+<div class="here"></div>
     <form action="q_note_up.php" method="post">
 
 <?php 
-ini_set( 'max_input_vars' , 4000 );
+ini_set('max_input_vars', 4000);
 set_time_limit(0);
 date_default_timezone_set("America/New_York");
 $time= date('m_d_y');
@@ -37,28 +39,61 @@ $n=1;
 $sql = "SELECT * FROM question_db;";
 $r=$conn->query($sql);
     if($r->num_rows>0){
+        while($row=$r->fetch_assoc()){
+            $m = $row['question_id'];
+            if(isset($_POST[$m])){
+                $am=$_POST[$m];
+                $sql = "UPDATE question_db SET q_note = '$am' WHERE question_id='$m';";
+                if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
+
+                $sql = "UPDATE center_db SET q_note = '$am' WHERE question_id='$m';";
+                if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
+
+            }}}
+
+
+$sql = "SELECT * FROM question_db;";
+$r=$conn->query($sql);
+    if($r->num_rows>0){
         echo "[cc_db]<br><table><th>value</th><th>q_note</th></tr>";
         while($row=$r->fetch_assoc()){
-            if($row['q_note']==""){
+        
                 $v = $row['value'];
-                echo"<tr><td><input style=\"width:40vw;\" type=\"text\" value=\"".$v."\" name=\"visit_dx".$n."\"></td><td><input style=\"width:40vw;\" type=\"text\" list=\"list2\" name=\"svd".$n."\"></td><td>";
-                $n=$n+1;
-            }
+                $id = $row['question_id'];
+                $q_n = $row['q_note'];
+                if($q_n==""){
+                    echo "<tr><td style=\"width:30vw;\">".$v."</td><td><div><span class=\"svd svd".$n."\">+++</span>";
+                    echo "<script>$(document).ready(()=>{
+                              $(\".svd".$n."\").on('click',event=>{
+                                var html1 = '<input style=\&quot;width:40vw;\&quot; list=list2 type=\&quot;text\&quot; id=\&quot;transcript\&quot; name =".$id.">';
+                                $(event.currentTarget).parent().append(html1);
+                                $(event.currentTarget).css(\"display\",\"none\");
+                                i++;
+                              });});
+                        </script>"."</div></td><td>";
+                    $n=$n+1;
+    
+                } elseif($q_n!==""){
+                    echo "<tr><td style=\"width:30vw;\">".$v."</td><td><div><span class=\"svd svd".$n."\">".$q_n."</span>";
+                    echo "<script>$(document).ready(()=>{
+                              $(\".svd".$n."\").on('click',event=>{
+                                var html1 = '<input style=\&quot;width:40vw;\&quot; type=\&quot;text\&quot; id=\&quot;transcript\&quot; name =".$id.">';
+                                $(event.currentTarget).parent().append(html1);
+                                $(event.currentTarget).css(\"display\",\"none\");
+                                i++;
+                              });});
+                        </script>"."</div></td><td>";
+                    $n=$n+1;
+                }
+                
+            
         }
         echo "</table><br><br><br>";
     }
 
-$sql = "SELECT q_note FROM question_db;";
-$r6=$conn->query($sql);
-if($r6->num_rows>0){
-    echo "<datalist id=\"list2\">";
-    while ($row6=$r6->fetch_assoc()){
-    echo "<option value=\"".$row6['q_note']."\" style=\"display:none;\"><option>";
-    }
-    echo "</datalist>";
-};
 
 
+/*
 for ($i=1;$i<=$n;$i++){
     $v="visit_dx".$i;
     $s="svd".$i;
@@ -74,10 +109,45 @@ for ($i=1;$i<=$n;$i++){
 
 
 }
-?>
+*/
+$sql = "SELECT q_note FROM question_db;";
+$r6=$conn->query($sql);
+if($r6->num_rows>0){
+    echo "<datalist id=\"list2\">";
+    while ($row6=$r6->fetch_assoc()){
+    echo "<option value=\"".$row6['q_note']."\" style=\"display:none;\"><option>";
+    }
+    echo "</datalist>";
+};
 
+
+?>
 
 <input type="submit">
   </form>
 
+    <script>   
+        
+          $(document).ready(()=>{
+          $(".svd").on('click',event=>{
+            var html1 = '<input style=\"width:40vw;\" type=\"text\" id=\"transcript\" name =\"svd';
+            var i = 'test';
+            var html2 = '\">';
+            $(event.currentTarget).parent().append(html1+i+html2);
+            i++;
+          });});
+    </script>
+    <style>
+        .svd {
+            cursor: pointer;
+        }
+        .hide {
+            display:none;
+        }
+        </style>
+
+
+
+</body>
+</html>
 
