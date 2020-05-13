@@ -77,16 +77,17 @@ if ($conn ->connect_errno) {
           $r3= $conn->query($sql);
           if($r3->num_rows>0){
             while($row3=$r3->fetch_assoc()){
-              $q_n = $row3['q_note'];
-              $av = $row3['answer_value'];
+              $q_n = ucwords($row3['q_note']);
+              $av = ucwords($row3['answer_value']);
+              
               $av = trim($av,-1);
               if($av == 'Start'){} 
               elseif ($av == 'Next'){} 
               else {
                 if ($q_n==""){
-                  echo $row3['question_value'].": ".$row3['answer_value']."<br>";}
+                  echo $row3['question_value'].": ".$av."<br>";}
                  elseif ($q_n!==""){
-                  echo $row3['q_note'].": ".$row3['answer_value']."<br>";};
+                  echo $q_n.": ".$av."<br>";};
                  
               } 
             }

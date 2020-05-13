@@ -38,7 +38,7 @@ for ($u=0;$u<=$n;$u++){
     echo "round ".$u."!<br>";
     if(strpos($lines[$u], "/") !== false){
     echo $lines[$u];
-    $k2=trim(substr(strstr($lines[$u],'/'),0,-1),'/');
+    $k2=ucwords(trim(substr(strstr($lines[$u],'/'),0,-1),'/'));
     echo "2nd k is:".$k2."<br>";
     $k = strstr($lines[$u],'/',true);
     }
@@ -118,7 +118,7 @@ for ($u=0;$u<=$n;$u++){
                     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}
                     $t= str_replace("\n","",$t);
                 }                
-                }    
+            }    
 
             $i = $k[-1];
             if ($i == 3) {
