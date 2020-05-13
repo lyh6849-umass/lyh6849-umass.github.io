@@ -22,8 +22,8 @@
 <div class="c3">
     <div class="div-block-2">
       <a href="#" class="link-block w-inline-block">
-        <h1 class="heading-2">You will receive a text message 10-15 minutes prior to your appointment time.<br>Please click the link in the text message.</h1>
-      </a><a href="
+        <h1 class="heading-2">Please click on the link below for video call.</h1>
+      </a><a href="https://doxy.me/famdrlee
       <?php /*
  
   $qn = $_POST['q1'];
