@@ -25,8 +25,7 @@
         <h1 class="heading-2">Please click on the link below for video call.</h1>
       </a><a href="https://doxy.me/famdrlee
       <?php /*
- 
-  $qn = $_POST['q1'];
+   $qn = $_POST['q1'];
   $sql = "SELECT * FROM qn_tele_db WHERE qn='$qn';";
   $r2=$conn->query($sql);
   if ($r2->num_rows>0){
