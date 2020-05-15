@@ -1740,18 +1740,22 @@
     line-height: 28px;
   }
   .checkbox-label-2 {
-    font-size: 18px;
+    margin-bottom: 0px;
+    font-size: 19px;
+    text-align: center;
   }
   .checkbox-2 {
     width: 15px;
     height: 15px;
     margin-top: 0px;
+    margin-left: 0px;
   }
   .checkbox-field-2 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    padding-left: 0px;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
@@ -1765,6 +1769,9 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
   }
 }
 
