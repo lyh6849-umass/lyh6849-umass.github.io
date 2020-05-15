@@ -73,7 +73,7 @@ $r5 = $conn->query($sql);
 if ($r5->num_rows>0){
   echo "<style>.medrec_nomed {display:none;]</style>";
   echo "<div class=\"c3 medrec\"><div class=\"b1\"><h1 class=\"heading-4\">Please bring all medication bottles for review.</h1>";
-  echo "<a href=\"#\" class=\"button-2 w-button medrecnext\">I'm ready</a>";
+  echo "<a href=\"#\" class=\"button-2 w-button  medrecnext\">I'm ready</a>";
   echo "<script>$(document).ready(()=>{ $(\".medrecnext\").on('click',()=>{ $(\"html, body\").animate({scrollTop: $(\".medrec\").offset().top + $(\".medrec\").height()}, 100);});});</script>";
   echo "</div></div>";
   while ($row5=$r5->fetch_assoc()){
