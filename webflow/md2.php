@@ -2,26 +2,44 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <link href = "css.css" type = "text/css" rel="stylesheet">
 
 </head>
 <body>
+  <div id="test">test here</div>
+  <button id="fuck" value="fuckx2">button</button>
+<?php include 'db.php';
+$qn = $_POST['q1'];
+echo "Questionnaire ID: ".$qn."<BR><BR>";?>
+<div id="medrec"></div>
+<div id="success"></div>
+<script>
+var qn = '<?php echo $qn;?>';
+  $(document).ready(function(){
+    $.post("medrec.php",{qn:qn},function(data){
+            $("#success").html(data);
+            });
+    $("#medrec").load("medrec.php");
+  });
+</script>
+
+<script type="text/javascript">
+    function deleteAjax(id){
+        $.post('suggestions.php',{delete_id:id},function(data){
+            $('#tr'+id).hide('slow');
+            $("#test").html(data);
+            });
+        };
+</script>
+
+
+
+
+
 
 <?php
-$user = 'b77225dc29feba';
-$password = '52bed046';
-$dbname = 'heroku_bf6133839e3e3aa';
-$host = 'us-cdbr-iron-east-04.cleardb.net';
-$port = 3306;
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn ->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn ->connect_error;
-    exit();
-  } else {};
-  date_default_timezone_set("America/New_York");
-  $time= date('m_d_y');
-  $qn = $_POST['q1'];
 
 
   /*$sql= "SELECT * FROM center_db WHERE answer_id = 'q2a1q1a1' AND patient_id = '$pt';";
@@ -29,7 +47,6 @@ if ($conn ->connect_errno) {
   if ($result ->num_rows>0){
   echo "<b>[Upper respiratory infection]</b><br>";
   };*/
-  echo "Questionnaire ID: ".$qn."<BR><BR>";
 
   $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
@@ -71,7 +88,7 @@ if ($conn ->connect_errno) {
   $r2=$conn->query($sql);
   if ($r2->num_rows>0){
     while($row2=$r2->fetch_assoc()){
-      echo "<br>[".$row2['visit_diagnosis']."]<br>";
+      echo "<br>[".$row2['visit_diagnosis']."]<br><div id=\"".$row2['cc_id']."\">";
       $i = $row2['cc_id'];
         $sql = "SELECT * FROM center_db WHERE patient_id = '$qn' AND question_cc = '$i';";
           $r3= $conn->query($sql);
@@ -92,12 +109,24 @@ if ($conn ->connect_errno) {
               } 
             }
     }
+
+    echo "</div><button onclick=\"copyTo('#".$row2['cc_id']."')\">Copy</button><br><br>";
+
   }
-  echo "<br><br>";
 
 }
 
 ?>
+<script>
+function copyTo(element) {
+  var $temp = $("<textarea>");
+  var brRegex = /<br\s*[\/]?>/gi;
+  $("body").append($temp);
+  $temp.val($(element).html().replace(brRegex, "\r\n")).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+</script>
 </div>
 </body>
 </html>
