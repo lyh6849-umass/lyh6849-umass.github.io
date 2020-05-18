@@ -7,7 +7,7 @@
 
 </head>
 <body>
-  <div id="test">test here</div>
+  <div id="test"></div>
   <button id="fuck" value="fuckx2">button</button>
 <?php include 'db.php';
 $qn = $_POST['q1'];
