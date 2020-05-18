@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id="test"></div>
-  <button id="fuck" value="fuckx2">button</button>
+
 <?php include 'db.php';
 $qn = $_POST['q1'];
 echo "Questionnaire ID: ".$qn."<BR><BR>";?>
