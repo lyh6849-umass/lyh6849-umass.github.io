@@ -117,6 +117,10 @@ var qn = '<?php echo $qn;?>';
 }
 
 ?>
+
+<br>
+<div id="msg">Hello, this is Dr. Lee. Our staff will inform you the PIN code on the phone. Please click on the link once you know your PIN number. http://pghd.herokuapp.com/webflow/pt1.php</div>
+<button onclick="copyTo('#msg')">Copy</button>
 <script>
 function copyTo(element) {
   var $temp = $("<textarea>");
