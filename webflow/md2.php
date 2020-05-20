@@ -7,8 +7,8 @@
 
 </head>
 <body>
-  <div id="test">test here</div>
-  <button id="fuck" value="fuckx2">button</button>
+  <div id="test"></div>
+
 <?php include 'db.php';
 $qn = $_POST['q1'];
 echo "Questionnaire ID: ".$qn."<BR><BR>";?>
@@ -48,9 +48,7 @@ var qn = '<?php echo $qn;?>';
   echo "<b>[Upper respiratory infection]</b><br>";
   };*/
 
-
-
-
+0
 
   $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
@@ -82,7 +80,7 @@ var qn = '<?php echo $qn;?>';
       }
     }echo"<br><br><br>";
   }
-
+*/
   
       
 ////find cc_id for dm
@@ -303,6 +301,10 @@ while($row=$r->fetch_assoc()){
 
 
 ?>
+
+<br>
+<div onclick="copyTo('#msg')" id="msg" style="cursor: pointer;">Hello, this is Dr. Lee. Our staff will inform you the PIN code on the phone. Please click on the link once you know your PIN number. http://pghd.herokuapp.com/webflow/pt1.php</div>
+<button onclick="copyTo('#msg')">Copy</button>
 <script>
 function copyTo(element) {
   var $temp = $("<textarea>");
