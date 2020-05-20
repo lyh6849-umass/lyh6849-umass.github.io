@@ -80,7 +80,7 @@ var qn = '<?php echo $qn;?>';
       }
     }echo"<br><br><br>";
   }
-*/
+
   
       
 ////find cc_id for dm
