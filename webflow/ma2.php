@@ -291,6 +291,8 @@ $lines=explode("\n", $i);
     $e= $arr[0];
     if(strlen($l)>3){
       $l=substr($l,4);
+      $arr1 = str_split($l);
+      print_r ($arr1);
         $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
         }; 
