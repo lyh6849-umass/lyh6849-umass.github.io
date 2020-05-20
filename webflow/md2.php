@@ -48,7 +48,7 @@ var qn = '<?php echo $qn;?>';
   echo "<b>[Upper respiratory infection]</b><br>";
   };*/
 
-0
+
 
   $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
