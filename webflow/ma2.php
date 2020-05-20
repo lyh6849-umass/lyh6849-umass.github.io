@@ -290,7 +290,7 @@ $lines=explode("\n", $i);
     //echo $arr[0]."<br>";
     $e= $arr[0];
     if(strlen($l)>3){
-      $l=substr($l,3);
+      $l=substr($l,4);
         $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
         }; 
