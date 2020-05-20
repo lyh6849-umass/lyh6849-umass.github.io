@@ -142,6 +142,16 @@ if ($r5->num_rows>0){
 
 }
 if ($conn->query($sql) === TRUE) {echo "";} else {echo "";}
+
+
+////find cc_id for dm
+$sql = "SELECT q_id FROM cc_db WHERE visit_diagnosis='Diabetes Follow Up';";
+$r=$conn->query($sql);
+while($row=$r->fetch_assoc()){
+  $dmid=$row['q_id'];
+}
+
+
 //all question generator
 $sql = "SELECT cc_id FROM pt_cc_db WHERE pt_id ='$qn';";
 $r=$conn->query($sql);

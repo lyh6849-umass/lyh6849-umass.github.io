@@ -60,7 +60,7 @@ if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>"
 //data insert to pt_cc_db, cc_db from visit diagnosis
 for ($i=1;$i<=10;$i++){
 $j = "q2_".$i;
-echo $j."<BR>";
+echo $j;
 $h = $_POST[$j];
 if(isset($h)){
   $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$h');";
@@ -113,6 +113,162 @@ for ($j=0;$j<=$n;$j++){
     } 
   } 
 
+
+  $time_input = strtotime("2011/05/21");  
+  $date_input = getDate($time_input);  
+  print_r($date_input);
+  echo "<br><br><br><br>";                 
+
+
+// DM meds to center_db
+$array1 = array();
+$sql = "SELECT dm_med FROM dm_med_db;";
+$r=$conn->query($sql);
+if($r->num_rows>0){
+  while($row=$r->fetch_assoc()){
+    $array1[]=$row['dm_med'];
+  }}
+  print_r ($array1);
+  echo "<br>";
+
+$i= $_POST['medication'];
+$n = substr_count($i,"\n");
+$lines=explode("\n", $i);
+$hban=0;
+for ($j=0;$j<=$n;$j++){
+  $jj=$lines[$j];
+    //strings with medication name
+  if(0 < count(array_intersect(array_map('strtolower', explode(' ', $jj)), array_map('strtolower',$array1))))
+  {
+    if(strpos($jj, "Rfl:") !== false){
+      if(strpos($jj, "syringe") == false){
+        echo substr(strstr($jj,', Disp:',true),3)."yeah<br>";
+
+  }}}
+  //strings with HBA1C
+  if(strpos($jj, "HGBA1C") !== false){
+    $arr1 = str_split($jj);
+    //print_r ($arr1);
+    //echo "<br>";
+    $nn = strlen($jj);
+    $ni=1;
+    for($i=0;$i<$nn;$i++){
+      if (is_numeric($arr1[$i]) && $ni==1){
+          $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==2){
+        $hba=$arr1[$i];
+        $ni=$ni+1;
+      } elseif(is_numeric($arr1[$i])&&$ni==3){
+        $hba=$hba*10+$arr1[$i];
+        //echo "hba1c is: ".$hba."<br>";
+      } elseif($arr1[$i]=="."&&$ni==3){
+        $ni=$ni+1;
+      } elseif(is_numeric($arr1[$i])&&$ni==4){
+        $hba=$hba+0.1*$arr1[$i];
+        $ni++;
+        $hban++;
+        //echo "hba1c is: ".$hba."<br>";
+      } elseif($arr1[$i]==" "&&$ni=5){
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==6){
+        $hbam = $arr1[$i];
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==7){
+        $hbam = $hbam*10 + $arr1[$i];
+        $ni++;
+        if($hbam<10){
+          $hbam="0".$hbam;
+        } else {};
+        //echo "Month is: ".$hbam."<br>";
+      } elseif(is_numeric($arr1[$i])&&$ni==8){
+        $hbad = $arr1[$i];
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==9){
+        $hbad = $hbad*10 + $arr1[$i];
+        $ni++;
+        if($hbad<10){
+          $hbad="0".$hbad;
+        } else {};
+        //echo "Date is: ".$hbad."<br>";
+      } elseif(is_numeric($arr1[$i])&&$ni==10){
+        $hbay = $arr1[$i];
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==11){
+        $hbay = $hbay*10 + $arr1[$i];
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==12){
+        $hbay = $hbay*10 + $arr1[$i];
+        $ni++;
+      } elseif(is_numeric($arr1[$i])&&$ni==13){
+        $hbay = $hbay*10 + $arr1[$i];
+        $ni++;
+        //echo "Year is: ".$hbay."<br>";
+      }
+        
+        //echo $arr1[$i]."=".$ni."<br>";
+    }
+    $date = $hbay."-".$hbam."-".$hbad;
+    if ($hban==0){
+      $sql = "INSERT INTO dm_a1c (qn,prox) VALUES('$qn','$hban');";
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}   
+    } else {
+      $sql = "INSERT INTO dm_a1c (qn,prox,a1c,date) VALUES('$qn','$hban','$hba','$date');";
+      if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
+    }
+
+/*
+    if($hban==1){
+      $hba1=$hba;
+      $date=$hbay."-".$hbam."-".$hbad;
+      $date1=date_create($date);
+      $date1st = $date1;
+      $date2= date('Y-m-d');
+      $date2= date_create($date2);
+      $diff=date_diff($date1,$date2);
+      if($diff->format('%y')==0){
+        $hbaint1 = "The lastest HbA1c checked ".$diff->format('%m month(s)/%d day(s)')." ago is ".$hba1."% ";
+      } else {
+        $hbaint1 =  "The lastest HbA1c checked ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." ago is ".$hba1."% ";
+      }
+    } elseif($hban==2){
+      $hba2=$hba;
+      $hbag=$hba2-$hba1;
+      $date=$hbay."-".$hbam."-".$hbad;
+      $date1=date_create($date);
+      $date2nd=$date1;
+      $date2= date('Y-m-d');
+      $date2= date_create($date2);
+      $diff=date_diff($date1st,$date2nd);
+      if($hbag>0){
+        if($diff->format('%y')==0){
+          $hbaint2 =  "which has improved by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%m month(s)/%d day(s)')." interval<br>";
+        } else {
+          $hbaint2 =  "which has improved by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." interval<br>";
+        }
+      } elseif($hbag==0){
+        if($diff->format('%y')==0){
+          $hbaint2 =  "which equals to the HbA1c checked with ".$diff->format('%m month(s)/%d day(s)')." interval<br>";
+        } else {
+          $hbaint2 =  "which equals to the HbA1c checked with ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." interval<br>";
+        }
+      } elseif($hbag<0){
+        if($diff->format('%y')==0){
+          $hbaint2 =  "which has progressed by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%m month(s)/%d day(s)')." interval<br>";
+        } else {
+          $hbaint2 =  "which has progressed by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." interval<br>";
+        }
+      }
+    } */
+
+  }
+  /*
+        */
+}
+
+echo $hbaint1.$hbaint2;
+
+
+
 //med rec
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
@@ -121,7 +277,7 @@ $lines=explode("\n", $i);
     $jj=$lines[$j];
     //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
     //echo "•<br>";
-    if(strpos($jj, "Disp") !== false){
+    if(strpos($jj, "Rfl:") !== false){
     //echo $lines[$j]."<br>";
     $k = strstr($lines[$j],', Disp:',true);
     //echo $k."<br>";
@@ -133,8 +289,8 @@ $lines=explode("\n", $i);
     $arr = explode(' ',trim($m));
     //echo $arr[0]."<br>";
     $e= $arr[0];
-    echo "line ".$j."is: ".$jj."<br>";
     if(strlen($l)>3){
+      $l=substr($l,3);
         $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
         }; 

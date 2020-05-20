@@ -4,78 +4,54 @@
 <html data-wf-page="5ea48705af4837295335b172" data-wf-site="5ea24fa4777920d17bd4218b">
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<div id="success">success</div>
 
-<script>
-$(document).ready(function(){
-    $("#success").load("load-comment.php");
-})
-</script>
-<?php
+<?php 
 include 'db.php';
 
-  $sql = "SELECT * FROM med_db WHERE recon='Discontinued' LIMIT 5;";
-  $r=$conn->query($sql);
-  
-  if ($r->num_rows>0){
-    echo "[Medication Reconcile]<br><table><th>Medication</th><th>Direction</th><th>Reconcile</th><th>Edit</th></tr>";
-    while($row=$r->fetch_assoc()){
-      $m = $row['med'];
-      $d = $row['dose'];
-      $id = $row['id'];
-      $recon = $row['recon'];
-      if ($recon == "Continued"){
-        echo "<tr><td>".$m."</td><td>".$d."</td><td><span style=\"color:green;\">".$recon."</span></td><td></td></tr>";
-      } elseif ($recon == "Discontinued" || $recon =="Patient is taking differently") {
-        echo "<tr id=\"tr".$id."\"><td>".$m."</td><td>".$d."</td><td><span style=\"color:red;\">".$recon."</span></td><td><button id=\"del".$id."\" value=\"nowwhat".$id."\" onclick=\"deleteAjax(".$id.")\")>Del</button></td></tr>";
-      } elseif ($recon == ""){
-        echo "<tr><td>".$m."</td><td>".$d."</td><td><span style=\"color:blue;\">Patient didn't answer</span></td></tr>";
-      };
-      
-    }
-
-    echo "</table>";
-    $sql = "SELECT * FROM med_add_db;";
-    $r=$conn->query($sql);
-    if($r->num_rows>0){
-      while($row=$r->fetch_assoc()){
-        if($row['momed']=="Yes"){
-          echo "<span style=\"color:red;\">Some mediations are missing in the record!</span>";
-        } else{};
-      }
-    }echo"<br><br><br>";
+$array1 = array();
+$sql = "SELECT visit_diagnosis FROM cc_db;";
+$r=$conn->query($sql);
+if($r->num_rows>0){
+  while($row=$r->fetch_assoc()){
+    $array1[]=$row['visit_diagnosis'];
   }
-?>
+}
+
+print_r( $array1 );
+echo "<br>";
 
 
-<script type="text/javascript">
-    function deleteAjax(id){
-        $.post('suggestions.php',{delete_id:id},function(data){
-            $('#tr'+id).hide('slow');
-            $("#test").html(data);
-            });
-        };
-</script>
+/*
+$result = mysql_query("
+SELECT tag_title_fld
+FROM tags
+JOIN articles_tags USING(tag_ID)
+ORDER BY article.article_ID
+");
+foreach($result as $row) { 
+   $array1[] = $row['tag_title_fld'];
+   // With count. See below for the query it goes with
+   // $array2 = array();
+   // $array2['tag'] = $row['tag_title_fld'];
+   // $array2['count'] = $row['tag_count'];
+   // $array1[] = $array2;
+}
+*/
 
 
-<!--
-  <script type='text/javascript'>
-    $(docment).ready(function(){
-        $("#del").click(function(){
-            var ka = 'tsettest';
-                $.post("suggestions.php", {
-                    suggestion: ka
 
-                }, function(data, status){
-                    $("#test").html(data);
-                });
-
-        });
+      $string = 'metformin dose is URI 500 hundres and insulin is whatever';
+      $array = array("x`etformin","insulin");
+      //check if med name is included 
+      print_r(explode(' ', $string));
+      echo "<br>";
+      if(0 < count(array_intersect(array_map('strtolower', explode(' ', $string)), array_map('strtolower',$array1))))
+      {
+        echo $string."<br>";
+      }
+?>      
 
 
-    });
-
-  </script>-->
 </head>
 <body>
 
