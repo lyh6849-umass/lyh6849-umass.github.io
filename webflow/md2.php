@@ -121,10 +121,8 @@ while($row=$r->fetch_assoc()){
         if(isset($_POST[$finger])){$finger=$_POST[$finger];}
 
         
-        
 
         $hb2nd="0";
-
         $array1 = array();
         $sql = "SELECT dm_med FROM dm_med_db;";
         $r=$conn->query($sql);
@@ -146,7 +144,6 @@ while($row=$r->fetch_assoc()){
               };
               $rr=$row['med'];
               if(strpos(strtolower($rr), "syringe") !== false){
-
               } else {
                 echo $on.". ".$row['med']." ".$row['dose']."<br>";
                 $on++;  
@@ -160,7 +157,6 @@ while($row=$r->fetch_assoc()){
           if($r->num_rows>0){
             while($row=$r->fetch_assoc()){
               if($row['prox']==0){
-
               } elseif($row['prox']==1) {
                 $date1=date_create($row['date']);
                 $date2= date('Y-m-d');
@@ -184,7 +180,6 @@ while($row=$r->fetch_assoc()){
                   $hb2nd =$row['a1c'];
                 }
               }
- 
 
         ////3. Hba1c repeat
               if($r->num_rows==1){
@@ -199,10 +194,9 @@ while($row=$r->fetch_assoc()){
                 }
               } elseif($r->num_rows>1){
                 $hbg=$hb1st - $hb2nd;
-              
               }
-              
             }
+
             ////finger stick + hypoglycemia?
             if($hypogs==$hypogsy){
               echo "<span style=\"color:red;\">Pt reports symptomatic hypoglycemia episode(s).<br></span>";
@@ -210,9 +204,10 @@ while($row=$r->fetch_assoc()){
               echo "Pt reports asymptomatic hypoglycemia episode(s).<br>";
             } elseif($hypog==$hypogn){
               echo "Pt checks finger stick regularly, denies hypoglycemic episode(s).<br>";
-            } elseif($finger=$fingern){
+            } elseif($finger==$fingern){
               echo "<span style=\"color:red;\">Pt doesn't check finger stick regularly.<br></span>";
-            };
+            } else{};
+
             //////Plan starts here
             echo "Plan: <br>";
             ////a1c repeat
@@ -229,7 +224,7 @@ while($row=$r->fetch_assoc()){
             }
             
 
-            if($finger=$fingern){
+            if($finger==$fingern){
               echo "Recommended patient to check fasting finger stick periodically to prevent hypoglycemia.<br>";
             };
             
