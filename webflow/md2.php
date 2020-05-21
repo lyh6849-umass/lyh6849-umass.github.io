@@ -97,7 +97,34 @@ while($row=$r->fetch_assoc()){
     while($row2=$r2->fetch_assoc()){
       echo "<br>[".$row2['visit_diagnosis']."]<br><div id=\"".$row2['cc_id']."\">";
       if ($row2['cc_id']==$dmid){
+        ////1. DM regimen
         // create an array of DM index
+        $finger="21fwe";
+        $hypog="1";
+        $hypogy="A1";
+        $hypogn="b1";
+        $hypogs="c1";
+        $hypogsy="d1";
+        $hypogsn="ewf1";
+        
+        $hypog=$dmid."q1a1q1a1q2";
+        $finger=$dmid."q1a1q1";
+        $fingery=$finger."a1";
+        $fingern=$finger."a2";
+        $hypogy=$hypog."a1";
+        $hypogn=$hypog."a2";
+        $hypogs=$hypog."a1q1";
+        $hypogsy=$hypogs."a1";
+        $hypogsn=$hypogs."a2";
+        if(isset($_POST[$hypog])){$hypog=$_POST[$hypog];}
+        if(isset($_POST[$hypogs])){$hypogs=$_POST[$hypogs];}
+        if(isset($_POST[$finger])){$finger=$_POST[$finger];}
+
+        
+        
+
+        $hb2nd="0";
+
         $array1 = array();
         $sql = "SELECT dm_med FROM dm_med_db;";
         $r=$conn->query($sql);
@@ -117,96 +144,99 @@ while($row=$r->fetch_assoc()){
                 echo "Current diabetes regimen: <br>";
                 $wn++;
               };
-              echo $on.". ".$row['med']." ".$row['dose']."<br>";
-              $on++;
-            }
+              $rr=$row['med'];
+              if(strpos(strtolower($rr), "syringe") !== false){
 
-          }
-        }
-        $i= $_POST['medication'];
-        $n = substr_count($i,"\n");
-        $lines=explode("\n", $i);
-        $hban=0;
-        for ($j=0;$j<=$n;$j++){
-          $jj=$lines[$j];
-            //strings with medication name
-          if(0 < count(array_intersect(array_map('strtolower', explode(' ', $jj)), array_map('strtolower',$array1))))
-          {
-            if(strpos($jj, "Rfl:") !== false){
-              if(strpos($jj, "syringe") == false){
-                echo substr(strstr($jj,', Disp:',true),3)."yeah<br>";
-          }}}
-          //strings with HBA1C
-          if(strpos($jj, "HGBA1C") !== false){
-            $arr1 = str_split($jj);
-            //print_r ($arr1);
-            //echo "<br>";
-            $nn = strlen($jj);
-            $ni=1;
-            for($i=0;$i<$nn;$i++){
-              if (is_numeric($arr1[$i]) && $ni==1){
-                  $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==2){
-                $hba=$arr1[$i];
-                $ni=$ni+1;
-              } elseif(is_numeric($arr1[$i])&&$ni==3){
-                $hba=$hba*10+$arr1[$i];
-                //echo "hba1c is: ".$hba."<br>";
-              } elseif($arr1[$i]=="."&&$ni==3){
-                $ni=$ni+1;
-              } elseif(is_numeric($arr1[$i])&&$ni==4){
-                $hba=$hba+0.1*$arr1[$i];
-                $ni++;
-                $hban++;
-                //echo "hba1c is: ".$hba."<br>";
-              } elseif($arr1[$i]==" "&&$ni=5){
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==6){
-                $hbam = $arr1[$i];
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==7){
-                $hbam = $hbam*10 + $arr1[$i];
-                $ni++;
-                if($hbam<10){
-                  $hbam="0".$hbam;
-                } else {};
-                //echo "Month is: ".$hbam."<br>";
-              } elseif(is_numeric($arr1[$i])&&$ni==8){
-                $hbad = $arr1[$i];
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==9){
-                $hbad = $hbad*10 + $arr1[$i];
-                $ni++;
-                if($hbad<10){
-                  $hbad="0".$hbad;
-                } else {};
-                //echo "Date is: ".$hbad."<br>";
-              } elseif(is_numeric($arr1[$i])&&$ni==10){
-                $hbay = $arr1[$i];
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==11){
-                $hbay = $hbay*10 + $arr1[$i];
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==12){
-                $hbay = $hbay*10 + $arr1[$i];
-                $ni++;
-              } elseif(is_numeric($arr1[$i])&&$ni==13){
-                $hbay = $hbay*10 + $arr1[$i];
-                $ni++;
-                //echo "Year is: ".$hbay."<br>";
+              } else {
+                echo $on.". ".$row['med']." ".$row['dose']."<br>";
+                $on++;  
               }
-                
-                //echo $arr1[$i]."=".$ni."<br>";
             }
-            $date = $hbay."-".$hbam."-".$hbad;
-            if ($hban==0){
-              $sql = "INSERT INTO dm_a1c (qn,prox) VALUES('$qn','$hban');";
-              if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}   
-            } else {
-              $sql = "INSERT INTO dm_a1c (qn,prox,a1c,date) VALUES('$qn','$hban','$hba','$date');";
-              if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
+          }
+        } echo "<br>";
+        ////HbA1c review
+          $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn';";
+          $r=$conn->query($sql);
+          if($r->num_rows>0){
+            while($row=$r->fetch_assoc()){
+              if($row['prox']==0){
+
+              } elseif($row['prox']==1) {
+                $date1=date_create($row['date']);
+                $date2= date('Y-m-d');
+                $date2= date_create($date2);
+                $diff=date_diff($date1,$date2);
+                echo "The lastest HbA1c checked ";   
+                if($diff->format('%y')==0){
+                  if($diff->format('%m')>1){
+                    echo $diff->format('%m months');
+                  } else {
+                    echo $diff->format('%m month');
+                  }
+                } else {
+                  echo $diff->format('%y year(s)/%m month(s)');
+                };
+                echo " (".$row['date'].") is ".$row['a1c']."%.<br>";
+                $hb1st=$row['a1c'];
+              } else {
+                echo "-".$row['date'].": ".$row['a1c']."%<br>";
+                if($row['prox']==2){
+                  $hb2nd =$row['a1c'];
+                }
+              }
+ 
+
+        ////3. Hba1c repeat
+              if($r->num_rows==1){
+                while($row=$r->fetch_assoc()){
+                  if($row['prox']==1){
+                    if($row['a1c']<7){
+                      echo "";
+                    } else {
+                      echo "Due to unsatisfactory HbA1c, will recheck the HbA1c 3 months after change in the DM management regimen.<br>";
+                    }
+                  }
+                }
+              } elseif($r->num_rows>1){
+                $hbg=$hb1st - $hb2nd;
+              
+              }
+              
             }
+            ////finger stick + hypoglycemia?
+            if($hypogs==$hypogsy){
+              echo "<span style=\"color:red;\">Pt reports symptomatic hypoglycemia episode(s).<br></span>";
+            } elseif($hypogs==$hypogsn){
+              echo "Pt reports asymptomatic hypoglycemia episode(s).<br>";
+            } elseif($hypog==$hypogn){
+              echo "Pt checks finger stick regularly, denies hypoglycemic episode(s).<br>";
+            } elseif($finger=$fingern){
+              echo "<span style=\"color:red;\">Pt doesn't check finger stick regularly.<br></span>";
+            };
+            //////Plan starts here
+            echo "Plan: <br>";
+            ////a1c repeat
+            if($hypog==$hypogy){
+              echo "";
+            } elseif($hb1st<=7 && $hbg >-0.5 && $hbg <0){
+              echo "Continue current treatment.<br>Repeat HbA1c in 6 months.<br>";
+            } elseif($hb1st<=7){
+              if($hbg==0.5 || $hbg<-0.5 ||$hbg>=0){
+                echo "Continue current treatment with repeat HbA1c in 4 months.<br>";
+              }
+            } elseif($hb1st>7){
+              echo "<br>Repeat HbA1c in *** months.<br>";
+            }
+            
+
+            if($finger=$fingern){
+              echo "Recommended patient to check fasting finger stick periodically to prevent hypoglycemia.<br>";
+            };
+            
+          }
+
         
+
         /*
             if($hban==1){
               $hba1=$hba;
@@ -249,12 +279,12 @@ while($row=$r->fetch_assoc()){
                   $hbaint2 =  "which has progressed by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." interval<br>";
                 }
               }
-            } */
+            } 
         
           }
-          /*
-                */
-        }
+          
+                
+        }*/
 
 
 
@@ -281,7 +311,7 @@ while($row=$r->fetch_assoc()){
                  
               } 
             }
-    }
+        }
       }
 
 
