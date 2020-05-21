@@ -218,7 +218,7 @@ while($row=$r->fetch_assoc()){
             ////a1c repeat
             if($hypog==$hypogy){
               echo "";
-            } elseif($hb1st<=7 && $hbg >-0.5 && $hbg <0){
+            } elseif($hb1st<=7 && $hbg >=-0.5 && $hbg <0){
               echo "Continue current treatment.<br>Repeat HbA1c in 6 months.<br>";
             } elseif($hb1st<=7){
               if($hbg==0.5 || $hbg<-0.5 ||$hbg>=0){
