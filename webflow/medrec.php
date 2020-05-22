@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
-$qn = $_POST['qn'];
+
+$qn = $_POST['q_id'];
 $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
   if ($r->num_rows>0){
@@ -33,3 +34,16 @@ $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   }
 
 ?>
+
+<script>
+function deleteAjax(id) {
+  $.ajax({
+    type:'post',
+    url:'medrecdel.php',
+    data:{delete_id:id},
+    success:function(data){
+      $("#tr"+id).slideUp(10);
+      }
+    }); 
+  };  
+</script>

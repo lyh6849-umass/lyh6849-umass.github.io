@@ -23,7 +23,7 @@
     <div class="div-block-2">
       <a href="#" class="link-block w-inline-block">
         <h1 class="heading-2">Please click on the link below for video call.</h1>
-      </a><a href="https://doxy.me/famdrlee
+      </a><a href="https://doxy.me/drleefam
       <?php /*
    $qn = $_POST['q1'];
   $sql = "SELECT * FROM qn_tele_db WHERE qn='$qn';";

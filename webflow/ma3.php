@@ -30,6 +30,7 @@ if ($conn ->connect_errno) {
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 
         $sql = "UPDATE cc_db SET q_id = '$c' WHERE visit_diagnosis='$a';";
+        if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};
 
         $sql = "UPDATE pt_cc_db SET cc_id = '$c' WHERE visit_diagnosis='$a';";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;};

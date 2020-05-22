@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <link href = "css.css" type = "text/css" rel="stylesheet">
 
 </head>
@@ -14,42 +13,30 @@ $qn = $_POST['q1'];
 echo "Questionnaire ID: ".$qn."<BR><BR>";?>
 <div id="medrec"></div>
 <div id="success"></div>
-<script>
-var qn = '<?php echo $qn;?>';
-  $(document).ready(function(){
-    $.post("medrec.php",{qn:qn},function(data){
-            $("#success").html(data);
-            });
-    $("#medrec").load("medrec.php");
-  });
-</script>
 
 <script type="text/javascript">
-    function deleteAjax(id){
-        $.post('suggestions.php',{delete_id:id},function(data){
-            $('#tr'+id).hide('slow');
-            $("#test").html(data);
-            });
-        };
+var qn = '<?php echo $qn;?>';
+  $(document).ready(function(){
+    $.ajax({
+
+    type:'post',
+    url:'medrec.php',
+    data:{q_id:qn},
+    success:function(data){
+      $("#success").html(data);
+      }
+
+    }); 
+  });  
 </script>
 
-
-
-
-
-
 <?php
-
-
-
   /*$sql= "SELECT * FROM center_db WHERE answer_id = 'q2a1q1a1' AND patient_id = '$pt';";
   $result = $conn->query($sql);
   if ($result ->num_rows>0){
   echo "<b>[Upper respiratory infection]</b><br>";
   };*/
-
-
-
+  /*
   $sql = "SELECT * FROM med_db WHERE qn = '$qn';";
   $r=$conn->query($sql);
   if ($r->num_rows>0){
@@ -68,7 +55,6 @@ var qn = '<?php echo $qn;?>';
       };
       
     }
-
     echo "</table>";
     $sql = "SELECT * FROM med_add_db WHERE qn='$qn';";
     $r=$conn->query($sql);
@@ -80,8 +66,7 @@ var qn = '<?php echo $qn;?>';
       }
     }echo"<br><br><br>";
   }
-
-  
+  */
       
 ////find cc_id for dm
 $sql = "SELECT q_id FROM cc_db WHERE visit_diagnosis='Diabetes Follow Up';";
@@ -116,11 +101,20 @@ while($row=$r->fetch_assoc()){
         $hypogs=$hypog."a1q1";
         $hypogsy=$hypogs."a1";
         $hypogsn=$hypogs."a2";
-        if(isset($_POST[$hypog])){$hypog=$_POST[$hypog];}
-        if(isset($_POST[$hypogs])){$hypogs=$_POST[$hypogs];}
-        if(isset($_POST[$finger])){$finger=$_POST[$finger];}
-
-        
+        $sql = "SELECT question_id, answer_id FROM center_db WHERE patient_id='$qn';";
+        $r=$conn->query($sql);
+        if($r->num_rows>0){
+          while($row=$r->fetch_assoc()){
+            if($row['question_id']==$hypog){
+              $hypog=$row['answer_id'];
+            } elseif($row['question_id']==$hypogs){
+              $hypogs=$row['answer_id'];
+            } elseif($row['question_id']==$finger){
+              $finger=$row['answer_id'];
+            }
+          }
+        };
+      
 
         $hb2nd="0";
         $array1 = array();
@@ -131,7 +125,7 @@ while($row=$r->fetch_assoc()){
             $array1[]=$row['dm_med'];
           }}
         //select med from the med_db, create an array with 'med'
-        $sql = "SELECT med, dose from med_db;";
+        $sql = "SELECT med, dose from med_db WHERE qn='$qn';";
         $wn=0;
         $on=1;
         $r=$conn->query($sql);
@@ -152,7 +146,7 @@ while($row=$r->fetch_assoc()){
           }
         } echo "<br>";
         ////HbA1c review
-          $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn';";
+          $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn' LIMIT 6;";
           $r=$conn->query($sql);
           if($r->num_rows>0){
             while($row=$r->fetch_assoc()){
@@ -172,7 +166,7 @@ while($row=$r->fetch_assoc()){
                 } else {
                   echo $diff->format('%y year(s)/%m month(s)');
                 };
-                echo " (".$row['date'].") is ".$row['a1c']."%.<br>";
+                echo " (".$row['date'].") ago is ".$row['a1c']."%.<br>";
                 $hb1st=$row['a1c'];
               } else {
                 echo "-".$row['date'].": ".$row['a1c']."%<br>";
@@ -199,17 +193,17 @@ while($row=$r->fetch_assoc()){
 
             ////finger stick + hypoglycemia?
             if($hypogs==$hypogsy){
-              echo "<span style=\"color:red;\">Pt reports symptomatic hypoglycemia episode(s).<br></span>";
+              echo "Pt reports symptomatic hypoglycemia episode(s).<br>";
             } elseif($hypogs==$hypogsn){
               echo "Pt reports asymptomatic hypoglycemia episode(s).<br>";
             } elseif($hypog==$hypogn){
               echo "Pt checks finger stick regularly, denies hypoglycemic episode(s).<br>";
             } elseif($finger==$fingern){
-              echo "<span style=\"color:red;\">Pt doesn't check finger stick regularly.<br></span>";
+              echo "Pt doesn't check finger stick regularly.<br>";
             } else{};
 
             //////Plan starts here
-            echo "Plan: <br>";
+            echo "<br>Plan: <br>";
             ////a1c repeat
             if($hypog==$hypogy){
               echo "";
@@ -220,7 +214,7 @@ while($row=$r->fetch_assoc()){
                 echo "Continue current treatment with repeat HbA1c in 4 months.<br>";
               }
             } elseif($hb1st>7){
-              echo "<br>Repeat HbA1c in *** months.<br>";
+              echo "Repeat HbA1c in 3-4 months.<br>";
             }
             
 
