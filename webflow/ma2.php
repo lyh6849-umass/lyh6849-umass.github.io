@@ -143,7 +143,11 @@ for ($j=0;$j<=$n;$j++){
   //echo "jj is".$jj."<br>";
   //echo "trnis".$trn."<br>";
   //string with last time treatment regimen changed
-  if(strpos($jj, "Encourage regular exercise") !==false || strpos($jj, "continue current") !==false){
+  $nr=0;
+  for ($i=0;$i<strlen($jj);$i++){
+    if(is_numeric($jj[$i])){$nr++;};
+  }
+  if($nr<4 && $trn==1){
     $trn++;
   }
 
