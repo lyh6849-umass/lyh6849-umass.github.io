@@ -2,9 +2,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<link href = "css.css" type = "text/css" rel="stylesheet">
-
 </head>
+
 <body>
   <div id="test"></div>
 
@@ -75,15 +74,13 @@ while($row=$r->fetch_assoc()){
   $dmid=$row['q_id'];
 }     
 
-
+////start DM note here
   $sql = "SELECT * FROM pt_cc_db WHERE pt_id ='$qn';";
   $r2=$conn->query($sql);
   if ($r2->num_rows>0){
     while($row2=$r2->fetch_assoc()){
       echo "<br>[".$row2['visit_diagnosis']."]<br><div id=\"".$row2['cc_id']."\">";
       if ($row2['cc_id']==$dmid){
-        ////1. DM regimen
-        // create an array of DM index
         $finger="21fwe";
         $hypog="1";
         $hypogy="A1";
@@ -100,7 +97,7 @@ while($row=$r->fetch_assoc()){
         $hypogn=$hypog."a2";
         $hypogs=$hypog."a1q1";
         $hypogsy=$hypogs."a1";
-        $hypogsn=$hypogs."a2";
+        $hypogsn=$hypogs."a2";        
         $sql = "SELECT question_id, answer_id FROM center_db WHERE patient_id='$qn';";
         $r=$conn->query($sql);
         if($r->num_rows>0){
@@ -114,6 +111,10 @@ while($row=$r->fetch_assoc()){
             }
           }
         };
+
+////1. DM regimen
+        // create an array of DM index
+
       
 
         $hb2nd="0";
@@ -144,11 +145,22 @@ while($row=$r->fetch_assoc()){
               }
             }
           }
-        } echo "<br>";
-        ////HbA1c review
+        } 
+          ////finger stick + hypoglycemia?
+          if($hypogs==$hypogsy){
+            echo "Pt reports symptomatic hypoglycemia episode(s).<br>";
+          } elseif($hypogs==$hypogsn){
+            echo "Pt reports asymptomatic hypoglycemia episode(s).<br>";
+          } elseif($hypog==$hypogn){
+            echo "Pt checks finger stick regularly, denies hypoglycemic episode(s).<br>";
+          } elseif($finger==$fingern){
+            echo "Pt doesn't check finger stick regularly.<br>";
+          } else{};
+////HbA1c review
           $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn' LIMIT 6;";
           $r=$conn->query($sql);
           if($r->num_rows>0){
+
             while($row=$r->fetch_assoc()){
               if($row['prox']==0){
               } elseif($row['prox']==1) {
@@ -176,6 +188,7 @@ while($row=$r->fetch_assoc()){
               }
 
         ////3. Hba1c repeat
+
               if($r->num_rows==1){
                 while($row=$r->fetch_assoc()){
                   if($row['prox']==1){
@@ -191,19 +204,9 @@ while($row=$r->fetch_assoc()){
               }
             }
 
-            ////finger stick + hypoglycemia?
-            if($hypogs==$hypogsy){
-              echo "Pt reports symptomatic hypoglycemia episode(s).<br>";
-            } elseif($hypogs==$hypogsn){
-              echo "Pt reports asymptomatic hypoglycemia episode(s).<br>";
-            } elseif($hypog==$hypogn){
-              echo "Pt checks finger stick regularly, denies hypoglycemic episode(s).<br>";
-            } elseif($finger==$fingern){
-              echo "Pt doesn't check finger stick regularly.<br>";
-            } else{};
 
-            //////Plan starts here
-            echo "<br>Plan: <br>";
+
+//////Plan starts here
             ////a1c repeat
             if($hypog==$hypogy){
               echo "";
@@ -221,8 +224,23 @@ while($row=$r->fetch_assoc()){
             if($finger==$fingern){
               echo "Recommended patient to check fasting finger stick periodically to prevent hypoglycemia.<br>";
             };
+
+
+
             
           }
+          echo "<br>Treatment(DM)<br>";
+          $sql = "SELECT * FROM dm_treat WHERE qn='$qn';";
+          $r=$conn->query($sql);
+          if($r->num_rows>0){
+            while($row=$r->fetch_assoc()){
+              $date=$row['date'];
+              $plan=$row['plan'];
+              echo "-"."$date".": ".$plan."<br>";
+            }
+          }
+          echo "-".date('Y-m-d').": <br>";
+          echo "-Encourage regular exercise<br>";
 
         
 
