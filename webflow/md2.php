@@ -164,6 +164,8 @@ while($row=$r->fetch_assoc()){
 
             while($row=$r->fetch_assoc()){
               if($row['prox']==0){
+              } elseif($row['a1c']=="HbA1c not checked"){
+                echo "HbA1c not checked<br>";
               } elseif($row['prox']==1) {
                 $date1=date_create($row['date']);
                 $date2= date('Y-m-d');
