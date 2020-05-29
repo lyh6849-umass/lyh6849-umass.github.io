@@ -109,6 +109,41 @@ while($row=$r->fetch_assoc()){
             } elseif($row['question_id']==$finger){
               $finger=$row['answer_id'];
             }
+            if ($row['answer_id']==$dmid."q1a1q2a1q1a1"){
+              echo "Compliant to med<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q2a1q1a2"){
+              echo "Not compliant to med<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a1"){
+              echo "Opthalmology visit within 3 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a2"){
+              echo "Opthalmology visit within 6 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a3"){
+              echo "Opthalmology visit within 12 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a4"){
+              echo "Opthalmology visit over a year ago<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q4a2"){
+              echo "Not seeing an ophthalmologist<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a1"){
+              echo "Last podiatry visit: within 3 months";
+            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a2"){
+              echo "Last podiatry visit: within 6 months";
+            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a3"){
+              echo "Last podiatry visit: within 12 months";
+            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a4"){
+              echo "Last podiatry visit: over a year ago";
+            } elseif ($row['answer_id']==$dmid."q1a1q5a2"){
+              echo "Not seeing a podiatry<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a1"){
+              echo "Endo on board, last app in 3 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a2"){
+              echo "Endo on board, last app in 6 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a3"){
+              echo "Endo on board, last app in 12 months<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a4"){
+              echo "Endo on board, however, last app more than a year ago<br>";
+            } elseif ($row['answer_id']==$dmid."q1a1q3a2"){
+              echo "Endo not on board<br>";
+            }
             echo $row['q_note'].": ".$row['answer_value']."<br>";
 
           }
