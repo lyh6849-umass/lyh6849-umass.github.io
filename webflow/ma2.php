@@ -114,7 +114,7 @@ for ($j=0;$j<=$n;$j++){
     };
     $microalbm=substr($arr3[0],-2);
     $microalbd=$arr3[1];
-    $microalby=$arr3[2];
+    $microalby=substr($arr3[2],0,-1);
     $microalbdate=$microalby."-".$microalbm."-".$microalbd;
     $sql="INSERT INTO dm_microalbumin (qn, date,microalbu) VALUES ('$qn','$microalbdate','$microalbumin')";
     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
