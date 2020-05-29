@@ -159,11 +159,10 @@ while($row=$r->fetch_assoc()){
 ////HbA1c review
           $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn' LIMIT 6;";
           $r=$conn->query($sql);
-          $lasthba1c="0";
+          $lasthba1c="6";
           if($r->num_rows>0){
 
             while($row=$r->fetch_assoc()){
-              echo $row['a1c'][0]."dddd<br>";
               if($row['a1c']=="HbA1c not checked"){
                 echo $row['a1c']."<br>";
               }
@@ -289,7 +288,7 @@ if($r->num_rows>0){
           } elseif($nexthba1c==1){
             echo "-Repeat HbA1c in ".$nexthba1c." month.";
           } elseif($nexthba1c<1){
-            echo "-Repeat HbA1c within a week.";
+            echo "-Repeat HbA1c within a few days.";
           }
         
 
