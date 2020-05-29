@@ -393,6 +393,7 @@ $lines=explode("\n", $i);
 
     $k=strtolower($k);
     $k=str_replace(" take","",$k);
+    $k=str_replace(",00","00",$k);
     $k=str_replace(" oral","",$k);
     $k=str_replace(" for pain","",$k);
     $k=str_replace(" by mouth","",$k);

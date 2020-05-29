@@ -109,45 +109,13 @@ while($row=$r->fetch_assoc()){
             } elseif($row['question_id']==$finger){
               $finger=$row['answer_id'];
             }
-            if ($row['answer_id']==$dmid."q1a1q2a1q1a1"){
-              echo "Compliant to med<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q2a1q1a2"){
-              echo "Not compliant to med<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a1"){
-              echo "Opthalmology visit within 3 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a2"){
-              echo "Opthalmology visit within 6 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a3"){
-              echo "Opthalmology visit within 12 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a4"){
-              echo "Opthalmology visit over a year ago<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q4a2"){
-              echo "Not seeing an ophthalmologist<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a1"){
-              echo "Last podiatry visit: within 3 months";
-            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a2"){
-              echo "Last podiatry visit: within 6 months";
-            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a3"){
-              echo "Last podiatry visit: within 12 months";
-            } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a4"){
-              echo "Last podiatry visit: over a year ago";
-            } elseif ($row['answer_id']==$dmid."q1a1q5a2"){
-              echo "Not seeing a podiatry<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a1"){
-              echo "Endo on board, last app in 3 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a2"){
-              echo "Endo on board, last app in 6 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a3"){
-              echo "Endo on board, last app in 12 months<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a4"){
-              echo "Endo on board, however, last app more than a year ago<br>";
-            } elseif ($row['answer_id']==$dmid."q1a1q3a2"){
-              echo "Endo not on board<br>";
-            }
-            echo $row['q_note'].": ".$row['answer_value']."<br>";
+            //echo $row['q_note'].": ".$row['answer_value']."<br>";
+
 
           }
         };
+
+
 
 ////1. DM regimen
         // create an array of DM index
@@ -184,6 +152,7 @@ while($row=$r->fetch_assoc()){
           }
         } 
           ////finger stick + hypoglycemia?
+          echo "<br>";
           if($hypogs==$hypogsy){
             echo "Pt reports symptomatic hypoglycemia episode(s).<br>";
           } elseif($hypogs==$hypogsn){
@@ -209,7 +178,7 @@ while($row=$r->fetch_assoc()){
                 $date2= date('Y-m-d');
                 $date2= date_create($date2);
                 $diff=date_diff($date1,$date2);
-                echo "<br>The latest HbA1c checked ";   
+                echo "The latest HbA1c checked ";   
                 if($diff->format('%y')==0){
                   $lasthba1c=$diff->format('%m');
                   if($diff->format('%m')>1){
@@ -294,10 +263,62 @@ if($r->num_rows>0){
         if($on==0){
           echo "Currently not on ACEi or ARB<br>";
         } 
+
+
+
+////consultant 
+$sql = "SELECT * FROM center_db WHERE patient_id='$qn';";
+$r=$conn->query($sql);
+if($r->num_rows>0){
+  echo "<BR>";
+  while($row=$r->fetch_assoc()){
+
+    if ($row['answer_id']==$dmid."q1a1q2a1q1a1"){
+
+    } elseif ($row['answer_id']==$dmid."q1a1q2a1q1a2"){
+      echo "Patient reports non-compliance to med<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a1"){
+      echo "Last Opthalmology visit: within 3 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a2"){
+      echo "Last Opthalmology visit: within 6 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a3"){
+      echo "Last Opthalmology visit: within 12 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q4a1q1a4"){
+      echo "Last Opthalmology visit: over a year ago<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q4a2"){
+      echo "Not seeing an ophthalmologist<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a1"){
+      echo "Last podiatry visit: within 3 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a2"){
+      echo "Last podiatry visit: within 6 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a3"){
+      echo "Last podiatry visit: within 12 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q5a1q1a4"){
+      echo "Last podiatry visit: over a year ago<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q5a2"){
+      echo "Not seeing a podiatry<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a1"){
+      echo "Endo on board, last app in 3 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a2"){
+      echo "Endo on board, last app in 6 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a3"){
+      echo "Endo on board, last app in 12 months<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q3a1q1a4"){
+      echo "Endo on board, however, last app more than a year ago<br>";
+    } elseif ($row['answer_id']==$dmid."q1a1q3a2"){
+      echo "Endo not on board<br>";
+    }
+
+
+  }
+};
+
+
 //////Plan starts here
 
             
 
+  
 
 
 
@@ -321,13 +342,12 @@ if($r->num_rows>0){
           };
           $nexthba1c=4-$lasthba1c;
           if($nexthba1c>2){
-            echo "-Repeat HbA1c in ".$nexthba1c." months.";
+            echo "-Repeat HbA1c in ".$nexthba1c." months.<br>";
           } elseif($nexthba1c==1){
-            echo "-Repeat HbA1c in ".$nexthba1c." month.";
+            echo "-Repeat HbA1c in ".$nexthba1c." month.<br>";
           } elseif($nexthba1c<1){
-            echo "-Repeat HbA1c within a few days.";
+            echo "-Repeat HbA1c within a few days.<br>";
           }
-        
 
         /*
             if($hban==1){
