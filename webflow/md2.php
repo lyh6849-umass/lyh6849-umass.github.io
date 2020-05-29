@@ -68,7 +68,7 @@ var qn = '<?php echo $qn;?>';
   */
       
 ////find cc_id for dm
-$sql = "SELECT q_id FROM cc_db WHERE visit_diagnosis='Diabetes Follow Up';";
+$sql = "SELECT q_id FROM cc_db WHERE visit_diagnosis='Diabetes Mellitus(DM)';";
 $r=$conn->query($sql);
 while($row=$r->fetch_assoc()){
   $dmid=$row['q_id'];
@@ -98,7 +98,7 @@ while($row=$r->fetch_assoc()){
         $hypogs=$hypog."a1q1";
         $hypogsy=$hypogs."a1";
         $hypogsn=$hypogs."a2";        
-        $sql = "SELECT question_id, answer_id FROM center_db WHERE patient_id='$qn';";
+        $sql = "SELECT * FROM center_db WHERE patient_id='$qn';";
         $r=$conn->query($sql);
         if($r->num_rows>0){
           while($row=$r->fetch_assoc()){
@@ -109,6 +109,8 @@ while($row=$r->fetch_assoc()){
             } elseif($row['question_id']==$finger){
               $finger=$row['answer_id'];
             }
+            echo $row['q_note'].": ".$row['answer_value']."<br>";
+
           }
         };
 
