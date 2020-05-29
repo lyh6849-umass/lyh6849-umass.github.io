@@ -163,10 +163,12 @@ while($row=$r->fetch_assoc()){
           if($r->num_rows>0){
 
             while($row=$r->fetch_assoc()){
+              echo $row['a1c'][0]."dddd<br>";
+              if($row['a1c']=="HbA1c not checked"){
+                echo $row['a1c']."<br>";
+              }
               if($row['prox']==0){
-              } elseif($row['a1c']=="HbA1c not checked"){
-                echo "HbA1c not checked<br>";
-              } elseif($row['prox']==1) {
+              }elseif($row['prox']==1) {
                 $date1=date_create($row['date']);
                 $date2= date('Y-m-d');
                 $date2= date_create($date2);
@@ -211,6 +213,7 @@ while($row=$r->fetch_assoc()){
 
 
 ////microalbumin/Cr
+echo "<br>";
 $sql = "SELECT * FROM dm_microalbumin WHERE qn='$qn' LIMIT 1;";
 $r=$conn->query($sql);
 if($r->num_rows>0){
