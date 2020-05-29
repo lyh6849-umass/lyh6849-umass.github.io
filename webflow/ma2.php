@@ -38,6 +38,7 @@
 <div style ="display:inline;">
 <?php
 $nn=1;
+$micron=0;
 date_default_timezone_set("America/New_York");
 $user = 'b77225dc29feba';
 $password = '52bed046';
@@ -82,14 +83,58 @@ if(isset($h)){
   };
 };
 
+
+
+
+
+
+
+
 //data insert to pt_cc_db, cc_db from textarea
 $i= $_POST['medication'];
 $n = substr_count($i,"\n");
 $lines=explode("\n", $i);
+
 for ($j=0;$j<=$n;$j++){
   $jj=$lines[$j];
   //echo "jj is: ".$jj."<br>jj0 is :".$jj[0]."<br>";
   //echo "•<br>";
+
+  //microalbumin to dm_microalbmuin
+  if(strpos($jj, "MICROALBUMIN")!==false){
+    echo ",,,,,,,,,,,,,,,,,,,,";
+  $micron++;
+  if($micron==2){
+    $microalbstr=$jj;
+    $arr3 = explode("/", $microalbstr);
+    $microalbumin= substr(substr($arr3[0],0,-3),14);
+    $mmm=strlen($microalbumin);
+    for($i=0;$i<$mmm;$i++){
+      echo "string".$i."is". $microalbumin[$i]."<br>";
+    };
+    $microalbm=substr($arr3[0],-2);
+    $microalbd=$arr3[1];
+    $microalby=$arr3[2];
+    $microalbdate=$microalby."-".$microalbm."-".$microalbd;
+    $sql="INSERT INTO dm_microalbumin (qn, date,microalbu) VALUES ('$qn','$microalbdate','$microalbumin')";
+    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
+
+  };
+  };
+
+  if(strpos($jj, "No results found for: MICROALBUMIN") !== false){
+    $ml="Microalbumin/Cr not checked";
+    $sql = "INSERT INTO dm_microalbumin (qn,microalbu) VALUES('$qn','$ml');";
+    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
+  }
+
+
+
+
+
+
+
+
   if(strpos($jj, "***") !== false){
     $jj =  substr(substr(ucwords(trim($jj, "***")),1),0,-1);;
     $sql = "INSERT INTO cc_db (visit_diagnosis) VALUES ('$jj');";
@@ -211,7 +256,6 @@ if(strpos(strtolower($jj), strtolower("treatment(DM)")) !==false){
     if(strpos($jj, "Rfl:") !== false){
       if(strpos($jj, "syringe") == false){
         echo substr(strstr($jj,', Disp:',true),3)."yeah<br>";
-
   }}}
   //strings with HBA1C
   if(strpos($jj, "HGBA1C") !== false){
@@ -272,19 +316,20 @@ if(strpos(strtolower($jj), strtolower("treatment(DM)")) !==false){
         $ni++;
         echo "Year is: ".$hbay."<br>";
       }
-        
         //echo $arr1[$i]."=".$ni."<br>";
     }
     $date = $hbay."-".$hbam."-".$hbad;
     if ($hban !==0){
       $sql = "INSERT INTO dm_a1c (qn,prox,a1c,date) VALUES('$qn','$hban','$hba','$date');";
       if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
-  
     }
   }
-
-
-  } 
+  if(strpos($jj, "No results found for: HGBA1C") !== false){
+    $ml="HbA1c not checked";
+    $sql = "INSERT INTO dm_a1c (qn,a1c) VALUES('$qn','$ml');";
+    if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
+  }
+} 
 /*
     if($hban==1){
       $hba1=$hba;
@@ -334,8 +379,7 @@ if(strpos(strtolower($jj), strtolower("treatment(DM)")) !==false){
 
  /*
         */
-echo $hbaint1.$hbaint2;
-
+//echo $hbaint1.$hbaint2;
 
 
 //med rec
@@ -434,9 +478,10 @@ $lines=explode("\n", $i);
     $k=str_replace(" ,",",",$k);
     $k=str_replace(" Once a day Once a day","Once a day",$k);
     $k=str_replace(" ion","",$k);
-    $k=str_replace(" subcutaneously","",$k);
-    $k=str_replace(" subcutaneously","",$k);
-    $k=str_replace(" subcutaneously","",$k);
+    $k=str_replace(","," , ",$k);
+    $k=str_replace("  "," ",$k);
+    $k=str_replace("  "," ",$k);
+    $k=str_replace(" ,",",",$k);
     $k=str_replace(" subcutaneously","",$k);
     $k=str_replace(" subcutaneously","",$k);
     $k=str_replace(" subcutaneously","",$k);
@@ -484,11 +529,11 @@ $lines=explode("\n", $i);
     $k=str_replace($g1,"",$k);
     $k=str_replace($g2,"",$k);
     $k=str_replace($g3,"",$k);
-  
     $l = strstr($k,', ',true);
     $m = substr(strstr($k,', '), 2);
     //$arr = explode(' ',trim($m));
     //$e= $arr[0];
+
     if(strlen($l)>3 
     && strpos($l, "strip") == false
     && strpos($l, "syringe") == false 
@@ -503,6 +548,7 @@ $lines=explode("\n", $i);
     ){
       //$l=substr($l,5);
       //$arr1 = str_split($l);
+      echo "here".$l."    ".$m."<br>";
         $sql = "INSERT INTO med_db (qn, med, dose) VALUES ('$qn', '$l', '$m');";
         if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}  
         }; 

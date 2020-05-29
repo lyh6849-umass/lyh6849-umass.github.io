@@ -159,6 +159,7 @@ while($row=$r->fetch_assoc()){
 ////HbA1c review
           $sql = "SELECT * FROM dm_a1c WHERE qn = '$qn' LIMIT 6;";
           $r=$conn->query($sql);
+          $lasthba1c="0";
           if($r->num_rows>0){
 
             while($row=$r->fetch_assoc()){
@@ -168,14 +169,16 @@ while($row=$r->fetch_assoc()){
                 $date2= date('Y-m-d');
                 $date2= date_create($date2);
                 $diff=date_diff($date1,$date2);
-                echo "The lastest HbA1c checked ";   
+                echo "<br>The latest HbA1c checked ";   
                 if($diff->format('%y')==0){
+                  $lasthba1c=$diff->format('%m');
                   if($diff->format('%m')>1){
                     echo $diff->format('%m months');
                   } else {
                     echo $diff->format('%m month');
                   }
                 } else {
+                  $lasthba1c=12*$diff->format('%y')+$diff->format('%m');
                   echo $diff->format('%y year(s)/%m month(s)');
                 };
                 echo " (".$row['date'].") ago is ".$row['a1c']."%.<br>";
@@ -205,25 +208,56 @@ while($row=$r->fetch_assoc()){
             }
 
 
-
+////microalbumin/Cr
+$sql = "SELECT * FROM dm_microalbumin WHERE qn='$qn' LIMIT 1;";
+$r=$conn->query($sql);
+if($r->num_rows>0){
+  while($row=$r->fetch_assoc()){
+    if($row['microalbu']=="Microalbumin/Cr not checked"){
+      echo $row['microalbu']."<br>";
+    } else {
+      echo "-".$row['date'].": ".$row['microalbu']."<br>";
+      $mm=$row['microalbu'];
+      if($mm<30){
+        echo "Negative for microalbuminuria(".$mm.") on ".$row['date']."<br>";
+      } elseif($mm>=30 && $mm<300){
+        echo "Moderate microalbuminuria(".$mm.") on  ".$row['date']."<br>";
+      } elseif($mm>=300){
+        echo "Severe microalbuminuria(".$mm.") on ".$row['date']."<br>";
+      }
+    }
+  }
+}
+        // create an array of acei_arb index
+        $hb2nd="0";
+        $array1 = array();
+        $sql = "SELECT med FROM acei_arb;";
+        $r=$conn->query($sql);
+        if($r->num_rows>0){
+          while($row=$r->fetch_assoc()){
+            $array1[]=$row['med'];
+          }}
+        //select med from the med_db, create an array with 'med'
+        $sql = "SELECT med, dose from med_db WHERE qn='$qn';";
+        $wn=0;
+        $on=0;
+        $r=$conn->query($sql);
+        if($r->num_rows>0){
+          while($row=$r->fetch_assoc()){
+            if(0 < count(array_intersect(array_map('strtolower', explode(' ', $row['med'])), array_map('strtolower',$array1)))){
+                echo "Currently on ".$row['med']." ".$row['dose']."<br>";
+                $on++;            
+            } 
+          }
+        }
+        if($on==0){
+          echo "Currently not on ACEi or ARB<br>";
+        } 
 //////Plan starts here
-            ////a1c repeat
-            if($hypog==$hypogy){
-              echo "";
-            } elseif($hb1st<=7 && $hbg >=-0.5 && $hbg <0){
-              echo "Continue current treatment.<br>Repeat HbA1c in 6 months.<br>";
-            } elseif($hb1st<=7){
-              if($hbg==0.5 || $hbg<-0.5 ||$hbg>=0){
-                echo "Continue current treatment with repeat HbA1c in 4 months.<br>";
-              }
-            } elseif($hb1st>7){
-              echo "Repeat HbA1c in 3-4 months.<br>";
-            }
+
             
 
-            if($finger==$fingern){
-              echo "Recommended patient to check fasting finger stick periodically to prevent hypoglycemia.<br>";
-            };
+
 
 
 
@@ -241,7 +275,17 @@ while($row=$r->fetch_assoc()){
           }
           echo "-".date('Y-m-d').": <br>";
           echo "-Encourage regular exercise<br>";
-
+          if($finger==$fingern){
+            echo "-Recommended patient to check fasting finger stick periodically to prevent hypoglycemia.<br>";
+          };
+          $nexthba1c=4-$lasthba1c;
+          if($nexthba1c>2){
+            echo "-Repeat HbA1c in ".$nexthba1c." months.";
+          } elseif($nexthba1c==1){
+            echo "-Repeat HbA1c in ".$nexthba1c." month.";
+          } elseif($nexthba1c<1){
+            echo "-Repeat HbA1c within a week.";
+          }
         
 
         /*
