@@ -335,12 +335,12 @@ for ($j=0;$j<=$n;$j++){
                 echo"<BR>";
                 echo "Plan:<BR>";
                 if($out_a1c[1][0]<=7){
-                    echo "Continue current treatment<BR>Encourage exercise & low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
+                    echo "Continue current treatment<BR>Encourage exercise and low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
                     if($hypoglycemia_agent>0){
                         echo "Instructed to check fasting finger stick on a regular basis, 3-4 times /week<br>Instructed pt to notify office if blood glucose lvl is below 70<BR>";
                     }
                 } elseif ($out_a1c[1][0]>7){
-                    echo "Encourage exercise & low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
+                    echo "Encourage exercise and low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
                     if($hypoglycemia_agent>0){
                         echo "Instructed to check fasting finger stick on a regular basis, 3-4 times /week<br>Instructed pt to notify office if blood glucose lvl is below 70<BR>";
                     }
@@ -426,12 +426,12 @@ for ($j=0;$j<=$n;$j++){
                 echo"<BR>";
                 echo "Plan:<BR>";
                 if($out_a1c[1][0]<=7){
-                    echo "Continue current treatment<BR>Encourage exercise & low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
+                    echo "Continue current treatment<BR>Encourage exercise and low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
                     if($hypoglycemia_agent>0){
                         echo "Instructed to check fasting finger stick on a regular basis, 3-4 times /week<br>Instructed pt to notify office if blood glucose lvl is below 70<BR>";
                     }
                 } elseif ($out_a1c[1][0]>7){
-                    echo "Encourage exercise & low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
+                    echo "Encourage exercise and low sugar/fat/carbohydrate diet<BR>Every 4 month hgba1c check<br>";
                     if($hypoglycemia_agent>0){
                         echo "Instructed to check fasting finger stick on a regular basis, 3-4 times /week<br>Instructed pt to notify office if blood glucose lvl is below 70<BR>";
                     }
