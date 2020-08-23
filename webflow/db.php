@@ -10,4 +10,5 @@ $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn ->connect_errno) {
     echo "Failed to connect to MySQL: " . $conn ->connect_error;
     exit();
+    echo "test";
   } else {echo "";};?>

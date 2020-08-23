@@ -45,6 +45,7 @@ $qn = $_POST['qa'];
 $lines=explode("\n", $qn);
 $n = substr_count($qn,"\n");
 echo $n."<BR>";
+echo "test";
 for ($u=0;$u<=$n;$u++){ 
     $k = $lines[$u];
     echo $k."<BR>";
