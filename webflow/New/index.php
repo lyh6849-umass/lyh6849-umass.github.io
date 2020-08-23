@@ -21,6 +21,7 @@
   	font-weight:bold;
   	color:white;
   	cursor: pointer;}
+      
 </style>
 </head>
 <body>
@@ -186,7 +187,7 @@ for ($j=0;$j<=$n;$j++){
     $f=$j-$n;
 
 //    echo $j.". ".$lines[$j]."<BR>";
-    preg_match_all('/Current Assessment & Plan/i', $lines[$j],$array);
+    preg_match_all('/(Current|Last) Assessment & Plan/i', $lines[$j],$array);
 
     if(count($array[0])>0){
       $i=$j-1;
