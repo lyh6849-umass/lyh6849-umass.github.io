@@ -330,7 +330,7 @@ if(strpos(strtolower($jj), strtolower("treatment(DM)")) !==false){
     if ($conn->query($sql) === TRUE) {echo "";} else {echo "Error: " . $sql . "<br>" . $conn->error;}    
   }
 } 
-/*
+
     if($hban==1){
       $hba1=$hba;
       $date=$hbay."-".$hbam."-".$hbad;
@@ -367,12 +367,12 @@ if(strpos(strtolower($jj), strtolower("treatment(DM)")) !==false){
         }
       } elseif($hbag<0){
         if($diff->format('%y')==0){
-          $hbaint2 =  "which has progressed by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%m month(s)/%d day(s)')." interval<br>";
+          $hbaint2 =  "which has progressed b y ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%m month(s)/%d day(s)')." interval<br>";
         } else {
           $hbaint2 =  "which has progressed by ".$hbag."% from HbA1c(".$hba2."%) checked with ".$diff->format('%y year(s)/%m month(s)/%d day(s)')." interval<br>";
         }
       }
-    } */
+    } 
 
   
  
