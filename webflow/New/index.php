@@ -25,6 +25,7 @@
 </style>
 </head>
 <body>
+
   <div class="w-row">
     <div class="column w-col w-col-6">
       <div class="form-block w-form">
@@ -80,6 +81,216 @@ if($r->num_rows>0){
         }
         } 
     }
+
+//loop with "patient active problem list"
+$pt_act_prob_list=0;
+for ($j=0;$j<=$n;$j++){
+    $string=$lines[$j];
+    preg_match_all("/patient active problem list/i",$string,$out);
+    preg_match_all("/•/i",$string,$out2);
+    preg_match_all("/\*\*end/i",$string,$out3);
+
+    if(count($out2[0])>0&&$pt_act_prob_list==1){
+        preg_match_all("/hypertension/i",$string,$out_htn);
+        preg_match_all("/diabetes mellitus/i",$string,$out_dm);
+//HTN note starts
+        if(count($out_htn[0])>0){
+
+            $htn_full_med_list=array();
+            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+
+//generate BP list, print.
+            $first_bp=0;
+            for ($p=0;$p<=$n;$p++){
+            preg_match_all('/(\d\d\/\d\d)\/(\d\d)\D{0,10}(\d{2,3})\/(\d{2,3})/', $lines[$p], $output_array);
+            if (count($output_array[0])>0&&$first_bp<6){
+                $first_bp++;
+                echo $output_array[1][0]."/20".$output_array[2][0].": ";
+                echo "<span style=\"color:";
+                if($output_array[3][0]>=140|$output_array[4][0]>=90){
+                    echo "red";
+                }
+                echo "\">".$output_array[3][0]."/".$output_array[4][0]."</span><BR>";
+                if($first_bp==1){
+                    $first_sbp=$output_array[3][0];
+                    $first_dbp=$output_array[4][0];
+                }
+            }
+        }
+
+            for ($p=0;$p<=$n;$p++){
+                //create HTN_med list
+                $str=strtolower($lines[$p]);
+                preg_match_all('/\w+/', $str, $output_array);
+                $jj=$output_array[0];
+                if(count(array_intersect($jj,$htn_med_db))>0){
+                    $jj=$str;
+                    $jj=preg_replace('/\((.*?)\)/', '', $jj);
+                    preg_match_all('/disp/',$jj,$out_disp);
+                    if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+                    $jj=str_replace("under the skin","",$jj);
+                    $jj=str_replace("by mouth","",$jj);
+                    $jj=str_replace("chew and swallow","take",$jj);
+                    $jj=str_replace("twice daily","2 times a day",$jj);
+                    $jj=str_replace("twice a day","2 times a day",$jj);
+                    $jj=str_replace(" with meals","",$jj);
+                    $jj=str_replace("once a week","weekly",$jj);
+                    $jj=str_replace(" before meals","",$jj);
+                    $jj=str_replace(" with dinner","",$jj);
+                    $jj=str_replace(" with food","",$jj);
+                    $jj=str_replace("daily","1 time a day",$jj);
+                    $jj=str_replace("weekly","1 time a week",$jj);
+                    $jj=str_replace("subcutaneously ","",$jj);
+                    $jj=str_replace("1/2","0.5",$jj);
+                    $jj=str_replace("times 1 time","times",$jj);
+                    $jj=str_replace("every morning ","1 time a day ",$jj);
+                    $jj=str_replace("before breakfast ","",$jj);
+                    $jj=str_replace("three","3",$jj);
+                    $jj=str_replace(" u "," units ",$jj);
+                    $jj=str_replace(" with breakfast","",$jj);
+                    $jj=str_replace("every day","1 time a day",$jj);
+                    $jj=str_replace("daily","1 time a day",$jj);
+                    $jj=str_replace("every 12 hours","2 times a day",$jj);
+                    $jj=str_replace("at bed time","1 time a day",$jj);
+                    $jj=str_replace("nightly","1 time a day",$jj);
+                    $jj=str_replace(" ss "," sliding scale ",$jj);
+                    $jj=str_replace("inejct","inject",$jj);
+                    $jj=str_replace("in the am","1 time a day",$jj);
+                    $jj=str_replace("in the pm","1 time a day",$jj);
+                    $jj=str_replace("/ml","/1ml",$jj);
+                    $jj=str_replace("","",$jj);
+                    preg_match_all('/.+(tablet|capsule).*,\s.*(take).*(tablet)/',$jj,$rrr);
+                    if(count($rrr[0])>0){$htn_full_med_list[]= $jj;}
+                }
+            }
+            //display htn_med list
+            echo "Currently on: <BR>";
+                for($i=0;$i<count($htn_full_med_list);$i++){
+                    echo preg_replace('/•/i', '-', $htn_full_med_list[$i])."<BR>";
+                }
+            //plan 
+            echo "Plan: <BR>";
+            if($first_sbp<140&&$first_dbp<90){
+                echo "-Most recent blood pressure with in target.<BR>-Continue current treatment.<BR>-Encourage regular exercise, low sugar/carbohydrate/fat diet.<BR>-At least twice a year blood pressure monitor in the office.<BR>";
+            }elseif($first_sbp>=140|$first_dbp>=90){
+                echo "";
+            }
+
+          
+        echo "<button onclick=\"copyTo('#copy_htn')\">Copy</button>";}//HTN nots ends Here 
+
+        //below is for copies only
+//HTN note copy starts
+if(count($out_htn[0])>0){
+    echo "<div style=\"display:none\" id=\"copy_htn\">";
+    $htn_full_med_list=array();
+
+//generate BP list, print.
+    $first_bp=0;
+    for ($p=0;$p<=$n;$p++){
+    preg_match_all('/(\d\d\/\d\d)\/(\d\d)\D{0,10}(\d{2,3})\/(\d{2,3})/', $lines[$p], $output_array);
+    if (count($output_array[0])>0&&$first_bp<6){
+        $first_bp++;
+        echo $output_array[1][0]."/20".$output_array[2][0].": ";
+        echo $output_array[3][0]."/".$output_array[4][0]."<BR>";
+        if($first_bp==1){
+            $first_sbp=$output_array[3][0];
+            $first_dbp=$output_array[4][0];
+        }
+    }
+}
+
+    for ($p=0;$p<=$n;$p++){
+        //create HTN_med list
+        $str=strtolower($lines[$p]);
+        preg_match_all('/\w+/', $str, $output_array);
+        $jj=$output_array[0];
+        if(count(array_intersect($jj,$htn_med_db))>0){
+            $jj=$str;
+            $jj=preg_replace('/\((.*?)\)/', '', $jj);
+            preg_match_all('/disp/',$jj,$out_disp);
+            if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+            $jj=str_replace("under the skin","",$jj);
+            $jj=str_replace("by mouth","",$jj);
+            $jj=str_replace("chew and swallow","take",$jj);
+            $jj=str_replace("twice daily","2 times a day",$jj);
+            $jj=str_replace("twice a day","2 times a day",$jj);
+            $jj=str_replace(" with meals","",$jj);
+            $jj=str_replace("once a week","weekly",$jj);
+            $jj=str_replace(" before meals","",$jj);
+            $jj=str_replace(" with dinner","",$jj);
+            $jj=str_replace(" with food","",$jj);
+            $jj=str_replace("daily","1 time a day",$jj);
+            $jj=str_replace("weekly","1 time a week",$jj);
+            $jj=str_replace("subcutaneously ","",$jj);
+            $jj=str_replace("1/2","0.5",$jj);
+            $jj=str_replace("times 1 time","times",$jj);
+            $jj=str_replace("every morning ","1 time a day ",$jj);
+            $jj=str_replace("before breakfast ","",$jj);
+            $jj=str_replace("three","3",$jj);
+            $jj=str_replace(" u "," units ",$jj);
+            $jj=str_replace(" with breakfast","",$jj);
+            $jj=str_replace("every day","1 time a day",$jj);
+            $jj=str_replace("daily","1 time a day",$jj);
+            $jj=str_replace("every 12 hours","2 times a day",$jj);
+            $jj=str_replace("at bed time","1 time a day",$jj);
+            $jj=str_replace("nightly","1 time a day",$jj);
+            $jj=str_replace(" ss "," sliding scale ",$jj);
+            $jj=str_replace("inejct","inject",$jj);
+            $jj=str_replace("in the am","1 time a day",$jj);
+            $jj=str_replace("in the pm","1 time a day",$jj);
+            $jj=str_replace("/ml","/1ml",$jj);
+            $jj=str_replace("","",$jj);
+            preg_match_all('/.+(tablet|capsule).*,\s.*(take).*(tablet)/',$jj,$rrr);
+            if(count($rrr[0])>0){$htn_full_med_list[]= $jj;}
+        }
+    }
+    //display htn_med list
+    echo "Currently on: <BR>";
+        for($i=0;$i<count($htn_full_med_list);$i++){
+            echo preg_replace('/•/i', '-', $htn_full_med_list[$i])."<BR>";
+        }
+    //plan 
+    echo "Plan: <BR>";
+    if($first_sbp<140&&$first_dbp<90){
+        echo "-Most recent blood pressure with in target.<BR>-Continue current treatment.<BR>-Encourage regular exercise, low sugar/carbohydrate/fat diet.<BR>-At least twice a year blood pressure monitor in the office.<BR>";
+    }elseif($first_sbp>=140|$first_dbp>=90){
+        echo "";
+    }
+
+  
+echo "</div>";}//HTN note copy ends here;
+
+    }
+    if(count($out[0])>0){
+        $pt_act_prob_list=$pt_act_prob_list+1;
+    }
+    if(count($out3[0])>0){
+        $pt_act_prob_list=$pt_act_prob_list+1;
+    }
+
+
+}
+
+?>
+
+
+<script>
+function copyTo(element) {
+  var $temp = $("<textarea>");
+  var brRegex = /<br\s*[\/]?>/gi;
+  $("body").append($temp);
+  $temp.val($(element).html().replace(brRegex, "\r\n")).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+</script>
+
+<?php
+
+ 
+    
+
 //DM med list
     $dm_full_med_list=array();
     for ($j=0;$j<=$n;$j++){
@@ -131,56 +342,6 @@ if($r->num_rows>0){
 
     $htn_full_med_list=array();
     for ($j=0;$j<=$n;$j++){
-    $str=strtolower($lines[$j]);
-
-
-
-//creat blood pressure list 
-        preg_match_all('/ /i',$str,$kkk);
-
-
- //create $htn_full_med_list   
-    preg_match_all('/\w+/', $str, $output_array);
-    $jj=$output_array[0];
-    if(count(array_intersect($jj,$htn_med_db))>0){
-        $jj=$str;
-        $jj=preg_replace('/\((.*?)\)/', '', $jj);
-        preg_match_all('/disp/',$jj,$out);
-        if(count($out[0])>0){$jj = strstr($jj,', disp:',true);}
-        $jj=str_replace("under the skin","",$jj);
-        $jj=str_replace("by mouth","",$jj);
-        $jj=str_replace("chew and swallow","take",$jj);
-        $jj=str_replace("twice daily","2 times a day",$jj);
-        $jj=str_replace("twice a day","2 times a day",$jj);
-        $jj=str_replace(" with meals","",$jj);
-        $jj=str_replace("once a week","weekly",$jj);
-        $jj=str_replace(" before meals","",$jj);
-        $jj=str_replace(" with dinner","",$jj);
-        $jj=str_replace(" with food","",$jj);
-        $jj=str_replace("daily","1 time a day",$jj);
-        $jj=str_replace("weekly","1 time a week",$jj);
-        $jj=str_replace("subcutaneously ","",$jj);
-        $jj=str_replace("1/2","0.5",$jj);
-        $jj=str_replace("times 1 time","times",$jj);
-        $jj=str_replace("every morning ","1 time a day ",$jj);
-        $jj=str_replace("before breakfast ","",$jj);
-        $jj=str_replace("three","3",$jj);
-        $jj=str_replace(" u "," units ",$jj);
-        $jj=str_replace(" with breakfast","",$jj);
-        $jj=str_replace("every day","1 time a day",$jj);
-        $jj=str_replace("daily","1 time a day",$jj);
-        $jj=str_replace("every 12 hours","2 times a day",$jj);
-        $jj=str_replace("at bed time","1 time a day",$jj);
-        $jj=str_replace("nightly","1 time a day",$jj);
-        $jj=str_replace(" ss "," sliding scale ",$jj);
-        $jj=str_replace("inejct","inject",$jj);
-        $jj=str_replace("in the am","1 time a day",$jj);
-        $jj=str_replace("in the pm","1 time a day",$jj);
-        $jj=str_replace("/ml","/1ml",$jj);
-        $jj=str_replace("","",$jj);
-        preg_match_all('/.+(tablet|capsule).*,\s.*(take).*(tablet)/',$jj,$rrr);
-        if(count($rrr[0])>0){$htn_full_med_list[]= $jj;}
-    }
 }
 
 for ($j=0;$j<=$n;$j++){
@@ -210,25 +371,10 @@ for ($j=0;$j<=$n;$j++){
         if(count($array_htn[0])>0){
           echo $lines[$i]."<BR>";
           echo "Blood pressure: <br>";
-            for ($p=0;$p<=$n;$p++){
-            
-                preg_match_all('/(\d\d\/\d\d)\/(\d\d)\D{2,10}(\d{2,3})\/(\d{2,3})/', $lines[$p], $output_array);
-                if (count($output_array[0])>0){
-                    echo $output_array[1][0]."/20".$output_array[2][0].": ";
-                    echo "<span style=\"color:";
-                    if($output_array[3][0]>=140|$output_array[4][0]>=90){
-                        echo "red";
-                    }
 
-                    echo "\">".$output_array[3][0]."/".$output_array[4][0]."</span><BR>";
-                }
-            }
 
             echo"Current regimen:<BR>";
-            for($i=0;$i<count($htn_full_med_list);$i++){
-                echo preg_replace('/•/i', '-', $htn_full_med_list[$i])."<BR>";
 
-            }
             echo"Plan: <br>";
         }
         echo "<BR>";
@@ -280,6 +426,17 @@ for ($j=0;$j<=$n;$j++){
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
