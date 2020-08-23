@@ -25,7 +25,6 @@
 </head>
 <body>
   <div class="w-row">
-  test
     <div class="column w-col w-col-6">
       <div class="form-block w-form">
         <form id="email-form" name="email-form" data-name="Email Form" class="form" action="index.php" method="post"><textarea placeholder="Enter data" maxlength="500000" id="field" name="text" class="textarea w-input"></textarea><input type="submit" value="Submit" data-wait="Please wait..." class="submit-button w-button"></form>
