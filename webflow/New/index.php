@@ -76,8 +76,7 @@ if($r->num_rows>0){
 }}
 
 
-
- 
+//data extract from $text
 
 //loop with "patient active problem list"
 $pt_act_prob_list=0;
@@ -91,7 +90,7 @@ for ($j=0;$j<=$n;$j++){
         preg_match_all("/hypertension/i",$string,$out_htn);
         preg_match_all("/diabetes mellitus/i",$string,$out_dm);
         preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidemia)/i",$string,$out_hld);
-
+        preg_match_all("/(CKD)|(kidney disease)|(AKI\s)|(CKI\s)|(AKD\s)|(kidney failure)|(kidney insufficiency)|(renal insufficiency)|(renal failure)/i",$string,$out_ckd);
 //HTN note starts
         if(count($out_htn[0])>0){
 
@@ -517,7 +516,46 @@ for ($j=0;$j<=$n;$j++){
             echo "Plan: continue current treatment<BR>";
             echo "</div>";
             echo "<button onclick=\"copyTo('#copy_hld')\">Copy</button><br><BR>";
-        }//HTN nots ends Here 
+        }//HLD nots ends Here 
+//CKD note starts here
+        preg_match_all('/creatinine\s+(\d+\.\d+).{1,6}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_cr); 
+        if(count($out_ckd[0])>0){
+            $cr_average=0;
+            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+            echo "<div id=\"copy_ckd\">";
+            if(count($out_cr[0])>0){
+                //display Cr 
+                for ($t=0;$t<count($out_cr[0]);$t++){
+                    echo$out_cr[0][$t]."<BR>";
+                }
+                $cr_prog=1;
+                for ($u=1;$u<count($out_cr[0]);$u++){
+                    if($out_cr[1][$u]>$out_cr[1][0]){
+                        $cr_prog=$cr_prog*0;
+                    }
+                }
+                if($out_cr[1][0]>$out_cr[1][1]+0.05&&$out_cr[1][1]>$out_cr[1][2]+0.05){
+                    $cr_prog=$cr_prog*0;
+                }
+
+                $diff=date_diff(date_create($out_cr[2][0]),date_create(date('Y-m-d')));
+                echo "Most recent creatinine was checked ".$diff->format('%m month(s) %d day(s)')." ago.<BR>";
+                echo "Plan:<BR>";
+                if($cr_prog==0){
+                    echo"-Most recent Cr within baseline range.<BR>-Continue Cr monitor every 4 months<BR>";
+                    if($diff->format('%m')>3){
+                        echo"-Recheck Cr with in a month<BR>";
+                    }
+                } elseif($cr_prog==1){
+                    echo"-Most recent Cr out of baseline range.<BR>-Further evaluation by nephrology indicated<BR>";
+                }
+                echo "</div>";
+                echo "<button onclick=\"copyTo('#copy_ckd')\">Copy</button><br><BR>";
+            }
+
+        }//CKD note ends here
+
+
     }
     if(count($out[0])>0){
         $pt_act_prob_list=$pt_act_prob_list+1;
@@ -527,7 +565,12 @@ for ($j=0;$j<=$n;$j++){
     }
 
 
-}
+
+
+
+
+
+}//Entire note ends here
 
 ?>
 
