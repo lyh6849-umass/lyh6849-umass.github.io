@@ -516,7 +516,7 @@ for ($j=0;$j<=$n;$j++){
             //plan 
             echo "Plan: continue current treatment<BR>";
             echo "</div>";
-            echo "<button onclick=\"copyTo('#copy_hld')\">Copy</button>";
+            echo "<button onclick=\"copyTo('#copy_hld')\">Copy</button><br><BR>";
         }//HTN nots ends Here 
     }
     if(count($out[0])>0){
