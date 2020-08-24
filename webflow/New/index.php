@@ -55,6 +55,13 @@ if($r->num_rows>0){
       $htn_med_db [] = $row['med'];
       
 }}
+$sql = "SELECT * FROM hld_med_db";
+$r=$conn->query($sql);
+$hld_med_db=array();
+if($r->num_rows>0){
+  while($row = $r->fetch_assoc()){
+      $hld_med_db [] = $row['med'];
+}}
 
 $sql = "SELECT * FROM dm_med_db";
 $r=$conn->query($sql);
@@ -83,6 +90,8 @@ for ($j=0;$j<=$n;$j++){
     if(count($out2[0])>0&&$pt_act_prob_list==1){
         preg_match_all("/hypertension/i",$string,$out_htn);
         preg_match_all("/diabetes mellitus/i",$string,$out_dm);
+        preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidaemia)/i",$string,$out_hld);
+
 //HTN note starts
         if(count($out_htn[0])>0){
 
@@ -164,8 +173,8 @@ for ($j=0;$j<=$n;$j++){
                 echo "";
             }
 
-          
-        echo "<button onclick=\"copyTo('#copy_htn')\">Copy</button>";}//HTN nots ends Here 
+            echo "<button onclick=\"copyTo('#copy_htn')\">Copy</button>";
+        }//HTN nots ends Here 
 //HTN note copy starts
         if(count($out_htn[0])>0){
             echo "<div style=\"display:none\" id=\"copy_htn\">";
@@ -242,9 +251,8 @@ for ($j=0;$j<=$n;$j++){
             }elseif($first_sbp>=140|$first_dbp>=90){
                 echo "";
             }
-
-        
-        echo "</div><BR><BR>";}//HTN note copy ends here;
+            echo "</div><BR><BR>";        
+        }//HTN note copy ends here;
 //DM note starts here
         if(count($out_dm[0])>0){
             echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
@@ -349,7 +357,6 @@ for ($j=0;$j<=$n;$j++){
 //DM note copy starts here
         if(count($out_dm[0])>0){
             echo "<div style=\"display:none\" id=\"copy_dm\">";
-            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
             preg_match_all('/HGBA1C\s(\d+.\d).{1,5}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_a1c);
             for ($p=0;$p<=$n;$p++){
                 //create DM_med list
@@ -438,7 +445,79 @@ for ($j=0;$j<=$n;$j++){
                 } 
                 echo "</div><BR><BR>";
         }//DM note copy ends here
-
+//HLD note starts here
+        if(count($out_hld[0])>0){
+            $hld_full_med_list=array();
+            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+            echo "<div id=\"copy_hld\">";
+            //generate lipid panel list, print.
+            preg_match_all('/((cholesterol)|(hdlcholeste)|(ldlcholeste)|(trig))\s+(\d+).{1,6}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_hld_panel);
+            echo "Lipid panel:<BR>";
+            for ($q=0;$q<count($out_hld_panel[0]);$q++){
+                
+                echo " - ".$out_hld_panel[0][$q]."<BR>";
+            }
+            preg_match_all('/The 10-year ASCVD risk score \(Goff DC Jr\., et al\., 2013\) is\:\s+((\d+)|(\d+\.\d+))%/i', $text, $out_ascvd);
+            if(count($out_ascvd[1])>0){
+                echo "10 year ASCVD risk is ".$out_ascvd[1][0]."%.<BR>"; 
+            } elseif(count($out_ascvd[1])==0){
+                echo "ASCVD risk not available<BR>";
+            }
+            //create hld_med list, display
+            $hld_full_med_list=array();
+            for ($p=0;$p<=$n;$p++){
+                $str=strtolower($lines[$p]);
+                preg_match_all('/\w+/', $str, $output_array);
+                $jj=$output_array[0];
+                if(count(array_intersect($jj,$hld_med_db))>0){
+                    $jj=$str;
+                    $jj=preg_replace('/\((.*?)\)/', '', $jj);
+                    preg_match_all('/disp/',$jj,$out_disp);
+                    if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+                    $jj=str_replace("under the skin","",$jj);
+                    $jj=str_replace("by mouth","",$jj);
+                    $jj=str_replace("chew and swallow","take",$jj);
+                    $jj=str_replace("twice daily","2 times a day",$jj);
+                    $jj=str_replace("twice a day","2 times a day",$jj);
+                    $jj=str_replace(" with meals","",$jj);
+                    $jj=str_replace("once a week","weekly",$jj);
+                    $jj=str_replace(" before meals","",$jj);
+                    $jj=str_replace(" with dinner","",$jj);
+                    $jj=str_replace(" with food","",$jj);
+                    $jj=str_replace("daily","1 time a day",$jj);
+                    $jj=str_replace("weekly","1 time a week",$jj);
+                    $jj=str_replace("subcutaneously ","",$jj);
+                    $jj=str_replace("1/2","0.5",$jj);
+                    $jj=str_replace("times 1 time","times",$jj);
+                    $jj=str_replace("every morning ","1 time a day ",$jj);
+                    $jj=str_replace("before breakfast ","",$jj);
+                    $jj=str_replace("three","3",$jj);
+                    $jj=str_replace(" u "," units ",$jj);
+                    $jj=str_replace(" with breakfast","",$jj);
+                    $jj=str_replace("every day","1 time a day",$jj);
+                    $jj=str_replace("daily","1 time a day",$jj);
+                    $jj=str_replace("every 12 hours","2 times a day",$jj);
+                    $jj=str_replace("at bed time","1 time a day",$jj);
+                    $jj=str_replace("nightly","1 time a day",$jj);
+                    $jj=str_replace(" ss "," sliding scale ",$jj);
+                    $jj=str_replace("inejct","inject",$jj);
+                    $jj=str_replace("in the am","1 time a day",$jj);
+                    $jj=str_replace("in the pm","1 time a day",$jj);
+                    $jj=str_replace("/ml","/1ml",$jj);
+                    $jj=str_replace("","",$jj);
+                    preg_match_all('/.+(tablet|capsule).*,\s.*(take).*(tablet)/',$jj,$rrr);
+                    if(count($rrr[0])>0){$hld_full_med_list[]= $jj;}
+                }
+            }
+            echo "Currently on: <BR>";
+                for($i=0;$i<count($hld_full_med_list);$i++){
+                    echo preg_replace('/•/i', '-', $hld_full_med_list[$i])."<BR>";
+                }
+            //plan 
+            echo "Plan: continue current treatment<BR>";
+            echo "</div>";
+            echo "<button onclick=\"copyTo('#copy_hld')\">Copy</button>";
+        }//HTN nots ends Here 
     }
     if(count($out[0])>0){
         $pt_act_prob_list=$pt_act_prob_list+1;
