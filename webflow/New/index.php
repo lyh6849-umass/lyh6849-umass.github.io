@@ -298,10 +298,10 @@ for ($j=0;$j<=$n;$j++){
                     $jj=str_replace("in the pm","1 time a day",$jj);
                     $jj=str_replace("/ml","/1ml",$jj);
                     $jj=str_replace("","",$jj);
-                    preg_match_all('/.+(tablet|capsule).*,\s.*(take).*(tablet)/',$jj,$rrr);
+                    preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/',$jj,$rrr);
                     if(count($rrr[0])>0){$dm_full_med_list[]= $jj;}
                 }}
-                //display htn_med list
+                //display DM_med list
             echo "Currently on: <BR>";
                 for($i=0;$i<count($dm_full_med_list);$i++){
                     echo preg_replace('/•/i', '-', $dm_full_med_list[$i])."<BR>";
