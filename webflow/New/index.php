@@ -90,7 +90,7 @@ for ($j=0;$j<=$n;$j++){
     if(count($out2[0])>0&&$pt_act_prob_list==1){
         preg_match_all("/hypertension/i",$string,$out_htn);
         preg_match_all("/diabetes mellitus/i",$string,$out_dm);
-        preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidaemia)/i",$string,$out_hld);
+        preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidemia)/i",$string,$out_hld);
 
 //HTN note starts
         if(count($out_htn[0])>0){
