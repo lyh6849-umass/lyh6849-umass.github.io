@@ -63,6 +63,15 @@ if($r->num_rows>0){
       $hld_med_db [] = $row['med'];
 }}
 
+$sql = "SELECT * FROM asthma_med_db";
+$r=$conn->query($sql);
+$asthma_med_db=array();
+if($r->num_rows>0){
+  while($row = $r->fetch_assoc()){
+      $asthma_med_db [] = $row['med'];
+      $asthma_med_db [] = $row['brand'];
+}}
+
 $sql = "SELECT * FROM dm_med_db";
 $r=$conn->query($sql);
 $dm_med_db=array();
@@ -75,9 +84,140 @@ if($r->num_rows>0){
       }
 }}
 
+$th_med_db=array("levothyroxine");
+
 
 //data extract from $text
 
+//All medication list generator 
+$th_full_med_list=array();
+$asthma_full_med_list=array();
+for ($p=0;$p<=$n;$p++){
+    $str=strtolower($lines[$p]);
+    preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/i',$str,$out_med);
+    preg_match_all('/\w+/', $str, $out_word);
+    if(count($out_med[0])>0){
+        $jj=$str;
+        $jj=preg_replace('/\((.*?)\)/', '', $jj);
+        preg_match_all('/disp/',$jj,$out_disp);
+        if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+        $jj=str_replace("under the skin","",$jj);
+        $jj=str_replace("by mouth","",$jj);
+        $jj=str_replace("chew and swallow","take",$jj);
+        $jj=str_replace("twice daily","2 times a day",$jj);
+        $jj=str_replace("twice a day","2 times a day",$jj);
+        $jj=str_replace(" with meals","",$jj);
+        $jj=str_replace("once a week","weekly",$jj);
+        $jj=str_replace(" before meals","",$jj);
+        $jj=str_replace(" with dinner","",$jj);
+        $jj=str_replace(" with food","",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("weekly","1 time a week",$jj);
+        $jj=str_replace("subcutaneously ","",$jj);
+        $jj=str_replace("1/2","0.5",$jj);
+        $jj=str_replace("times 1 time","times",$jj);
+        $jj=str_replace("every morning ","1 time a day ",$jj);
+        $jj=str_replace("before breakfast ","",$jj);
+        $jj=str_replace("three","3",$jj);
+        $jj=str_replace(" u "," units ",$jj);
+        $jj=str_replace(" with breakfast","",$jj);
+        $jj=str_replace("every day","1 time a day",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("every 12 hours","2 times a day",$jj);
+        $jj=str_replace("at bed time","1 time a day",$jj);
+        $jj=str_replace("nightly","1 time a day",$jj);
+        $jj=str_replace(" ss "," sliding scale ",$jj);
+        $jj=str_replace("inejct","inject",$jj);
+        $jj=str_replace("in the am","1 time a day",$jj);
+        $jj=str_replace("in the pm","1 time a day",$jj);
+        $jj=str_replace("/ml","/1ml",$jj);
+        if(count(array_intersect(array_map('strtolower',$out_word[0]),array_map('strtolower',$asthma_med_db)))>0){$asthma_full_med_list[]=$jj;}
+        if(count(array_intersect(array_map('strtolower',$out_word[0]),array_map('strtolower',$th_med_db)))>0){$th_full_med_list[]=$jj;}
+    }
+    preg_match_all('/\w+/', $str, $output_array);
+    $jj=$output_array[0];
+    preg_match_all('/•.+levothyroxine.+tablet,.+take.+tablet/i', $str, $out_th_med);
+    if(count($out_th_med[0])>0){
+        $jj=$str;
+        $jj=preg_replace('/\((.*?)\)/', '', $jj);
+        preg_match_all('/disp/',$jj,$out_disp);
+        if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+        $jj=str_replace("under the skin","",$jj);
+        $jj=str_replace("by mouth","",$jj);
+        $jj=str_replace("chew and swallow","take",$jj);
+        $jj=str_replace("twice daily","2 times a day",$jj);
+        $jj=str_replace("twice a day","2 times a day",$jj);
+        $jj=str_replace(" with meals","",$jj);
+        $jj=str_replace("once a week","weekly",$jj);
+        $jj=str_replace(" before meals","",$jj);
+        $jj=str_replace(" with dinner","",$jj);
+        $jj=str_replace(" with food","",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("weekly","1 time a week",$jj);
+        $jj=str_replace("subcutaneously ","",$jj);
+        $jj=str_replace("1/2","0.5",$jj);
+        $jj=str_replace("times 1 time","times",$jj);
+        $jj=str_replace("every morning ","1 time a day ",$jj);
+        $jj=str_replace("before breakfast ","",$jj);
+        $jj=str_replace("three","3",$jj);
+        $jj=str_replace(" u "," units ",$jj);
+        $jj=str_replace(" with breakfast","",$jj);
+        $jj=str_replace("every day","1 time a day",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("every 12 hours","2 times a day",$jj);
+        $jj=str_replace("at bed time","1 time a day",$jj);
+        $jj=str_replace("nightly","1 time a day",$jj);
+        $jj=str_replace(" ss "," sliding scale ",$jj);
+        $jj=str_replace("inejct","inject",$jj);
+        $jj=str_replace("in the am","1 time a day",$jj);
+        $jj=str_replace("in the pm","1 time a day",$jj);
+        $jj=str_replace("/ml","/1ml",$jj);
+        $jj=str_replace("","",$jj);
+        preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/',$jj,$rrr);
+        if(count($rrr[0])>0){$th_full_med_list[]= $jj;}
+    }
+    if(count(array_intersect($output_array[0],$dm_med_db))>0){
+        $jj=$str;
+        $jj=preg_replace('/\((.*?)\)/', '', $jj);
+        preg_match_all('/disp/',$jj,$out_disp);
+        if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
+        $jj=str_replace("under the skin","",$jj);
+        $jj=str_replace("by mouth","",$jj);
+        $jj=str_replace("chew and swallow","take",$jj);
+        $jj=str_replace("twice daily","2 times a day",$jj);
+        $jj=str_replace("twice a day","2 times a day",$jj);
+        $jj=str_replace(" with meals","",$jj);
+        $jj=str_replace("once a week","weekly",$jj);
+        $jj=str_replace(" before meals","",$jj);
+        $jj=str_replace(" with dinner","",$jj);
+        $jj=str_replace(" with food","",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("weekly","1 time a week",$jj);
+        $jj=str_replace("subcutaneously ","",$jj);
+        $jj=str_replace("1/2","0.5",$jj);
+        $jj=str_replace("times 1 time","times",$jj);
+        $jj=str_replace("every morning ","1 time a day ",$jj);
+        $jj=str_replace("before breakfast ","",$jj);
+        $jj=str_replace("three","3",$jj);
+        $jj=str_replace(" u "," units ",$jj);
+        $jj=str_replace(" with breakfast","",$jj);
+        $jj=str_replace("every day","1 time a day",$jj);
+        $jj=str_replace("daily","1 time a day",$jj);
+        $jj=str_replace("every 12 hours","2 times a day",$jj);
+        $jj=str_replace("at bed time","1 time a day",$jj);
+        $jj=str_replace("nightly","1 time a day",$jj);
+        $jj=str_replace(" ss "," sliding scale ",$jj);
+        $jj=str_replace("inejct","inject",$jj);
+        $jj=str_replace("in the am","1 time a day",$jj);
+        $jj=str_replace("in the pm","1 time a day",$jj);
+        $jj=str_replace("/ml","/1ml",$jj);
+        $jj=str_replace("","",$jj);
+        preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/',$jj,$rrr);
+        if(count($rrr[0])>0){$dm_full_med_list[]= $jj;}
+    }}
+
+
+    
 //loop with "patient active problem list"
 $pt_act_prob_list=0;
 for ($j=0;$j<=$n;$j++){
@@ -89,6 +229,7 @@ for ($j=0;$j<=$n;$j++){
     if(count($out2[0])>0&&$pt_act_prob_list==1){
         preg_match_all("/hypertension/i",$string,$out_htn);
         preg_match_all("/diabetes mellitus/i",$string,$out_dm);
+        preg_match_all("/(hypothyroid)|(hypothyroidism)/i",$string,$out_th);
         preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidemia)/i",$string,$out_hld);
         preg_match_all("/(CKD)|(kidney disease)|(AKI\s)|(CKI\s)|(AKD\s)|(kidney failure)|(kidney insufficiency)|(renal insufficiency)|(renal failure)/i",$string,$out_ckd);
 //HTN note starts
@@ -518,42 +659,84 @@ for ($j=0;$j<=$n;$j++){
             echo "<button onclick=\"copyTo('#copy_hld')\">Copy</button><br><BR>";
         }//HLD nots ends Here 
 //CKD note starts here
-        preg_match_all('/creatinine\s+(\d+\.\d+).{1,6}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_cr); 
-        if(count($out_ckd[0])>0){
-            $cr_average=0;
-            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
-            echo "<div id=\"copy_ckd\">";
-            if(count($out_cr[0])>0){
-                //display Cr 
-                for ($t=0;$t<count($out_cr[0]);$t++){
-                    echo$out_cr[0][$t]."<BR>";
-                }
-                $cr_prog=1;
-                for ($u=1;$u<count($out_cr[0]);$u++){
-                    if($out_cr[1][$u]>$out_cr[1][0]){
-                        $cr_prog=$cr_prog*0;
-                    }
-                }
-                if($out_cr[1][0]>$out_cr[1][1]+0.05&&$out_cr[1][1]>$out_cr[1][2]+0.05){
-                    $cr_prog=$cr_prog*0;
-                }
-
-                $diff=date_diff(date_create($out_cr[2][0]),date_create(date('Y-m-d')));
-                echo "Most recent creatinine was checked ".$diff->format('%m month(s) %d day(s)')." ago.<BR>";
-                echo "Plan:<BR>";
-                if($cr_prog==0){
-                    echo"-Most recent Cr within baseline range.<BR>-Continue Cr monitor every 4 months<BR>";
-                    if($diff->format('%m')>3){
-                        echo"-Recheck Cr with in a month<BR>";
-                    }
-                } elseif($cr_prog==1){
-                    echo"-Most recent Cr out of baseline range.<BR>-Further evaluation by nephrology indicated<BR>";
-                }
-                echo "</div>";
-                echo "<button onclick=\"copyTo('#copy_ckd')\">Copy</button><br><BR>";
+preg_match_all('/creatinine\s+(\d+\.\d+).{1,6}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_cr); 
+if(count($out_ckd[0])>0){
+    $cr_average=0;
+    echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+    echo "<div id=\"copy_ckd\">";
+    if(count($out_cr[0])>0){
+        //display Cr 
+        for ($t=0;$t<count($out_cr[0]);$t++){
+            echo$out_cr[0][$t]."<BR>";
+        }
+        $cr_prog=1;
+        for ($u=1;$u<count($out_cr[0]);$u++){
+            if($out_cr[1][$u]>$out_cr[1][0]){
+                $cr_prog=$cr_prog*0;
             }
+        }
+        if($out_cr[1][0]>$out_cr[1][1]+0.05&&$out_cr[1][1]>$out_cr[1][2]+0.05){
+            $cr_prog=$cr_prog*0;
+        }
 
-        }//CKD note ends here
+        $diff=date_diff(date_create($out_cr[2][0]),date_create(date('Y-m-d')));
+        echo "Most recent creatinine was checked ".$diff->format('%m month(s) %d day(s)')." ago.<BR>";
+        echo "Plan:<BR>";
+        if($cr_prog==0){
+            echo"-Most recent Cr within baseline range.<BR>-Continue Cr monitor every 4 months<BR>";
+            if($diff->format('%m')>3){
+                echo"-Recheck Cr with in a month<BR>";
+            }
+        } elseif($cr_prog==1){
+            echo"-Most recent Cr out of baseline range.<BR>-Further evaluation by nephrology indicated<BR>";
+        }
+        echo "</div>";
+        echo "<button onclick=\"copyTo('#copy_ckd')\">Copy</button><br><BR>";
+    }
+
+}//CKD note ends here
+//Hypothyroidism note starts here
+        preg_match_all('/tsh\s+(\d+\.\d+).{1,6}(\d\d\/\d\d\/\d\d\d\d)/i', $text, $out_tsh); 
+        if(count($out_th[0])>0){
+            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+            echo "<div id=\"copy_th\">";
+            echo "Currently on: <BR>";
+            for($i=0;$i<count($th_full_med_list);$i++){
+                echo preg_replace('/•/i', '-', $th_full_med_list[$i])."<BR>";
+           
+            }
+            echo"<BR>";
+            if(count($out_tsh[0])>0){
+                //display Cr 
+                echo "Recent TSH results<BR>";
+                for ($t=0;$t<count($out_tsh[0]);$t++){
+                    echo$out_tsh[0][$t]."<BR>";
+                }
+                
+
+                $diff=date_diff(date_create($out_tsh[2][0]),date_create(date('Y-m-d')));
+                echo "Most recent TSH was checked ".$diff->format('%m month(s) %d day(s)')." ago.<BR>";
+                echo "Plan:<BR>";
+                if($out_tsh[1][0]>0.4&&$out_tsh[1][0]<4.5){
+                    echo"-Most recent TSH within target.<BR>-Continue TSH monitor every 6-12 months<BR>";
+                    if($diff->format('%m')>11){
+                        echo"-Recheck TSH with in a month<BR>";
+                    }
+                } elseif($out_tsh[1][0]<=0.4|$out_tsh[1][0]>=4.5){
+                    echo"<br>";
+                }
+                
+            }
+            
+            echo "</div>";
+                echo "<button onclick=\"copyTo('#copy_th')\">Copy</button><br><BR>";
+
+        }//Hypothyroidism note ends here
+
+
+
+
+
 
 
     }
