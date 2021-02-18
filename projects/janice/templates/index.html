@@ -1,0 +1,661 @@
+
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset='utf-8'name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+
+        span {
+            cursor:pointer;
+        }
+
+        button {
+            color: black;
+            background-color: rgb(227, 227, 240);
+            margin: 2px;
+            border:white;
+        }
+
+        button:hover{
+            background-color:rgb(174, 174, 199);
+            color: white;
+    
+        }
+
+        .collapse {
+            display:none;
+        }
+
+        span {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    {%block body%}
+    <script>
+        function pad(num, size) {
+            var s = num+"";
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+
+        answer_array=[]
+        original="{{answer_array}}"
+        answer_number=original.match(/\[(\d+),/g).length
+        answer_match=original.match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([aq\d]+)&#x27;\]/g)
+        answer_match_number=answer_match.length
+        if(answer_number==answer_match_number){
+            for (i=0;i<answer_match_number;++i){
+                answer_submatch=answer_match[i].match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/]+)&#x27;,\s&#x27;([aq\d]+)&#x27;\]/)
+                answer_array.push([answer_submatch[1],answer_submatch[2],answer_submatch[3],answer_submatch[4]])
+            }
+        } else {
+            answer_array=["we failed to read some of your answers when running Regex"]
+        }
+    
+        question_array=[]
+        question_original="{{question_array}}"
+        question_number=question_original.match(/\[(\d+),/g).length
+        question_match=question_original.match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([a-z]+)&#x27;\]/g)
+        question_match_number=question_match.length
+        if(question_number==question_match_number){
+            for (i=0;i<question_number;++i){
+                question_submatch=question_match[i].match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([a-z]+)&#x27;\]/)
+                question_array.push([question_submatch[1],question_submatch[2],question_submatch[3],question_submatch[4]])
+            }
+        } else {
+            question_array=["we failed to read some of your questions when running Regex"]
+            $(".body2").append("question_number: "+question_number+"<BR>question_match_number: "+question_match_number+"<BR>")
+        }
+
+        function collapse(){
+            $(event.target).parent().children("div").toggleClass("collapse")
+        }
+
+    </script>
+
+
+    <script>
+
+        function show_id(){
+            id =$(event.target).parent().attr("id");
+            $(event.target).replaceWith(id)
+        }
+
+        function auto_ajax(){
+            var input=$(event.target).val();
+            var new_q_id =$(event.target).parent().attr("id");
+            duplicate_checker_array=['t']
+
+            for (i=0; i<question_array.length;i++){
+
+                if(question_array[i][2]==input){
+                    var m = 1;
+                    duplicate_checker=""
+                    t=1
+                    for(r=0;r<answer_array.length;r++){
+                        if(answer_array[r][3]==question_array[i][1]){
+                            duplicate_checker=duplicate_checker+answer_array[r][2]
+                        }
+                    }
+                    if (jQuery.inArray(duplicate_checker,duplicate_checker_array)!==-1){
+                    } else if (jQuery.inArray(duplicate_checker,duplicate_checker_array)==-1) {
+                        duplicate_checker_array.push(duplicate_checker)
+                        $(event.target).parent().append("<div id=\"interim_"+i+"\" class=\"interim_"+i+"\"></div><button value=\"interim_"+i+"\" id=\"select_button\" type=\"button\" onclick=\"select()\">Select</button><BR>")
+                        for(j=0;j<answer_array.length;j++){
+                            if(answer_array[j][3]==question_array[i][1]){
+                                $("#interim_"+i).append("<div id=\""+new_q_id+"a"+pad(m,3)+"\" style=\"margin-left:10px\">- <input type=\"text\" value=\""+answer_array[j][2]+"\" id=\""+new_q_id+"a"+pad(m,3)+"_input\" name=\""+new_q_id+"a"+pad(m,3)+"\"></input></div>")
+                                $("#interim_"+i).children("#"+new_q_id+"a"+pad(m,3)).append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+                                $("#interim_"+i).children("#"+new_q_id+"a"+pad(m,3)).append("<button type=\"button\" onclick=\"a_ajax()\">Save</button>")
+                                $("#interim_"+i).children("#"+new_q_id+"a"+pad(m,3)).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                                $("#interim_"+i).children("#"+new_q_id+"a"+pad(m,3)).append("<br>")
+                                m=m+1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        function branch_copy(){
+            $(event.target).parent().append("<input id=\"branch_id\" type=\"text\"><button type=\"button\" onclick=\"branch_copy2()\">++Q</button>")
+        }
+
+        function branch_copy2(){
+            head_id=$(event.target).siblings("#branch_id").val()
+            for(i=0;i<question_array.length;++i){
+                if(question_array[i][1].substring(0,head_id.length)==head_id){
+                    c=head_id.length
+                    id_add= question_array[i][1].substring(head_id.length,question_array[i][1].length)
+                    a_id=$(event.target).parent("div").attr("id")
+                    final_id=a_id+id_add
+                    parent_id=final_id.substring(0,final_id.length-4)
+                    $("body").append(parent_id+"<BR>")
+                    $("#"+parent_id).append("<div id=\""+final_id+"\" style=\"margin:15px\"></div>")
+                    $("#"+final_id).append("Q)<input type=\"text\" id=\""+final_id+"_input\" name=\""+final_id+"\" list=\"q_list\" onkeyup=\"auto_ajax()\" value=\""+question_array[i][2]+"\">")
+                    $("#"+final_id).append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+                    $("#"+final_id).append("<button type=\"button\" onclick=\"qa_ajax()\">Save</button>")
+                    $("#"+final_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                    $("#"+final_id).append("<button type=\"button\" onclick=\"yes_no()\">Y/N</button>")
+                    if(question_array[i][3]=="off"){
+                        $("#"+final_id).append("<input type=\"radio\" value=\"on\" name=\""+final_id+"_q_type\">")
+                        $("#"+final_id).append("<input type=\"radio\" value=\"off\" name=\""+final_id+"_q_type\"checked>")    
+                    } else if(question_array[i][3]=="on") {
+                        $("#"+final_id).append("<input type=\"radio\" value=\"on\" name=\""+final_id+"_q_type\"checked>")
+                        $("#"+final_id).append("<input type=\"radio\" value=\"off\" name=\""+final_id+"_q_type\">")    
+                    }
+                    for(j=0;j<answer_array.length;++j){
+                        if(answer_array[j][3]==question_array[i][1]){
+                            a_id_add=answer_array[j][1].substring(head_id.length,answer_array[j][1].length)
+                            final_answer_id=a_id+a_id_add
+                            answer_parent_id=final_answer_id.substring(0,final_answer_id.length-4)
+                            $("#"+answer_parent_id).append("<div id=\""+final_answer_id+"\" style=\"margin-left:10px\"> - <input id=\""+final_answer_id+"_input\" type=\"text\" name=\""+final_answer_id+"\" value=\""+answer_array[j][2]+"\"></div>")
+                            $("#"+final_answer_id).append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+                            $("#"+final_answer_id).append("<button type=\"button\" onclick=\"a_ajax()\">Save</button>")
+                            $("#"+final_answer_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                            $("#"+final_answer_id).append("<button type=\"button\" onclick=\"branch_copy()\">++Q</button>")
+                        }
+                    }
+                }
+            }
+        }
+
+        function select(){
+            var new_class=$(event.target).val()
+            var q_id=$(event.target).parent("div").attr("id")
+            var clone = $("."+new_class).children().clone(true)
+            $(event.target).siblings("div").remove()
+            $(event.target).siblings("#select_button").remove()
+            $(event.target).siblings("br").remove()
+            $(event.target).remove()
+            $("#"+q_id).append(clone);
+
+        }
+
+        function yes_no(){
+            var q_id=$(event.target).parent().attr("id")
+            $(event.target).parent().append("<div id=\""+q_id+"a001\" style=\"margin-left:10px\"> - <input id=\""+q_id+"a001_input\" type=\"text\" name=\""+q_id+"a001\" value=\"yes\"></div>")
+            $("#"+q_id+"a001").append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+            $("#"+q_id+"a001").append("<button type=\"button\" onclick=\"a_ajax()\">Save</button>")
+            $("#"+q_id+"a001").append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+            $(event.target).parent().append("<div id=\""+q_id+"a002\" style=\"margin-left:10px\"> - <input id=\""+q_id+"a002_input\" type=\"text\" name=\""+q_id+"a002\" value=\"no\"></div>")
+            $("#"+q_id+"a002").append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+            $("#"+q_id+"a002").append("<button type=\"button\" onclick=\"a_ajax()\">Save</button>")
+            $("#"+q_id+"a002").append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+        }
+        
+        function dbl_click(){
+            var aorq=$(event.target).parent().attr("id").match(/[aq,\d]*([aq])\d\d\d$/)[1]
+            let yes= event.target.textContent
+            if( aorq=="a"){
+                var a_id=$(event.target).parent().attr("id");
+                $(event.target).replaceWith( "<input type=\"text\" value=\""+yes+"\" id=\""+a_id+"_input\" name=\""+a_id+"\"><button type=\"button\" onclick=\"a_value_update_ajax()\">Save</button>" );
+            } else if (aorq=="q"){
+                var q_id=$(event.target).parent().attr("id");
+                $(event.target).replaceWith( "<input type=\"text\" value=\""+yes+"\" id=\""+q_id+"_input\" name=\""+q_id+"\"><button type=\"button\" onclick=\"q_value_update_ajax()\">Save</button>" );
+            }
+        }
+    </script>
+
+
+
+
+    <script>
+
+    </script>
+   
+    <datalist id="datalist"></datalist>
+    <script>
+        var q_list = []  
+        $(document).ready(function(){
+            for(i=0;i<question_array.length;++i){
+                if (jQuery.inArray(question_array[i][2],q_list)==-1){
+                    q_list.push(question_array[i][2])
+                    $("#q_list").append("<option value=\""+question_array[i][2]+"\"<option>")
+                }
+            }
+        })
+            
+
+       
+    </script>
+    <datalist id="q_list"></datalist>
+
+    <script>
+        function q_type_update_ajax(){
+            var q_id=$(event.target).parent().attr("id");
+            var input_id=q_id+"_q_type";
+            var question_type=$(event.target).val()
+            $.ajax({
+                type:'post',
+                url:'q_type_update',
+                data:{
+                    q_id: q_id,
+                    question_type: question_type,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                }
+            })
+        }
+
+        function q_value_update_ajax(){
+            var q_id=$(event.target).parent().attr("id");
+            var q_value=$("#"+q_id+"_input").val()
+            $.ajax({
+                type:'post',
+                url:'q_value_update',
+                data:{
+                    q_id: q_id,
+                    q_value: q_value,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                    $("#"+q_id+"_input").replaceWith(q_value);
+                }
+            })
+        }
+
+        function a_value_update_ajax(){
+            var a_id=$(event.target).parent().attr("id");
+            var a_value=$("#"+a_id+"_input").val()
+            $.ajax({
+                type:'post',
+                url:'a_value_update',
+                data:{
+                    a_id: a_id,
+                    a_value: a_value,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                    $("#"+a_id+"_input").replaceWith(a_value);
+                }
+            })
+        }
+        
+
+        function a_delete_ajax() {
+            $a_id=$(event.target).parent().attr("id");
+            $.ajax({
+                type:'post',
+                url:'a_delete',
+                data:{
+                    a_id: $a_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){
+                $("#"+$a_id).slideUp(10);
+                }
+                }); 
+        };    
+
+        function new_question(){
+            var a_id=$(event.target).parent().attr("id");
+            var a_count=$(event.target).parent().children("div").length;
+            if(a_count==0){
+                var q_id=a_id+"q001";
+            } else {
+                var last_q_id=$(event.target).parent().children("div").last().attr("id");
+                let an = last_q_id.match(/(^[a-zA-Z0-9._%+-]*)(\D)(\d+)$/);
+                var next_q_number=+an[3]+1;
+                var next_q_number=('000'+next_q_number).slice(-3);
+                var q_id=an[1]+an[2]+next_q_number;
+            }
+                $("#"+a_id).append("<div id=\""+q_id+"\" style=\"margin:15px\"></div>")
+                $("#"+q_id).append("Q)<input type=\"text\" id=\""+q_id+"_input\" name=\""+q_id+"\" list=\"q_list\" onkeyup=\"auto_ajax()\">")
+                $("#"+q_id).append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+                $("#"+q_id).append("<button type=\"button\" onclick=\"qa_ajax()\">Save</button>")
+                $("#"+q_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                $("#"+q_id).append("<button type=\"button\" onclick=\"yes_no()\">Y/N</button>")
+                $("#"+q_id).append("<input type=\"radio\" value=\"on\" name=\""+q_id+"_q_type\" >")
+                $("#"+q_id).append("<input type=\"radio\" value=\"off\" name=\""+q_id+"_q_type\"checked>")
+        };
+
+        function new_answer(){
+            var auto_clarify=$(event.target).parent().children("div").attr("class");
+            if(auto_clarify=="auto"){
+                var children_number=$(event.target).parent().children("div").children("div").length;
+                var last_answer_id=$(event.target).parent().children("div").children("div").last().attr("id");
+        
+            } else if (auto_clarify!="auto") {
+                var children_number=$(event.target).parent().children("div").length;
+                var last_answer_id=$(event.target).parent().children("div").last().attr("id");
+                
+            }
+            var parent_id=$(event.target).parent().attr("id");
+            $("#print_here").append("last answer id: "+last_answer_id+"<BR>")
+            $("#print_here").append(children_number+"<BR>")
+            $("#print_here").append(auto_clarify+"<BR>")
+        
+            if (children_number>0){
+                let an = last_answer_id.match(/(^[a-zA-Z0-9._%+-]*)(\D)(\d+)$/);
+                var next_answer_number=+an[3]+1;
+                var next_answer_number=('000'+next_answer_number).slice(-3);
+                var next_a_id=an[1]+an[2]+next_answer_number
+                if(auto_clarify=="auto"){
+                    $("#"+parent_id).children("div").append("<div id=\""+next_a_id+"\" style=\"margin-left:10px\"> - <input type=\"text\" name=\""+next_a_id+"\"></div>")
+                } else if (auto_clarify!="auto") {
+                    $("#"+parent_id).append("<div id=\""+next_a_id+"\" style=\"margin-left:10px\"> - <input id=\""+next_a_id+"_input\" type=\"text\" name=\""+next_a_id+"\"></div>")
+                }
+        
+            } else {
+                //$().append(parent_id)
+                var next_a_id = parent_id+"a001"
+                $("#"+parent_id).append("<div id=\""+parent_id+"a001\" style=\"margin-left:10px\"> - <input id=\""+next_a_id+"_input\" type=\"text\" name=\""+parent_id+"a001\"></div>")
+            }
+        
+            $("#"+next_a_id).append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+            $("#"+next_a_id).append("<button type=\"button\" onclick=\"a_ajax()\">Save</button>")
+            $("#"+next_a_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+            $("#"+next_a_id).append("<button type=\"button\" onclick=\"branch_copy()\">++Q</button>")
+        
+         };
+        
+         function qa_ajax(){
+            q_id= $(event.target).parent().attr("id");
+            question_type=$(event.target).siblings("input[name="+q_id+"_q_type]:checked").val();
+            q_value= $("#"+q_id+"_input").val();
+            $.ajax({
+                type: "POST",
+                url: "q_insert",
+                data:{
+                    q_id: q_id,
+                    q_value: q_value,
+                    q_type: question_type,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                    $("#"+q_id+"_input").replaceWith(q_value);
+                }
+            })
+            a_count=$(event.target).parent().children("div").length
+            for(i=0;i<a_count;++i){
+                window["a_id"+i]=$(event.target).parent().children("div").eq(i).attr("id")
+                window["a_value"+i]=$("#"+window["a_id"+i]+"_input").val();
+                d=$("#"+window["a_id"+i]+"_input").val();
+                $.ajax({
+                    type: "POST",
+                    url: "a_insert",
+                    data:{
+                        a_id: window["a_id"+i],
+                        a_value: window["a_value"+i],
+                        q_id: q_id,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    }, 
+                    success: function(){
+                        
+                    }
+                })
+                $("#"+window["a_id"+i]+"_input").replaceWith(window["a_value"+i]);
+            }
+        }
+
+        function q_ajax(){
+            var current_q_id= $(event.target).parent().attr("id");
+            var test=$(event.target).siblings("input[name="+current_q_id+"_q_type]:checked").val();
+            var current_q_input= current_q_id+"_input";
+            var current_q_type= current_q_id+"_q_type";
+            var current_value= $("#"+current_q_input).val();
+            $.ajax({
+                type: "POST",
+                url: "q_insert",
+                data:{
+                    q_id: current_q_id,
+                    q_value: current_value,
+                    q_type: test,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                    $("#"+current_q_input).replaceWith(current_value);
+                }
+            })
+        }
+
+        function a_ajax(){
+            var current_a_id= $(event.target).parent().attr("id");
+            var current_q_id= $(event.target).parent().parent().attr("id");
+            var current_a_input= current_a_id+"_input";
+            var current_value= $("#"+current_a_input).val();
+            $.ajax({
+                type: "POST",
+                url: "a_insert",
+                data:{
+                    a_id: current_a_id,
+                    a_value: current_value,
+                    q_id: current_q_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(){
+                    $("#"+current_a_input).replaceWith(current_value);
+                }
+            })
+        }
+    
+
+
+    </script>
+    <script>
+
+        function d_delete(){
+            var id=$(event.target).parent().attr("id");
+            $("#"+id).remove();
+        };
+        
+
+
+        function ai_question(){
+            var a_id=$(event.target).parent().attr("id");
+            var a_count=$(event.target).parent().children("div").length;
+            $.ajax({
+                type:'post',
+                url: "{% url 'getQuestions'%}",
+                data:{
+                    ajax: a_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        
+                },
+                success:function(response){
+                    console.log(response.example);
+                    if (a_count==0){
+                        for (var i in response.example){
+                            m = parseInt(i)+1
+                            p = pad(m,3)
+                            q_id=a_id+"q"+p
+                            $("#"+a_id).append("<form><div id=\""+a_id+"q"+p+"\" style=\"margin:15px\"></div></form>")
+                            $("#"+q_id).append("Q)<input id=\""+q_id+"_input\" type=\"text\" name=\""+q_id+"\" list=\"q_list\" value=\'"+response.example[i]+"\'>")
+                            $("#"+q_id).append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+                            $("#"+q_id).append("<button type=\"button\" onclick=\"q_ajax()\">Save</button>")
+                            $("#"+q_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                            $("#"+q_id).append("<button type=\"button\" onclick=\"q_up()\">Up</button>")
+                            $("#"+q_id).append("<input type=\"radio\" value=\"on\" name=\""+q_id+"_q_type\" checked>")
+                            $("#"+q_id).append("<input type=\"radio\" value=\"off\" name=\""+q_id+"_q_type\">")
+                    
+                        }
+                    } else if (a_count>0){
+                        for (var i in response.example){
+                            m2= parseInt(i)+1+a_count
+                            p2= pad(m2,3)
+                            q_id=a_id+"q"+p2
+                                $("#"+a_id).append("<form action=\"\" method=\"POST\"><div id=\""+a_id+"q"+p2+"\" style=\"margin:15px\"></div></form>")
+                                $("#"+q_id).append("Q)<input type=\"text\" name=\""+q_id+"\" list=\"q_list\">")
+                                $("#"+q_id).append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+                                $("#"+q_id).append("<button type=\"button\" onclick=\"d_delete()\">Del</button>")
+                                $("#"+q_id).append("<button type=\"button\" onclick=\"d_delete()\">Save</button>")
+                                $("#"+q_id).append("<input type=\"radio\" value=\"on\" name=\""+q_id+"_q_type\" checked>")
+                                $("#"+q_id).append("<input type=\"radio\" value=\"off\" name=\""+q_id+"_q_type\">")
+                    
+                            }
+                        }
+                },
+                    
+                error: function(response){
+                }
+            })
+            
+        }
+    </script>
+
+    {%csrf_token%}
+
+
+
+    <script>
+        let tt="{{result}}";
+        let match=tt.match(/&#x27;([a-z,0-9,_]+)&#x27;:\s\[&#x27;([a-z,0-9,\s,\/,-,\.]+)&#x27;\]/gi)
+        $.each(match, function(index,value){
+            var csr_recogn=/csrfmiddlewaretoken/gi;
+            if(csr_recogn.test(value)){
+                let match_csr=value.match(/&#x27;[a-z,0-9,_]+&#x27;:\s\[&#x27;([a-z,0-9,\s,\/,-,\.]+)&#x27;\]/i)
+                $csrfmiddlewaretoken=match_csr[1];
+            }
+        })      
+        $.each(match, function(index,value){
+            let match2=value.match(/&#x27;([a-z,0-9,_]+)&#x27;:\s\[&#x27;([a-z,0-9,\s,\/,-,\.]+)&#x27;\]/i)
+            var q_recogn=/q\d\d\d$/gi;
+            var a_recogn=/a\d\d\d$/gi;
+            if  (q_recogn.test(match2[1])){
+                var id=match2[1]
+                var value=match2[2]
+                $.ajax({
+                    type: "POST",
+                    url: "q_insert",
+                    data:{
+                        q_id: id,
+                        q_value: value,
+                        csrfmiddlewaretoken: $csrfmiddlewaretoken
+                    },
+                    success: function(){
+                        $("body").append("q_added")
+ 
+                    }
+                });
+            } 
+        })          
+        $.each(match, function(index,value){
+            let match2=value.match(/&#x27;([a-z,0-9,_]+)&#x27;:\s\[&#x27;([a-z,0-9,\s,\/,-,\.]+)&#x27;\]/i)
+            var q_recogn=/q\d\d\d$/gi;
+            var a_recogn=/a\d\d\d$/gi;
+            var q_type_recogn=/q\d\d\d_q_type$/gi;
+            if  (q_type_recogn.test(match2[1])){
+                var q_plus_type=match2[1]
+                let match_q_type=q_plus_type.match(/([a-z,0-9,_]+)_q_type/i)
+                var id=match_q_type[1]
+                var value=match2[2]
+                $.ajax({
+                    type: "POST",
+                    url: "q_type_update",
+                    data:{
+                        q_id: id,
+                        question_type: value,
+                        csrfmiddlewaretoken: $csrfmiddlewaretoken
+                    },
+                    success: function(){
+                        $("body").append("q_type_added")
+ 
+                        }
+                });
+            }
+ 
+        })       
+        $.each(match, function(index,value){            
+            let match2=value.match(/&#x27;([a-z,0-9,_]+)&#x27;:\s\[&#x27;([a-z,0-9,\s,\/,-,\.]+)&#x27;\]/i)
+            var a_recogn=/a\d\d\d$/gi;
+ 
+            if (a_recogn.test(match2[1])){
+                var q_plus_a=match2[1]
+                let match_q=q_plus_a.match(/([a-z,0-9,_]+)a\d\d\d/i)
+                $q_id= match_q[1]
+                $id=match2[1]
+                $value=match2[2]
+                    $.ajax({
+                        type: "POST",
+                        url: "a_insert",
+                        data:{
+                            a_id: $id,
+                            a_value: $value,
+                            q_id: $q_id,
+                            csrfmiddlewaretoken: $csrfmiddlewaretoken
+                        },
+                        success: function(){
+                            $("body").append("a_added")
+                        }
+                    });
+            }
+        })       
+     </script>
+     <script> 
+        $(document).ready(function(){
+            for (i=0;i<question_array.length;++i){
+                var q_id_pattern=/a\d\d\d/gi;
+                if(!q_id_pattern.test(question_array[i][1])){
+                    $(".form").append("<div id=\""+question_array[i][1]+"\" style=\"margin:15px\"><b>Q</b>) <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\""+question_array[i][2]+"\">"+question_array[i][2]+"</span></div>")
+                } else {
+                    match_up_a = question_array[i][1].match(/(.+)q\d\d\d$/i)[1]
+                    $("#"+match_up_a).append("<div id=\""+question_array[i][1]+"\" style=\"margin:15px\"><b>Q</b>) <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\""+question_array[i][2]+"\">"+question_array[i][2]+"</span></div>")
+                }
+                $("#"+question_array[i][1]).append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+                $("#"+question_array[i][1]).append("<button type=\"button\" onclick=\"collapse()\">c/e</button><button type=\"button\" onclick=\"q_delete_ajax()\">Del</button></div>")
+                if(question_array[i][3]=="on"){
+                    $("#"+question_array[i][1]).append("<input type=\"radio\" name=\""+question_array[i][1]+"_q_type\" value=\"on\"  onclick=\"q_type_update_ajax()\" checked><input type=\"radio\" name=\""+question_array[i][1]+"_q_type\" value=\"off\"  onclick=\"q_type_update_ajax()\" >")
+                } else if (question_array[i][3]=="off"){
+                    $("#"+question_array[i][1]).append("<input type=\"radio\" name=\""+question_array[i][1]+"_q_type\" value=\"on\"  onclick=\"q_type_update_ajax()\"><input type=\"radio\" name=\""+question_array[i][1]+"_q_type\" value=\"off\"  onclick=\"q_type_update_ajax()\" checked>")
+                } else {
+                    $("#"+question_array[i][1]).append("q_type not available")
+                }
+                for (j=0;j<answer_array.length;++j){
+    
+                    if(answer_array[j][3]==question_array[i][1]){
+                        $("#"+answer_array[j][3]).append("<div class=\"primary\"id=\""+answer_array[j][1]+"\" style=\"margin-left:10px\">- <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\""+answer_array[j][2]+"\">"+answer_array[j][2]+"</span></div>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"ai_question()\">AI</button>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"a_delete_ajax()\">Del</button>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"branch_copy()\">++Q</button>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"show_id()\">#</button>")
+                        $("#"+answer_array[j][1]).append("<button type=\"button\" onclick=\"collapse()\">c/e</button>")
+                    }
+                }
+            }
+        })
+    </script>
+    
+    <div class="result"></div>
+    <form action="" method="POST">
+ 
+        <div class="form">
+            {%csrf_token%}
+ 
+        </div>
+        <input type ="submit"></button>
+    </form>
+    
+    {%endblock%}
+
+</body>
+</html>
+ 
+ 
+ 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script>
+      function add_problem(){
+        prob_count=$(".problems").children("div").length
+        $(".problems").append("<div class=\"form-group\"><input class=\"form-control input_"+prob_count+"\"   style=\"text-align: center;\" placeholder=\"Search\" ></div>")
+      }
+
+      function submit(){
+        prob_count=$(".problems").children("div").length
+        for(i=0;i<prob_count;++i){
+          $.ajax({
+            type:'post',
+            url:"agenda_submit",
+            data:{
+              p_id: 123,
+              csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+              prob_free: $(".input_"+i).val(),
+            }, 
+            success: function(){
+            }
+          })
+          $(".input_"+i).parent("div").slideUp(1000).delay(1000)
+        }
+
+      }
+
+      function regex(){
+        info=$(event.target).val()
+        line=info.split("\n")
+        line_count=info.split("\n").length
+        $(".copy").empty()
+        for(i=0;i<line_count;++i){
+          b=0
+            if(/will recheck [a-zA-Z\s,\d]{1,30} (|today)/i.test(line[i])){b=1}
+            if(/will (check|recheck) [a-zA-Z\s,\d]{1,30} today/i.test(line[i])){b=1}
+            if(/recheck [a-zA-Z\s,\d]{1,30} today/i.test(line[i])){b=1}
+            if(/check [a-zA-Z\s,\d]{1,30} today/i.test(line[i])){b=1}
+            if(/next eval/i.test(line[i])){b=1}
+            if(/reval in/i.test(line[i])){b=1}
+            if(/next visit/i.test(line[i])){b=1}
+            if(/recheck [a-zA-Z\s,\d]{1,30} in [a-zA-Z\s,\d]{1,30}/i.test(line[i])){b=1}
+            if(/reval \d (weeks|week|month|months)/i.test(line[i])){b=1}
+            if(/reval \d months/i.test(line[i])){b=1}
+            if(/will[a-zA-Z\s,\d]{1,30}once[a-zA-Z\s,\d]{1,30}(we|i) /i.test(line[i])){b=1}
+            if(/will[a-zA-Z\s,\d]{1,30}obtain/i.test(line[i])){b=1}
+            if(/repeat[a-zA-Z\s,\d]{1,30}(once|twice|three times) a year/i.test(line[i])){b=1}
+            if(/repeat[a-zA-Z\s,\d]{1,30}yearly/i.test(line[i])){b=1}
+            if(/will have further discussion in/i.test(line[i])){b=1}
+            if(/team will/i.test(line[i])){b=1}
+            if(/will reval/i.test(line[i])){b=1}
+            if(/will transfer to ER/i.test(line[i])){b=1}
+            if(/[a-zA-Z\s,\d]{1,30} within \d (days|weeks|day|week|month|months)/i.test(line[i])){b=1}
+            if(/transfer the patient to the ER/i.test(line[i])){b=1}
+            if(/next[a-zA-Z\s,\d]{1,30}\d{4}/i.test(line[i])){b=1}
+            if(/Will start [a-zA-Z\s,\d]{1,30}/i.test(line[i])){b=1}
+            if(/will recheck[a-zA-Z\s,\d]{1,30}in/i.test(line[i])){b=1}
+            if(/reval[a-zA-Z\s,\d]{1,30}\d{1,2}\/\d\d\d\d/i.test(line[i])){b=1}
+            if(/will (check|recheck)[a-zA-Z\s,\d]{1,30}as well/i.test(line[i])){b=1}
+            if(/plan(:|;)[a-zA-Z\s,\d]{1,30}today/i.test(line[i])){b=1}
+            if(/will (check|recheck)[a-zA-Z\s,\d]{1,30}at home/i.test(line[i])){b=1}
+            if(/will (check|recheck)[a-zA-Z\s,\d]{1,30}in \d{1,2} (day|days|week|weekds)/i.test(line[i])){b=1}
+            if(/will taper down/i.test(line[i])){b=1}
+            if(/plan(:|;)[a-zA-Z\s,\d]{1,30}referral/i.test(line[i])){b=2}
+            if(/will double/i.test(line[i])){b=1}
+            if(/will recheck[a-zA-Z\s,\d]{1,30}/i.test(line[i])){b=1}
+            if(/repeat[a-zA-Z\s,\d]{1,30}in \d{1,2} (day|days|week|weeks|month|months)/i.test(line[i])){b=1}
+            if(/us duplex/i.test(line[i])){b=1}
+            if(/instructed patient to visit ER/i.test(line[i])){b=1}
+            if(/have further discussion with result/i.test(line[i])){b=1}
+            if(/Plan: start/i.test(line[i])){b=1}
+            if(/Plan: Every (\d|\d\d) month/i.test(line[i])){b=1}
+            if(/We will repeat the[a-zA-Z\s,\d,-]{1,30}/i.test(line[i])){b=1}
+            if(/Instructed patient to arrange an (appt|appointment)/i.test(line[i])){b=1}
+            if(/Will check/i.test(line[i])){b=1}
+            if(/next[a-zA-Z\s,\d,-]{1,30}:[a-zA-Z\s,\d,-]{1,30}\/\d{4}/i.test(line[i])){b=1}
+            if(/Next mammogram/i.test(line[i])){b=1}
+            if(/Next hemoglobin A1c/i.test(line[i])){b=1}
+            if(/will add/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/dcfgjvhkbjlnkm/i.test(line[i])){b=1}
+            if(/Plan: (CBC|CMP|UA|KUB|CT|CXR)/i.test(line[i])){b=1}
+
+          //    [a-zA-Z\s,\d]{1,30}
+
+            if(/Last Assessment & Plan/i.test(line[i])){b=2}
+
+            if(/will refer to [a-zA-Z\s,\d]{1,30}/i.test(line[i])){b=3}
+            if(/will refer (her|him|patient|) to [a-zA-Z\s,\d]{1,30}/i.test(line[i])){b=3}
+
+            if(/will reval if/i.test(line[i])){b=0}
+            if(/reval in (\d|a) (day|days|week|weeks|month|months) if persist/i.test(line[i])){b=0}
+            if(/decision was made to transfer the patient to the ER/i.test(line[i])){b=0}
+
+
+            if(b==0){
+            $(".copy").append(line[i]+"<br>")
+          } else if(b==1){
+            $(".copy").append("<span style=\"color:red;\">"+line[i]+"</span><br>")
+          } else if(b==2){
+            $(".copy").append("<span style=\"color:blue;\">"+line[i]+"</span><br>")
+          } else if(b==3){
+            $(".copy").append("<span style=\"color:green;\">"+line[i]+"</span><br>")
+          }
+        }
+      }
+    </script>
+  </head>
+
+<body>
+  {%csrf_token%}
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-5">
+        <textarea name="info" style="width:100%; height:50vh;" onkeyup="regex()"></textarea>
+      </div>
+      <div class="col-5">
+        <div class="copy"></div>>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="d-flex justify-content-center h1" style="margin-top: 5vh;">How can we help you?</div>
+  <div class="problems" style="padding:5%;">
+    <div class="form-group">
+      <input class="form-control input_0" style="text-align: center;" placeholder="Search">
+    </div>  
+  </div>
+
+  <div class="d-flex justify-content-center" style="margin-top: 10px;">
+    <button type="button" class="btn btn-primary" style="margin: 5px; width: 15vw;" onclick="add_problem()">+</button>    
+    <button type="button" class="btn btn-primary" style="margin: 5px; width: 15vw;" onclick="submit()">Next</button>
+  </div>
+
+  
+</body>
+
+</html>
+ 

@@ -1,0 +1,125 @@
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{%csrf_token%}
+<script>
+
+    question_array=[]
+    answer_array=[]
+</script>
+{%for q in q_db%}
+    <script>
+        $(document).ready(function(){
+            window["array_"+"{{q.id}}"]=["{{q.id}}","{{q.q_id}}","{{q.q_value}}","{{q.question_type}}"]
+            question_array.push(window["array_"+"{{q.id}}"])
+        })
+    </script>
+{%endfor%}
+
+
+{%for a in a_db%}
+<script>
+    $(document).ready(function(){
+        window["array_"+"{{a.id}}"]=["{{a.id}}","{{a.a_id}}","{{a.a_value}}","{{a.q_id}}"]
+        answer_array.push(window["array_"+"{{a.id}}"])
+    })
+</script>
+{%endfor%}
+
+
+<script>
+    $(document).ready(function(){
+
+        q_dup_array=[]
+        for (i=0;i<question_array.length;++i){
+            $(".body").append("q_id is: "+question_array[i][1]+"<BR>")
+            $(".body").append("array is: "+q_dup_array+"<BR>")
+            if (jQuery.inArray(question_array[i][1],q_dup_array)!==-1){
+                q_id=question_array[i][1]
+                id=question_array[i][0]
+                $(".body").append(question_array[i][1]+" does have duplicate!<BR>")
+                $.ajax({
+                    type:'post',
+                    url:'q_delete',
+                    data:{
+                        q_id:q_id,
+                        id:id,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(){
+                        $(".body").append("So, I deleted "+question_array[i][1]+"<BR>")
+                    }
+                })
+            } else if (jQuery.inArray(question_array[i][1],q_dup_array)==-1){
+                q_dup_array.push(question_array[i][1])
+            }
+            $(".body").append("array after screening is: "+q_dup_array+"<BR>")
+
+        }
+
+        a_dup_array=[]
+        for (i=0;i<answer_array.length;++i){
+
+            $(".body").append("a_id is: "+answer_array[i][1]+"<BR>")
+            $(".body").append("array is: "+a_dup_array+"<BR>")
+            if (jQuery.inArray(answer_array[i][1],a_dup_array)!==-1){
+                id=answer_array[i][0]
+                $.ajax({
+                    type:'post',
+                    url:'a_delete',
+                    data:{
+                        id:id,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(){
+                        $(".body").append(id+"is successfully deleted<BR>")
+                    }
+                })
+            } else if (jQuery.inArray(answer_array[i][1],a_dup_array)==-1) {
+                a_dup_array.push(answer_array[i][1])
+            }
+        }
+    })
+</script>
+
+{%for q in q_db%}
+<script>
+    $(document).ready(function(){
+
+        let an = "{{q.q_id}}".match(/([aq,\d]*)q\d\d\d$/);
+        var a_id= an[1]
+        q_id=Number("{{q.id}}")
+        $.ajax({
+            type:'post',
+            url:'residual_delete2',
+            data:{
+                a_id:a_id,
+                q_id:q_id,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(){
+            }
+        })
+    })
+</script>
+{%endfor%}
+
+{%for a in a_db%}
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            type:'post',
+            url:'residual_delete',
+            data:{
+                q_id:"{{a.q_id}}",
+                a_id:"{{a.id}}",
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(){
+            }
+        })
+    })    
+</script>
+{%endfor%}
+
+
+<div class="body"></div>

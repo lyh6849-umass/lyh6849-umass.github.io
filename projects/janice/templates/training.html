@@ -1,0 +1,192 @@
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function pad(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+</script>
+
+<script>
+    answer_array=[]
+    original="{{answer_array}}"
+    answer_number=original.match(/\[(\d+),/g).length
+    answer_match=original.match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([aq\d]+)&#x27;\]/g)
+    answer_match_number=answer_match.length
+    if(answer_number==answer_match_number){
+        for (i=0;i<answer_match_number;++i){
+            answer_submatch=answer_match[i].match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/]+)&#x27;,\s&#x27;([aq\d]+)&#x27;\]/)
+            answer_array.push([answer_submatch[1],answer_submatch[2],answer_submatch[3],answer_submatch[4]])
+        }
+    } else {
+        answer_array=["we failed to read some of your answers when running Regex"]
+    }
+
+    question_array=[]
+    question_original="{{question_array}}"
+    question_number=question_original.match(/\[(\d+),/g).length
+    question_match=question_original.match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([a-z]+)&#x27;\]/g)
+    question_match_number=question_match.length
+    if(question_number==question_match_number){
+        for (i=0;i<question_number;++i){
+            question_submatch=question_match[i].match(/\[(\d+),\s&#x27;([aq\d]+)&#x27;,\s&#x27;([a-zA-Z\s\-\(\)\,\d\.\/?:]+)&#x27;,\s&#x27;([a-z]+)&#x27;\]/)
+            question_array.push([question_submatch[1],question_submatch[2],question_submatch[3],question_submatch[4]])
+        }
+    } else {
+        question_array=["we failed to read some of your questions when running Regex"]
+        $(".body2").append("question_number: "+question_number+"<BR>question_match_number: "+question_match_number+"<BR>")
+    }
+</script>
+
+
+<!--
+
+
+    {%for q in q_db%}
+    <script>   
+        var match_up_a = "{{q.q_id}}".match(/(.+)q\d\d\d$/i)
+        window["q"+"{{q.q_id}}"]="{{q.q_id}}"
+        window["q"+"{{q.q_id}}"+"a"]=match_up_a[1]
+        window["q"+"{{q.q_value}}"]="{{q.q_value}}"
+        window["q"+"{{q.q_id}}_type"]="{{q.question_type}}"
+    </script>
+    <script>
+        var q_id_pattern=/a\d\d\d/gi;
+        if(!q_id_pattern.test("{{q.q_id}}")){
+            $(document).ready(function(){
+                $(".form").append("<div id=\""+"{{q.q_id}}"+"\" style=\"margin:15px\"><b>Q</b>) <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\"{{q.q_value}}\">{{q.q_value}}</span></div>")
+            })
+        } else {
+            var match4 = window["q"+"{{q.q_id}}"].match(/(.+)q\d\d\d$/i)
+            var q_test=match4[1]
+            $(document).ready(function(){
+                $("#"+window["q"+"{{q.q_id}}"+"a"]).append("<div id=\""+"{{q.q_id}}"+"\" style=\"margin:15px\"><b>Q</b>) <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\"{{q.q_value}}\">{{q.q_value}}</span></div>")
+            })
+        }
+        $(document).ready(function(){
+        $("#{{q.q_id}}").append("<button type=\"button\" onclick=\"new_answer()\">+A</button>")
+        $("#{{q.q_id}}").append("<button type=\"button\" onclick=\"q_up()\">Up</button><button type=\"button\" onclick=\"q_delete_ajax()\">Del</button></div>")
+        if("{{q.question_type}}"=="on"){
+            $("#{{q.q_id}}").append("<input type=\"radio\" name=\"{{q.q_id}}_q_type\" value=\"on\"  onclick=\"q_type_update_ajax()\" checked><input type=\"radio\" name=\"{{q.q_id}}_q_type\" value=\"off\"  onclick=\"q_type_update_ajax()\" >")
+        } else if ("{{q.question_type}}"=="off"){
+            $("#{{q.q_id}}").append("<input type=\"radio\" name=\"{{q.q_id}}_q_type\" value=\"on\"  onclick=\"q_type_update_ajax()\"><input type=\"radio\" name=\"{{q.q_id}}_q_type\" value=\"off\"  onclick=\"q_type_update_ajax()\" checked>")
+        } else {
+            $("#{{q.q_id}}").append("q_type not available")
+        }
+        })
+    </script>
+    {%for a in a_db%}
+    <script>
+        window["a"+"{{a.q_id}}"]="{{a.q_id}}"
+        window["a"+"{{a.a_id}}"]="{{a.a_id}}"
+        window["a"+"{{a.a_value}}"]="{{a.a_value}}"
+    </script>
+    <script>
+        var match3 = window["a"+"{{a.a_id}}"].match(/(.+)a\d\d\d/i)
+        var test=match3[1]
+        $(document).ready(function(){
+            if(window["a"+"{{a.q_id}}"]==window["q"+"{{q.q_id}}"]){
+                $("#"+window["a"+"{{a.q_id}}"]).append("<div id=\""+window["a"+"{{a.a_id}}"]+"\" style=\"margin-left:10px\">- <span ondblclick=\"dbl_click()\"style=\"display:inline;\" value=\"{{a.a_value}}\">{{a.a_value}}</span></div>")
+                $("#{{a.a_id}}").append("<button type=\"button\" onclick=\"new_question()\">+Q</button>")
+                $("#{{a.a_id}}").append("<button type=\"button\" onclick=\"ai_question()\">AI</button>")
+                $("#{{a.a_id}}").append("<button type=\"button\" onclick=\"a_delete_ajax()\">Del</button>")
+                $("#{{a.a_id}}").append("<button type=\"button\" onclick=\"branch_copy()\">++Q</button>")
+                $("#{{a.a_id}}").append("<button type=\"button\" onclick=\"show_id()\">#</button>")
+
+            }
+        })
+ 
+        
+    </script>
+    {%endfor%}
+    {%endfor%}
+-->
+
+<!--
+{%for q in q_db%}
+<script>
+    $(document).ready(function(){
+        window["array_"+"{{q.id}}"]=["{{q.id}}","{{q.q_id}}","{{q.q_value}}","{{q.qustion_type}}"]
+        question_array.push(window["array_"+"{{q.id}}"])
+    })
+</script>
+{%endfor%}
+-->
+<!--
+{%for a in a_db%}
+<script>
+    $(document).ready(function(){
+        window["array_"+"{{a.id}}"]=["{{a.id}}","{{a.a_id}}","{{a.a_value}}","{{a.q_id}}"]
+        answer_array.push(window["array_"+"{{a.id}}"])
+    })
+
+</script>
+{%endfor%}
+
+-->
+
+
+{%csrf_token%}
+<script>
+    $(document).ready(function(){
+        for (i=0; i<answer_array.length; ++i){
+            
+            output="none"
+            for (w=0;w<question_array.length;++w){
+                e=0
+                if(question_array[w][1].match(/([aq,\d]*)([aq])(\d\d\d$)/)[1]==answer_array[i][1]){
+                    if(output=="none"){
+                        output=question_array[w][2];
+                    } else{
+                        output=question_array[w][2]+", "+output
+                    }
+                }
+            }
+
+            input=""
+            a_id=answer_array[i][1]
+            loop_id=a_id
+                while (loop_id.length >0){
+                    id_div=loop_id.match(/([aq,\d]*)([aq])(\d\d\d$)/)
+                    if (id_div[2]=='a'){
+                        for (j=0;j<answer_array.length;++j){
+                            if(answer_array[j][1]==loop_id){
+                                input=answer_array[j][2]+" "+input
+                                //$("body").append("answer_arrayj1="+answer_array[j][1]+"<BR>loop_id is:"+loop_id+"<BR>");
+                            }
+                        }
+                        loop_id=id_div[1]
+                    } else if (id_div[2]=='q') {
+                        for (m=0;m<question_array.length;++m){
+                            if(question_array[m][1]==loop_id){
+                                input=question_array[m][2]+" "+input
+                            }
+                        }
+                        if(id_div[3]==1){
+                            loop_id=id_div[1]
+                        } else {
+                            z=id_div[3]-1
+                            loop_id=id_div[1]+'q'+pad(z,3)
+                        }
+                    }
+                }
+            $(".in_out").append("<tr><td>"+i+"</td><td>"+input+"</td><td>"+output+"</td></tr>");
+        }
+    })
+</script>
+<div class="form">
+</div>
+<div class="body">
+    <script>
+        {{answer_array2}}
+    </script>
+    
+    <table class="in_out">
+        <tr>
+            <th>Numb</th>
+            <th>In</th>
+            <th>Out</th>
+        </tr>
+      </table>
+</div>
