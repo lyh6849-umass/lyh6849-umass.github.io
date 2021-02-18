@@ -45,7 +45,29 @@ include 'db.php';
 $text = $_POST['text']; 
 $n = substr_count($text,"\n");
 $lines=explode("\n", $text);
+$u=0;
+$total="";
+for ($p=0;$p<=$n;$p++){
+    $total=$total.$lines[$p];
+}
 
+/*
+$array2=(explode('. ',strtolower($total)));
+for($m=0;$m<count($array2);$m++){
+    $array2_2=explode('. ',$array2[$m]);
+    for($e=0;$e<count($array2_2);$e++){
+        echo"-".$array2_2[$e]."<BR>";
+    }
+}
+$array3=str_split($total);
+$total="";
+for($m=0;$m<count($array3);$m++){
+    $total=$total.$array3[$m];
+}
+*/
+
+
+    
 
 $sql = "SELECT * FROM htn_med_db";
 $r=$conn->query($sql);
@@ -94,7 +116,7 @@ $th_full_med_list=array();
 $asthma_full_med_list=array();
 for ($p=0;$p<=$n;$p++){
     $str=strtolower($lines[$p]);
-    preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/i',$str,$out_med);
+    preg_match_all('/.+(tablet|capsule|unit|inhaler|nebulizer).*,\s.*(take|inject|inhale).*(tablet|unit|vial|puff)/i',$str,$out_med);
     preg_match_all('/\w+/', $str, $out_word);
     if(count($out_med[0])>0){
         $jj=$str;
@@ -136,46 +158,7 @@ for ($p=0;$p<=$n;$p++){
     }
     preg_match_all('/\w+/', $str, $output_array);
     $jj=$output_array[0];
-    preg_match_all('/•.+levothyroxine.+tablet,.+take.+tablet/i', $str, $out_th_med);
-    if(count($out_th_med[0])>0){
-        $jj=$str;
-        $jj=preg_replace('/\((.*?)\)/', '', $jj);
-        preg_match_all('/disp/',$jj,$out_disp);
-        if(count($out_disp[0])>0){$jj = strstr($jj,', disp:',true);}
-        $jj=str_replace("under the skin","",$jj);
-        $jj=str_replace("by mouth","",$jj);
-        $jj=str_replace("chew and swallow","take",$jj);
-        $jj=str_replace("twice daily","2 times a day",$jj);
-        $jj=str_replace("twice a day","2 times a day",$jj);
-        $jj=str_replace(" with meals","",$jj);
-        $jj=str_replace("once a week","weekly",$jj);
-        $jj=str_replace(" before meals","",$jj);
-        $jj=str_replace(" with dinner","",$jj);
-        $jj=str_replace(" with food","",$jj);
-        $jj=str_replace("daily","1 time a day",$jj);
-        $jj=str_replace("weekly","1 time a week",$jj);
-        $jj=str_replace("subcutaneously ","",$jj);
-        $jj=str_replace("1/2","0.5",$jj);
-        $jj=str_replace("times 1 time","times",$jj);
-        $jj=str_replace("every morning ","1 time a day ",$jj);
-        $jj=str_replace("before breakfast ","",$jj);
-        $jj=str_replace("three","3",$jj);
-        $jj=str_replace(" u "," units ",$jj);
-        $jj=str_replace(" with breakfast","",$jj);
-        $jj=str_replace("every day","1 time a day",$jj);
-        $jj=str_replace("daily","1 time a day",$jj);
-        $jj=str_replace("every 12 hours","2 times a day",$jj);
-        $jj=str_replace("at bed time","1 time a day",$jj);
-        $jj=str_replace("nightly","1 time a day",$jj);
-        $jj=str_replace(" ss "," sliding scale ",$jj);
-        $jj=str_replace("inejct","inject",$jj);
-        $jj=str_replace("in the am","1 time a day",$jj);
-        $jj=str_replace("in the pm","1 time a day",$jj);
-        $jj=str_replace("/ml","/1ml",$jj);
-        $jj=str_replace("","",$jj);
-        preg_match_all('/.+(tablet|capsule|unit).*,\s.*(take|inject).*(tablet|unit)/',$jj,$rrr);
-        if(count($rrr[0])>0){$th_full_med_list[]= $jj;}
-    }
+  
     if(count(array_intersect($output_array[0],$dm_med_db))>0){
         $jj=$str;
         $jj=preg_replace('/\((.*?)\)/', '', $jj);
@@ -230,8 +213,19 @@ for ($j=0;$j<=$n;$j++){
         preg_match_all("/hypertension/i",$string,$out_htn);
         preg_match_all("/diabetes mellitus/i",$string,$out_dm);
         preg_match_all("/(hypothyroid)|(hypothyroidism)/i",$string,$out_th);
+        preg_match_all("/(asthma)|(copd)|(chronic obstructive lung disease)|(airway)|(reactive airway)/i",$string,$out_asthma);
         preg_match_all("/(dyslipidemia)|(cholesterol)|(hypertriglyceridemia)|(elevated LDL)|(hyperglyceridemia)|(hyperlipidemia)/i",$string,$out_hld);
         preg_match_all("/(CKD)|(kidney disease)|(AKI\s)|(CKI\s)|(AKD\s)|(kidney failure)|(kidney insufficiency)|(renal insufficiency)|(renal failure)/i",$string,$out_ckd);
+//Asthma, copd note starts
+        if(count($out_asthma[0])>0){
+            echo ucfirst(preg_replace('/•\s*/i', '', $string))."<BR>";
+            echo "<div id=\"copy_asthma\">";
+            echo "Currently on: <BR>";
+            for($i=0;$i<count($asthma_full_med_list);$i++){echo preg_replace('/•/i', '-', $asthma_full_med_list[$i])."<BR>";}
+            echo "Plan: <BR>";
+            echo "</div>";
+            echo "<button onclick=\"copyTo('#copy_asthma')\">Copy</button><br><BR>";
+        }
 //HTN note starts
         if(count($out_htn[0])>0){
 
@@ -650,9 +644,7 @@ for ($j=0;$j<=$n;$j++){
                 }
             }
             echo "Currently on: <BR>";
-                for($i=0;$i<count($hld_full_med_list);$i++){
-                    echo preg_replace('/•/i', '-', $hld_full_med_list[$i])."<BR>";
-                }
+                for($i=0;$i<count($hld_full_med_list);$i++){echo preg_replace('/•/i', '-', $hld_full_med_list[$i])."<BR>";}
             //plan 
             echo "Plan: continue current treatment<BR>";
             echo "</div>";
